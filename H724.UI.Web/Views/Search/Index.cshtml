@@ -1,0 +1,50 @@
+﻿
+@model SearchViewModel
+@using H724.UI.Web.Models
+
+@{
+
+    Layout = "../Shared/_Layout.cshtml";
+    
+    ViewBag.Title = "Search";
+
+    IDictionary<string, object> formHtml = new Dictionary<string, object>();
+    formHtml.Add("class", "form form-horizontal well");
+
+    IDictionary<string, object> controlLabel = new Dictionary<string, object>();
+    controlLabel.Add("class", "control-label");
+
+    IDictionary<string, object> dateFieldHtml = new Dictionary<string, object>();
+    dateFieldHtml.Add("class", "input-small");
+
+    IDictionary<string, object> adultDropdownHtml = new Dictionary<string, object>();
+    adultDropdownHtml.Add("class", "input-mini adult");
+
+    IDictionary<string, object> childDropdownHtml = new Dictionary<string, object>();
+    childDropdownHtml.Add("class", "input-mini child");
+
+    IDictionary<string, object> ageDropDownHtml = new Dictionary<string, object>();
+    ageDropDownHtml.Add("class", "input-mini age");
+
+    IDictionary<string, object> mutliSelectHtml = new Dictionary<string, object>();
+    mutliSelectHtml.Add("multiple", "multiple");
+}
+
+
+<div class="row">
+    <div class="span12">
+        @Html.Partial("_search", Model)
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+
+        $(document).ready(function() {
+            $('div#searchForm').show();
+        });
+        
+    </script>
+}
+
+

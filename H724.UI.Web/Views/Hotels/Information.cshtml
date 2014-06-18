@@ -1,0 +1,509 @@
+﻿
+@using System.Globalization
+@model H724.Services.Expedia.Hotels.Models.Response.HotelInformationResponse
+
+@{
+    ViewBag.Title = "Information";
+    CultureInfo culture = new CultureInfo("en-GB");
+}
+
+
+<div class="row well">
+    
+    <div id="mapInfo">
+        <input id="IATACode" type="hidden" value="@Model.HotelSummary.AirportCode" />
+        <input id="DestinationId" type="hidden" value="@Session["DestinationId"] as string" />
+    </div>
+    
+    
+    @if (!string.IsNullOrEmpty(Session["ResultUrl"] as string))
+    {
+        <!-- ROW RESULTS -->
+        <div class="row-fluid">
+            <div class="span12">
+                <a class="btn btn-info pull-left" href="@Session["ResultUrl"]" title="Return to your results">
+                    <i class="icon-arrow-left"></i> Back to results
+                </a>
+            </div>
+        </div>
+    }
+    <!-- ROW HOTEL NAME -->
+    <div class="row-fluid">
+        <div class="span12">
+            <h2 id="name">
+                @Server.HtmlDecode(Model.HotelSummary.Name)
+                <small>@Model.HotelSummary.City, @Model.HotelSummary.CountryCode</small>
+            </h2>
+        </div>
+    </div>
+
+    <!-- ROW IMAGES -->
+    <div class="row-fluid">
+        
+        <!-- COLUMN 1 -->
+        <div class="span6">
+            <!-- IMAGE CAROUSEL -->
+            <div class="carousel slide" id="myCarousel">
+                <div class="carousel-inner">
+                    @foreach (var image in Model.HotelImages.HotelImage)
+                    {                       
+                        <div class="item hotel-image @(Model.HotelImages.HotelImage.IndexOf(image) == 0 ? "active" : "")">
+                            <img class="img-polaroid" src="@image.Url" alt="Hotel Image" style="margin-left: auto; margin-right: auto;" />
+                        </div>
+                    }
+                </div>
+                <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+                <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+            </div>
+        </div>
+        <!-- COLUMN 2 -->
+        <div class="span6" style="margin-top: 15px;">
+            <h4>Photos 
+                <small>click to go to it</small>
+            </h4>
+            <!-- LIST OF IMAGE THUMBNAILS -->
+            <ul class="inline unstyled">
+                @foreach (var image in Model.HotelImages.HotelImage)
+                {
+                    <li style="margin-bottom: 10px;">
+                        <img title="Click me to see a bigger version!" src="@image.ThumbnailUrl" height="50" width="50" alt="" />
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+
+    <!-- ROW -->
+    <div class="row-fluid">
+
+        <!-- HOTEL POLICY AND INFORMATION -->
+        <div class="span12">
+            <div class="row-fluid">
+                <!-- Address -->
+                <span class="label label-inverse">Hotel Address</span>
+                
+                @if (!string.IsNullOrEmpty(Model.HotelSummary.AirportCode))
+                {
+                    <span class="label label-info" title="Nearest Airport (IATA Code)">
+                        <i class="icon-plane"></i> Closest Airport: @Model.HotelSummary.AirportCode
+                    </span>
+                }
+                
+                <address>
+                    @if (!string.IsNullOrEmpty(Model.HotelSummary.Address1))
+                    {
+                        @Server.HtmlDecode(Model.HotelSummary.Address1)<br />
+                    }
+                    @if (!string.IsNullOrEmpty(Model.HotelSummary.Address2))
+                    {
+                        @Server.HtmlDecode(Model.HotelSummary.Address2)<br />
+                    }
+                    @if (!string.IsNullOrEmpty(Model.HotelSummary.City))
+                    {
+                        @Server.HtmlDecode(Model.HotelSummary.City)<br />
+                    }
+                    @if (!string.IsNullOrEmpty(Model.HotelSummary.PostalCode))
+                    {
+                        @Model.HotelSummary.PostalCode<br />
+                    }
+                </address>
+
+            </div>
+            <!-- INNER ROW 1 -->
+            <div class="row-fluid">
+                <span class="label label-important"><i class="icon-file"></i> Hotel Policy</span>
+                <p>@Model.HotelDetails.HotelPolicy</p>
+            </div>
+            <!-- INNER ROW 2 -->
+            <div class="row-fluid">
+                <span class="label label-info"><i class="icon-exclamation-sign"></i> Good to know</span>
+                <ul class="unstyled">
+                    <li>Check-in Time: @Model.HotelDetails.CheckInTime</li>
+                    <li>Check-out Time: @Model.HotelDetails.CheckOutTime</li>
+                </ul>
+            </div>
+            
+            @if (!String.IsNullOrEmpty(Model.HotelSummary.TripAdvisorRatingUrl))
+            {
+                <div class="row" style="margin-left: 10px;">
+                    <h4>TripAdvisor <small>rating based on <span>@Model.HotelSummary.TripAdvisorReviewCount</span> reviews</small></h4>
+                    <img src="@Model.HotelSummary.TripAdvisorRatingUrl" />
+                </div>
+            }
+        </div>
+
+    </div>
+
+    <!-- ROW -->
+    <div class="row">
+        <div>
+            <div class="pull-right">
+                <!-- INNER ROW PRICE -->
+                <div class="row">
+                    <span>From</span>
+                    <h1 style="margin-top: -2px;">
+                        <span>@culture.NumberFormat.CurrencySymbol</span>@Model.HotelSummary.LowRate.ToString("0.##")<small> / night</small>
+                    </h1>
+                </div>
+                <!-- INNER ROW AVAILABILITY CHECK -->
+                <div class="row">
+                    
+                    @{
+                        var route = new RouteValueDictionary
+                                {
+                                    {"id", Model.HotelSummary.HotelId},
+                                    {"name", Server.UrlEncode(Model.HotelSummary.Name.Replace('-', ' ').Replace("  ", " ").Replace(' ', '-'))},
+                                    {"city", Model.HotelSummary.City},
+                                    {"country", Model.HotelSummary.CountryCode}
+                                };
+                    }
+
+                    <a href="@Url.Action("Availability", "Rooms", route)" class="btn btn-success">
+                        <span>Check Room Availability <i class="icon-arrow-right"></i></span>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ROW -->
+    <div class="row-fluid">
+
+        <!-- HIDE TABS BUTTON -->
+        <div class="span2" style="margin-bottom: 10px;">
+            <button id="hide" class="btn btn-mini btn-block">
+                <span><i class="icon-search"></i>Hide Tab Content</span>
+            </button>
+        </div>
+
+    </div>
+
+    <!-- ROW -->
+    <div class="row-fluid">
+
+        <div class="span12">
+
+            <!-- TABS NAVIGATION -->
+            <ul id="tabs" class="nav nav-tabs">
+                <li><a href="#description" data-toggle="tab"><i class="icon-info-sign"></i> Description</a></li>
+                <li><a href="#amenities" data-toggle="tab"><i class="icon-list"></i> Amenities</a></li>
+                <li><a href="#area" data-toggle="tab"><i class="icon-info-sign"></i> Area Info</a></li>
+                <li><a href="#rooms" data-toggle="tab"><i class="icon-info-sign"></i> Room Info</a></li>
+                <li><a href="#driving" data-toggle="tab"><i class="icon-road"></i> Directions</a></li>
+                <li><a href="#checkin" data-toggle="tab"><i class="icon-tags"></i> Check-in</a></li>
+                <li><a href="#map" data-toggle="tab"><i class="icon-map-marker"></i> Google Map</a></li>
+                <li><a href="#tour" data-toggle="tab"><i class="icon-camera"></i> Virtual Tour</a></li>
+            </ul>
+
+            <!-- TAB CONTENT -->
+            <div class="tab-content">
+
+                <!-- TAB 1 -->
+                <div id="description" class="tab-pane">
+                    <p>@Html.Raw(Server.HtmlDecode(Model.HotelDetails.PropertyDescription))</p>
+                </div>
+
+                <!-- TAB 2 -->
+                <div id="amenities" class="tab-pane">
+                    <ol>
+                        @foreach (var amenity in Model.PropertyAmenities.PropertyAmenity)
+                        {
+                            <li style="margin-left: 10px;" title="@amenity.AmenityId">@Server.HtmlDecode(amenity.Amenity)</li>
+                        }
+                    </ol>
+                </div>
+
+                <!-- TAB 3 -->
+                <div id="area" class="tab-pane">
+                    @Html.Raw(Server.HtmlDecode(Model.HotelDetails.AreaInformation))
+                </div>
+
+                <!-- TAB 4 -->
+                <div id="driving" class="tab-pane">
+                    @Html.Raw(Server.HtmlDecode(Model.HotelDetails.DrivingDirections))
+                </div>
+
+                <!-- TAB 5 -->
+                <div id="rooms" class="tab-pane">
+                    @Html.Raw(Server.HtmlDecode(Model.HotelDetails.RoomInformation))
+                </div>
+
+                <!-- TAB 6 -->
+                <div id="checkin" class="tab-pane">
+                    @Html.Raw(Server.HtmlDecode(Model.HotelDetails.CheckInInstructions))
+                </div>
+
+                <!-- TAB 7 -->
+                <div id="map" class="tab-pane">
+
+                    <!-- STORE VALUES FOR JQUERY -->
+                    <div id="latitude" class="hidden" title="@Model.HotelSummary.Latitude"></div>
+                    <div id="longitude" class="hidden" title="@Model.HotelSummary.Longitude"></div>
+
+                    <div id="map_canvas" style="width: 100%; height: 100%">
+                        <!-- GOOGLE MAP -->
+                    </div>
+                </div>
+
+                <!-- TAB 8 -->
+                <div id="tour" class="tab-pane">
+
+                    @{
+                        string url = "http://travel.ian.com/hotel/tours/" + Model.HotelId + "?cid=55505";
+                    }
+
+                    <iframe style="width: 100%; height: 100%" seamless="seamless" src="@url"></iframe>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        
+
+        
+        @using (Html.BeginForm("Availability", "Rooms", new { id = Model.HotelSummary.HotelId }, FormMethod.Get))
+        {
+            <input class="hide" type="submit" />
+        }
+
+    </div>
+
+</div>
+
+
+@section Scripts {
+
+    <script type="text/javascript">
+        
+        var map;
+        var service;
+        var infoWindow;
+        var lat = $('div[id="latitude"]').attr('title');
+        var lon = $('div[id="longitude"]').attr('title');
+        var hotel = new google.maps.LatLng(lat, lon);
+
+        function initialize() {
+
+            var mapOptions = {
+                center: new google.maps.LatLng(lat, lon),
+                zoomControlOptions: {
+                    style: google.maps.ZoomControlStyle.LARGE
+                },
+                zoom: 20,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+
+            map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+            infoWindow = new google.maps.InfoWindow();
+            service = new google.maps.places.PlacesService(map);
+
+            var weatherLayer = new google.maps.weather.WeatherLayer({
+                temperatureUnits: google.maps.weather.TemperatureUnit.CELSIUS
+            });
+
+            var text = new $('h2#name').text();
+
+
+            // Hotel Position
+            var marker = new google.maps.Marker({
+                position: hotel,
+                draggable: false,
+                title: text
+            });
+
+            marker.setMap(map);
+            weatherLayer.setMap(map);
+
+            // Center on the hotels position
+            map.setCenter(marker.position);
+
+        }
+
+        function getAttractions() {
+
+            // https://maps.googleapis.com/maps/api/place/nearbysearch/output?parameters
+            // https://developers.google.com/places/documentation/supported_types
+
+            var request = {
+                location: hotel,
+                radius: 2000, // search within 2000 meters
+                types: [
+                    "point_of_interest",
+                    "museum",
+                    "night_club",
+                    "park",
+                    "bar",
+                    "aquarium",
+                    "restaurant",
+                    "amusement_park",
+                    "zoo"]
+            };
+            
+            
+
+            // A Places Radar Search is initiated with a call to the PlacesService's radarSearch() method, 
+            // which will return an array of up to 200 PlaceResult objects. 
+            // PlaceResult objects returned by radarSearch() will only include the geometry.location and reference properties.
+
+            // https://developers.google.com/maps/documentation/javascript/places#radar_search_requests
+            //service.radarSearch(request, callback);
+            
+            // https://developers.google.com/maps/documentation/javascript/places#place_search_requests
+            service.nearbySearch(request, callback);
+
+
+        }
+
+        function createMarker(result) {
+
+
+            // https://developers.google.com/maps/documentation/javascript/overlays#Markers
+            // Markers icon customization here :)
+            // Attraction Marker
+            var marker = new google.maps.Marker({
+                draggable: false,
+                position: result.geometry.location,
+                title: result.name,
+                icon: result.icon
+            });
+
+            // Set its map
+            marker.setMap(map);
+
+            // Info window for this marker
+            google.maps.event.addListener(marker, 'click', function () {
+
+                console.log("marker clicked");
+                
+                var infoContent = "Name: " + result.name + "<br />";
+                infoContent += "Location: <br />" + result.vicinity + "<br />";
+                infoWindow.setContent(infoContent);
+                infoWindow.open(map, this);
+                
+            });
+
+        }
+
+        function callback(results, status) {
+
+            if (status != google.maps.places.PlacesServiceStatus.OK) {
+                console.log(status);
+                return;
+            }
+
+            for (var i = 0; i < results.length; i++) {
+                createMarker(results[i]);
+            }
+
+        }
+
+        $(document).ready(function () {
+
+            $('#myCarousel').carousel({
+                interval: 10000,
+                pause: 'pause'
+            });
+
+            $(".rateit").rateit();           
+
+            // ----------------------------------------------------------------
+            // Tabbed Hotel content -------------------------------------------
+            // ----------------------------------------------------------------
+
+            $('#tabs a').click(function (e) {
+
+                e.preventDefault();
+                $(this).tab('show');
+                $('.tab-content').show();
+
+            });
+
+            $('#tabs a:first').tab('show'); // Activate first tab
+
+            $('button#hide').click(function () {
+
+                var button = $(this);
+
+                console.log("tab content visible: " + $('.tab-content').is(':visible'));
+
+                if ($('.tab-content').is(':visible')) {
+
+                    $('.tab-content').slideUp('slow', function () {
+                        $(button).html('<span><i class="icon-search"></i> Show Tab Content</span>');
+                    });
+
+                } else {
+
+                    $('.tab-content').slideDown('slow', function () {
+                        $(button).html('<span><i class="icon-search"></i> Hide Tab Content</span>');
+                    });
+                }
+            });
+
+
+            // ----------------------------------------------------------------
+            // Hotel Images ---------------------------------------------------
+            // ----------------------------------------------------------------
+
+            $('ul li img').click(function () {
+                
+                var idx = $(this).parent('li').index();
+                console.log("image clicked in li index " + idx);
+                $('#myCarousel').carousel(idx);
+            });
+
+            // ----------------------------------------------------------------
+            // Twitter Bootstrap Google Map Fix -------------------------------
+            // ----------------------------------------------------------------
+            // http://stackoverflow.com/questions/10453477/bootstrap-tabbable-nav-setting-tab-section2-height-to-tab-section1
+            // http://stackoverflow.com/questions/14320277/twitter-bootstrap-google-maps-still-doesnt-work-with-bug-fix            
+            // https://github.com/twitter/bootstrap/issues/1552
+            // https://github.com/twitter/bootstrap/issues/2330
+            // http://jsfiddle.net/26mrX/197/
+
+            var loaded = false;
+
+            // Only initilize once the tab has been shown, otherwise causes rendering issues with the map
+
+            $('a[href="#map"]').on('shown', function (e) {
+
+                console.log("Load Google Map, Tab is shown");
+
+                if (!loaded) {
+
+                    initialize();
+
+                    // getAttractions();
+                    
+                    displayAirportRoute();
+                    displayLandmarkRoute();
+                     
+                    loaded = true;
+                }
+
+                $(window).resize(function () {
+
+                    var h = $(".tab-content").height();
+                    $('#map_canvas').css('height', h);
+
+                }).resize();
+
+
+            });
+            
+
+            function displayAirportRoute() {
+            }
+            
+            function displayLandmarkRoute() {
+                
+            }
+
+        });
+
+    </script>
+
+}
