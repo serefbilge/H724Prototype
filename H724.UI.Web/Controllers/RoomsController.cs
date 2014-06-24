@@ -7,6 +7,11 @@ using H724.Services.Expedia.Hotels.Models.Request;
 using H724.Services.Expedia.Hotels.Models.Response;
 using H724.UI.Web.Models;
 using Ninject;
+using System.Net;
+using System.Xml;
+using System.IO;
+using System.Data;
+using Newtonsoft.Json;
 
 namespace H724.UI.Web.Controllers
 {
@@ -45,7 +50,8 @@ namespace H724.UI.Web.Controllers
 
                 Session["Search"] = model;
             }
-            
+
+
             HotelRoomAvailabilityRequest request = new HotelRoomAvailabilityRequest();
             request.HotelId = id;
             request.ArrivalDate = model.CheckinDate;
@@ -55,6 +61,7 @@ namespace H724.UI.Web.Controllers
             request.SupplierType = "E";
             request.NumberOfBedrooms = model.NumberOfBedrooms;
             request.RoomGroup = model.RoomViewModels
+                
                         .Where(room => room.Adults > 0 || room.Children > 0)
                         .Select(room => new Room()
                         {
@@ -63,15 +70,52 @@ namespace H724.UI.Web.Controllers
                             ChildAges = room.AgeViewModels.Select(a => a.Age != null ? a.Age.Value : 0).ToList(),
                         })
                         .ToList();
-
+           
+            BedType bt = new BedType();
+            RateInfo ri = new RateInfo();
             HotelRoomAvailabilityResponse response = _expediaService.GetHotelRoomAvailability(request);
+
+            HotelRoomResponse hotelRoomResponse = new HotelRoomResponse();
+            hotelRoomResponse = response.HotelRoomResponse[0];
+            RoomGroup rg = new RoomGroup();
+            Room r = new Room();
+            r = hotelRoomResponse.RateInfos.RateInfo.RoomGroup.Room[0];
 
             if (response.EanWsError != null)
             {
                 Error(response.EanWsError.PresentationMessage);
             }
+            string[] strArrivalDate = response.ArrivalDate.ToString().Split(' ');
+            string[] strDepartureDate = response.DepartureDate.ToString().Split(' ');
 
+            
+            //---------
+            string urll = "https://api.eancdn.com/ean-services/rs/hotel/v3/res?cid=55505&minorRev=99&apiKey=rs3m6mzwdz2sxuxtmsqtup8r&locale=en_US&currencyCode="+hotelRoomResponse.RateInfos.RateInfo.ChargeableRateInfo.CurrencyCode+"&xml=<HotelRoomReservationRequest><hotelId>" + response.HotelId + "</hotelId><arrivalDate>" + strArrivalDate[0] + "</arrivalDate><departureDate>" + strDepartureDate[0] + "</departureDate><supplierType>" + hotelRoomResponse.SupplierType + "</supplierType><rateKey>" + r.RateKey + "></rateKey><roomTypeCode>"+hotelRoomResponse.RoomType.RoomCode+"</roomTypeCode><rateCode>" + hotelRoomResponse.RateCode + "</rateCode><chargeableRate>"+hotelRoomResponse.RateInfos.RateInfo.ChargeableRateInfo.Total+"</chargeableRate><RoomGroup><Room><numberOfAdults>1</numberOfAdults><firstName>test</firstName><lastName>tester</lastName><bedTypeId>" + bt.Id + "</bedTypeId><smokingPreference>" + hotelRoomResponse.SmokingPreferences + "</smokingPreference></Room></RoomGroup><ReservationInfo><email>test@travelnow.com</email><firstName>test</firstName><lastName>tester</lastName><homePhone>2145370159</homePhone><workPhone>2145370159</workPhone><creditCardType>CA</creditCardType><creditCardNumber>5401999999999999</creditCardNumber><creditCardIdentifier>123</creditCardIdentifier><creditCardExpirationMonth>11</creditCardExpirationMonth><creditCardExpirationYear>2016</creditCardExpirationYear></ReservationInfo><AddressInfo><address1>travelnow</address1><city>" + response.HotelCity + "</city><stateProvinceCode>" + response.HotelStateProvince + "</stateProvinceCode><countryCode>" + response.HotelCountry + "</countryCode><postalCode>98004</postalCode></AddressInfo></HotelRoomReservationRequest>";
+            WebRequest requestt = WebRequest.Create(urll);
+            requestt.ContentType = "text/xml";
+            requestt.Timeout = 1400000;
+            requestt.Method = "POST";
+            requestt.ContentLength = 0;
+            WebResponse responsee = requestt.GetResponse();
+            Stream dataStreamm = responsee.GetResponseStream();
+            StreamReader readerr = new StreamReader(dataStreamm);
+            string responseFromServerr = readerr.ReadToEnd();
+            string outputtt = JsonConvert.SerializeObject(responseFromServerr);
+
+            var deserializedProducttt = JsonConvert.DeserializeObject(outputtt);// .DeserializeObject<DataSet>(output);
+            XmlDocument doccc = JsonConvert.DeserializeXmlNode(responseFromServerr);
+            string xmlll = Convert.ToString(doccc.InnerXml);
+            DataSet dss = new DataSet();
+            dss.ReadXml(new StringReader(xmlll));
+
+            
+            using (HotelsEntities db = new HotelsEntities())
+            {
+                //tblRoomsReservation objRooms = new tblRoomsReservation();
+              
+            }
             return View(response);
+
         }
     }
 }

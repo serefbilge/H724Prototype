@@ -139,12 +139,10 @@
                 </div> 
                 
                 <div class="span2">
-                    
                     <div class="row">
                         <!-- Hotel Amenities -->
                         <div class="pull-left">
                             <ul class="unstyled" style="margin-left: 10px;">
-                                
                                 @foreach (var amenity in hotel.Amenities.GetFlags())
                                 {
                                     // Only the popular amenities, otherwise we end up listing to much crap
@@ -175,7 +173,6 @@
                         </div>                        
                     </div>
                 </div>
-
             </div>
             
             <!-- Row -->
@@ -192,7 +189,6 @@
                     <div class="span6">
                         <!-- HOTEL GALLERY AJAX CALL -->
                         <div class="buttons pull-right">
-
                             <a href="#gallery" data-toggle="modal" class="btn btn-mini btn-info">
                                 Photo Gallery <i class="icon-camera"></i>
                                 <input type="hidden" value="@hotel.HotelId" />
@@ -210,6 +206,7 @@
 
                             <a href="@Url.Action("Information", "Hotels", route)" class="btn btn-mini btn-info">
                                 <span>Hotel Details </span><i class="icon-arrow-right"></i>
+                               
                             </a>
                         </div>
                     </div>

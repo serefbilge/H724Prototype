@@ -49,7 +49,6 @@
         @foreach (var room in Model.HotelRoomResponse.OrEmptyIfNull())
         {
             int id = Model.HotelRoomResponse.IndexOf(room);
-
             <div class="accordion-group" style="margin-bottom: 10px; background-color: white">
                 <div class="accordion-heading">
                     <div class="accordion-toggle">
@@ -181,8 +180,6 @@
                                                             @description.OrderBy(s => s.Length).LastOrDefault()
                                                         </p>
                                                     }    
-                                                                                                    
-                                               
                                             </div>
                                         </div>
                                     </div> 
