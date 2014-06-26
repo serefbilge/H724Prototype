@@ -15,6 +15,7 @@ namespace H724.Services.Expedia.Hotels.Models
         public string PromoDescription { get; set; }
         public long PromoId { get; set; }
         public string RateType { get; set; }
+        public string PromoType { get; set; }
         public RoomGroup RoomGroup { get; set; }
         public decimal TaxRate { get; set; }
     }

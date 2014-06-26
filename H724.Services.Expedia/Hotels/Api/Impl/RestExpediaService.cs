@@ -20,7 +20,7 @@ namespace H724.Services.Expedia.Hotels.Api.Impl
     // http://developer.ean.com/general_info/Properly_Handling_Data_Transfers
     // User-agent should NOT include MSIE anywhere in the string, which will cause the results not to be compressed.
     // Ensuring that compressed content is transmitted will greatly speed up the response time of your results, especially when transferring large messages.
-    
+
     /// <summary>
     /// A REST Implementation of the Expedia API
     /// 
@@ -31,8 +31,10 @@ namespace H724.Services.Expedia.Hotels.Api.Impl
     /// </summary>
     public class RestExpediaService : AbstractExpediaService
     {
-     //   private const string BaseUrl = "http://api.ean.com/ean-services/rs/hotel/v3";
+        //   private const string BaseUrl = "http://api.ean.com/ean-services/rs/hotel/v3";
         private const string BaseUrl = "https://api.eancdn.com/ean-services/rs/hotel/v3";
+
+        public RestExpediaService() { }
 
         // Injected properties
         public override long Cid { get; set; }
@@ -43,15 +45,16 @@ namespace H724.Services.Expedia.Hotels.Api.Impl
         public override string CurrencyCode { get; set; }
         public override string CustomerSessionId { get; set; }
         public override string CustomerIpAddress { get; set; }
-        public override string CustomerUserAgent { get; set; } 
+        public override string CustomerUserAgent { get; set; }
         public override string Sig { get; set; }
 
-        private T Execute<T>(RestRequest request) where T : new()
+        private T Execute<T>(RestRequest request, string baseUrl = "") where T : new()
         {
-            var client = new RestClient();
-            client.BaseUrl = new Uri(BaseUrl).AbsoluteUri;
+            baseUrl = string.IsNullOrEmpty(baseUrl) ? BaseUrl : baseUrl;
+
+            var client = new RestClient { BaseUrl = new Uri(baseUrl).AbsoluteUri };
             client.ClearHandlers();
-            client.AddHandler("application/json",  new JsonDeserializer());
+            client.AddHandler("application/json", new JsonDeserializer());
             client.AddDefaultParameter("Accept-Encoding", "gzip,deflate", ParameterType.HttpHeader);
 
             var preSig = (ApiKey + Secret + (Int32)(DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalSeconds);
@@ -64,13 +67,13 @@ namespace H724.Services.Expedia.Hotels.Api.Impl
             request.AddParameter("currencyCode", CurrencyCode);
             request.AddParameter("locale", Locale);
 
-            if(CustomerUserAgent.HasValue())
+            if (CustomerUserAgent.HasValue())
                 request.AddParameter("customerUserAgent", CustomerUserAgent);
 
-            if(CustomerSessionId.HasValue())       
+            if (CustomerSessionId.HasValue())
                 request.AddParameter("customerSessionId", CustomerSessionId);
 
-            if(CustomerIpAddress.HasValue())
+            if (CustomerIpAddress.HasValue())
                 request.AddParameter("customerIpAddress", CustomerIpAddress);
 
             request.Parameters.ForEach(p => Debug.WriteLine(p.Name + "=" + p.Value));
@@ -90,7 +93,7 @@ namespace H724.Services.Expedia.Hotels.Api.Impl
 
             return response.Data;
         }
-        
+
         private const string Pattern = @"(@{1})(?=[A-Za-z]{1,}"":)"; // Remove that fucking attribute
         private static readonly Regex Regex = new Regex(Pattern, RegexOptions.Compiled);
 
@@ -162,7 +165,7 @@ namespace H724.Services.Expedia.Hotels.Api.Impl
 
             if (hotelListRequest.DestinationId.HasValue()) // If I gave you a destination id, use that
             {
-                request.AddParameter("destinationId", hotelListRequest.DestinationId); 
+                request.AddParameter("destinationId", hotelListRequest.DestinationId);
             }
             else if (hotelListRequest.DestinationString.HasValue()) // otherwise, use the destination string I gave
             {
@@ -190,7 +193,7 @@ namespace H724.Services.Expedia.Hotels.Api.Impl
 
             if (hotelListRequest.RoomGroup != null)
             {
-                for(int i = 0; i < hotelListRequest.NumberOfBedRooms; i++)
+                for (int i = 0; i < hotelListRequest.NumberOfBedRooms; i++)
                 {
                     Room room = hotelListRequest.RoomGroup[i];
                     int adults = room.NumberOfAdults;
@@ -200,7 +203,7 @@ namespace H724.Services.Expedia.Hotels.Api.Impl
 
                     var parameter = new Parameter();
 
-                    parameter.Value = adults + (ages.OrEmptyIfNull().Any() ? ("," + String.Join(",", ages.Take(children).ToArray())) : "" );
+                    parameter.Value = adults + (ages.OrEmptyIfNull().Any() ? ("," + String.Join(",", ages.Take(children).ToArray())) : "");
                     parameter.Type = ParameterType.GetOrPost;
                     parameter.Name = string.Format("room{0}", roomNumber);
                     request.AddParameter(parameter);
@@ -237,10 +240,10 @@ namespace H724.Services.Expedia.Hotels.Api.Impl
                     restRequest.AddParameter("city", hotelListRequest.City);
 
                 if (hotelListRequest.CountryCode.HasValue())
-                    restRequest.AddParameter("countryCode", hotelListRequest.CountryCode); 
+                    restRequest.AddParameter("countryCode", hotelListRequest.CountryCode);
 
                 if (hotelListRequest.StateProvinceCode.HasValue())
-                    restRequest.AddParameter("stateProvinceCode", hotelListRequest.StateProvinceCode); 
+                    restRequest.AddParameter("stateProvinceCode", hotelListRequest.StateProvinceCode);
             }
 
             HandleFilteringMethods(restRequest, hotelListRequest);
@@ -264,7 +267,7 @@ namespace H724.Services.Expedia.Hotels.Api.Impl
 
             return Execute<HotelInformationResponse>(request);
         }
-        
+
         /**
          * http://api.ean.com/ean‑services/rs/hotel/v3/avail?minorRev=[current minorRev #]
          * &cid=55505
@@ -286,11 +289,14 @@ namespace H724.Services.Expedia.Hotels.Api.Impl
         {
             Require.Argument("roomAvailabilityRequest", roomAvailabilityRequest);
 
-            RestRequest request = new RestRequest();
-            request.Resource = "avail";
-            request.Method = Method.GET;
+            RestRequest request = new RestRequest
+            {
+                Resource = "avail",
+                Method = Method.GET,
+                RootElement = "HotelRoomAvailabilityResponse",
+                RequestFormat = DataFormat.Json
+            };
 
-            request.RootElement = "HotelRoomAvailabilityResponse";
             request.AddParameter("options", "ROOM_TYPES,ROOM_AMENITIES");
             request.AddParameter("hotelId", roomAvailabilityRequest.HotelId);
             request.AddParameter("arrivalDate", roomAvailabilityRequest.ArrivalDate.ToShortDateString());
@@ -303,9 +309,9 @@ namespace H724.Services.Expedia.Hotels.Api.Impl
                 for (int i = 0; i < roomAvailabilityRequest.NumberOfBedrooms; i++)
                 {
                     var parameter = new Parameter();
-                    parameter.Value = roomAvailabilityRequest.RoomGroup[i].NumberOfAdults + (roomAvailabilityRequest.RoomGroup[i].ChildAges == null ? "" : ("," + String.Join(",", roomAvailabilityRequest.RoomGroup[i].ChildAges.Take(roomAvailabilityRequest.RoomGroup[i].NumberOfChildren).ToArray())));
+                    parameter.Value = roomAvailabilityRequest.RoomGroup.Room[i].NumberOfAdults + (roomAvailabilityRequest.RoomGroup.Room[i].ChildAges == null ? "" : ("," + String.Join(",", roomAvailabilityRequest.RoomGroup.Room[i].ChildAges.Take(roomAvailabilityRequest.RoomGroup.Room[i].NumberOfChildren).ToArray())));
                     parameter.Type = ParameterType.GetOrPost;
-                    parameter.Name = "room" + (roomAvailabilityRequest.RoomGroup.IndexOf(roomAvailabilityRequest.RoomGroup[i]) + 1);
+                    parameter.Name = "room" + (roomAvailabilityRequest.RoomGroup.Room.IndexOf(roomAvailabilityRequest.RoomGroup.Room[i]) + 1);
                     request.AddParameter(parameter);
                 }
             }
@@ -313,17 +319,81 @@ namespace H724.Services.Expedia.Hotels.Api.Impl
             return Execute<HotelRoomAvailabilityResponse>(request);
         }
 
+        public override HotelRoomReservationResponse GetHotelRoomReservation(HotelRoomReservationRequest roomReservationRequest)
+        {
+            Require.Argument("roomReservationRequest", roomReservationRequest);
+
+            var request = new RestRequest
+            {
+                Resource = "res",
+                Method = Method.GET,
+                RootElement = "HotelRoomReservationResponse",
+                RequestFormat = DataFormat.Json
+            };
+
+            request.AddParameter("hotelId", roomReservationRequest.HotelId);
+            request.AddParameter("currencyCode", roomReservationRequest.CurrencyCode);
+            request.AddParameter("arrivalDate", roomReservationRequest.ArrivalDate.ToShortDateString());
+            request.AddParameter("departureDate", roomReservationRequest.DepartureDate.ToShortDateString());
+            request.AddParameter("selectedPrice", roomReservationRequest.ChargeableRate);
+            request.AddParameter("supplierType", roomReservationRequest.SupplierType);
+            request.AddParameter("rateCode", roomReservationRequest.RateCode);
+            request.AddParameter("roomTypeCode", roomReservationRequest.RoomTypeCode);
+            request.AddParameter("roomsCount", roomReservationRequest.RoomsCount);
+
+            if (roomReservationRequest.RoomGroup != null && roomReservationRequest.RoomGroup.Room != null)
+            {
+                foreach (var room in roomReservationRequest.RoomGroup.Room)
+                {
+                    // Adult and Childs
+                    var adultAndChilds = new Parameter
+                    {
+                        Value = 
+                            room.NumberOfAdults +
+                            (room.ChildAges == null
+                                ? ""
+                                : ("," + String.Join(",", room.ChildAges.Take(room.NumberOfChildren).ToList()))),
+                        Type = ParameterType.GetOrPost,
+                        Name = "room" + (roomReservationRequest.RoomGroup.Room.IndexOf(room) + 1)
+                    };
+                    request.AddParameter(adultAndChilds);
+
+                    // RateKey
+                    var rateKey = new Parameter
+                    {
+                        Value = room.RateKey,
+                        Type = ParameterType.GetOrPost,
+                        Name = "room" + (roomReservationRequest.RoomGroup.Room.IndexOf(room) + 1) + "RateKey"
+                    };
+                    request.AddParameter(rateKey);
+
+                    // BedTypeId
+                    var bedTypeId = new Parameter
+                    {
+                        Value = room.BedTypeId,
+                        Type = ParameterType.GetOrPost,
+                        Name = "room" + (roomReservationRequest.RoomGroup.Room.IndexOf(room) + 1) + "BedTypeId"
+                    };
+                    request.AddParameter(bedTypeId);
+                }
+            }
+
+            const string bookingBaseUrl = "https://book.api.eancdn.com/ean-services/rs/hotel/v3";
+
+            return Execute<HotelRoomReservationResponse>(request, bookingBaseUrl);
+        }
+
         public override LocationInfoResponse GetGeoSearch(LocationInfoRequest locationInfoRequest)
         {
             Require.Argument("locationInfoRequest", locationInfoRequest);
-            
+
             RestRequest request = new RestRequest();
             request.Resource = "geoSearch";
             request.Method = Method.GET;
             request.RootElement = "LocationInfoResponse";
 
             // LOCATION REQUESTS
-            
+
             //Values: 
             //0: unknown
             //1: city
@@ -391,7 +461,7 @@ namespace H724.Services.Expedia.Hotels.Api.Impl
             if (hotelListRequest.MinStarRating.HasValue)
             {
                 request.AddParameter("minStarRating", hotelListRequest.MinStarRating.Value);
-            } 
+            }
 
             if (hotelListRequest.MaxStarRating.HasValue)
             {

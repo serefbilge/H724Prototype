@@ -98,6 +98,11 @@ namespace H724.Services.Expedia.Hotels.Api.Fake
             return hotelRoomAvailabilityResponse;
         }
 
+        public override HotelRoomReservationResponse GetHotelRoomReservation(HotelRoomReservationRequest roomReservationRequest)
+        {
+            throw new NotImplementedException();
+        }
+
         public override LocationInfoResponse GetGeoSearch(LocationInfoRequest locationInfoRequest)
         {
             string path = PathFor("LocationInfoResponse.json");

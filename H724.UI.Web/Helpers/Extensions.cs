@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
+using System.Web.Routing;
 
 namespace H724.UI.Web.Helpers
 {
@@ -28,6 +29,11 @@ namespace H724.UI.Web.Helpers
 
             // Return the hexadecimal string.
             return sBuilder.ToString();
+        }
+        public static RouteValueDictionary Extend(this RouteValueDictionary dest, IEnumerable<KeyValuePair<string, object>> src)
+        {
+            src.ToList().ForEach(x => { dest[x.Key] = x.Value; });
+            return dest;
         }
     }
 }

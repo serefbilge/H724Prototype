@@ -7,7 +7,6 @@ namespace H724.Services.Expedia.Hotels.Models.Response
     {
         public EanWsError EanWsError { get; set; }
         public string CustomerSessionId { get; set; }
-
         public long HotelId { get; set; }
         public DateTime ArrivalDate { get; set; }
         public DateTime DepartureDate { get; set; }
@@ -19,6 +18,7 @@ namespace H724.Services.Expedia.Hotels.Models.Response
         public int NumberOfRoomsRequested { get; set; }
         public string CheckInInstructions { get; set; }
         public string RateKey { get; set; }
+        public RoomGroup RoomGroup { get; set; }
         public int TripAdvisorReviewCount { get; set; }
         public string TripAdvisorRatingUrl { get; set; }
         public decimal TripAdvisorRating { get; set; }

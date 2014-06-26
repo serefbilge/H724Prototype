@@ -191,21 +191,6 @@
     <Compile Include="Helpers\AjaxAttribute.cs" />
     <Compile Include="Helpers\HtmlHelperExtensions.cs" />
     <Compile Include="Models\HotelDistanceViewModel.cs" />
-    <Compile Include="Models\Hotels.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Hotels.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Hotels.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Hotels.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Hotels.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Hotels.edmx</DependentUpon>
-    </Compile>
     <Compile Include="Models\ModelInitializer.cs" />
     <Compile Include="Models\ResultsViewModel.cs" />
     <Compile Include="Models\SearchViewModels.cs" />
@@ -611,23 +596,6 @@
     <Content Include="Scripts\cultures\globalize.culture.zu.js" />
     <Content Include="Scripts\cultures\globalize.cultures.js" />
     <Content Include="Scripts\html5shiv.js" />
-    <EntityDeploy Include="Models\Hotels.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Hotels.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\Hotels.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Hotels.edmx</DependentUpon>
-      <LastGenOutput>Hotels.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\Hotels.edmx.diagram">
-      <DependentUpon>Hotels.edmx</DependentUpon>
-    </Content>
-    <Content Include="Models\Hotels.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Hotels.edmx</DependentUpon>
-      <LastGenOutput>Hotels.cs</LastGenOutput>
-    </Content>
     <None Include="Properties\PublishProfiles\hotello.pubxml" />
     <None Include="Scripts\jquery-1.9.0.intellisense.js" />
     <Content Include="Scripts\jquery-1.9.0.js" />

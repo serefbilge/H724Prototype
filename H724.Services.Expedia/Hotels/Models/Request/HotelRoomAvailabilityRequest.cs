@@ -35,7 +35,7 @@ namespace H724.Services.Expedia.Hotels.Models.Request
         /// Container for the Room arrays that define guest and room count.
         /// If you used REST in your list request, remember to continue to follow the unique REST format.
         /// </summary>
-        public List<Room> RoomGroup { get; set; }
+        public RoomGroup RoomGroup { get; set; }
 
         /// <summary>
         /// 
