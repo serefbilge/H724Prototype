@@ -49,6 +49,7 @@
         @foreach (var room in Model.HotelRoomResponse.OrEmptyIfNull())
         {
             int id = Model.HotelRoomResponse.IndexOf(room);
+            string str = Convert.ToString(Session["ChildAges"]);
             <div class="accordion-group" style="margin-bottom: 10px; background-color: white">
                 <div class="accordion-heading">
                     <div class="accordion-toggle">
@@ -139,45 +140,72 @@
                                     </p>
                                 </div>
                                 <div class="span2">
+                                    @*@{
+
+                                            var roomsValueDictionary = new RouteValueDictionary();
+                                            var c = 0;
+                                            foreach (var r in room.RateInfos.RateInfo.RoomGroup.Room)
+                                            {
+                                                roomsValueDictionary.Add("Rooms[" + c + "].NumberOfAdults", r.NumberOfAdults);
+                                                roomsValueDictionary.Add("Rooms[" + c + "].RateKey", r.RateKey);
+                                                roomsValueDictionary.Add("Rooms[" + c + "].BedTypeId", r.BedTypeId);
+                                                c++;
+                                            }
+
+
+                                            var route = new RouteValueDictionary
+                                            {
+                                                {"Id", Model.HotelId},
+                                                {"CurrencyCode", room.RateInfos.RateInfo.ChargeableRateInfo.CurrencyCode},
+                                                {"StandardCheckin", Model.ArrivalDate},
+                                                {"StandardCheckout", Model.DepartureDate},
+                                                {"SelectedPrice", room.RateInfos.RateInfo.ChargeableRateInfo.Total},
+                                                {"SupplierType", room.SupplierType},
+                                                {"RateCode", room.RateCode},
+                                                {"RoomTypeCode", room.RoomType.RoomCode},
+                                                {"RoomsCount", Model.NumberOfRoomsRequested},
+                                                //{"Rooms[0].NumberOfAdults", room.RateInfos.RateInfo.RoomGroup.Room[0].NumberOfAdults},
+                                                //{"Rooms[0].RateKey", room.RateInfos.RateInfo.RoomGroup.Room[0].RateKey},
+                                                {"Name", Server.UrlEncode(Model.HotelName.Replace('-', ' ').Replace("  ", " ").Replace(' ', '-'))},
+                                                {"City", Model.HotelCity},
+                                                {"Country", Model.HotelCountry}
+                                            };
+
+                                            route.Extend(roomsValueDictionary);
+                                        }*@
                                     @{
+            var route = new RouteValueDictionary
+                                    {
+                                        {"currencyCode",room.RateInfos.RateInfo.ChargeableRateInfo.CurrencyCode},
+                                        {"hotelId",Model.HotelId},
+                                        {"arrivalDate",Model.ArrivalDate.ToShortDateString()},
+                                        {"departureDate",Model.DepartureDate.ToShortDateString()},
+                                        {"supplierType",room.SupplierType},
+                                        {"rateKey",room.RateInfos.RateInfo.RoomGroup.Room[0].RateKey},
+                                        {"roomTypeCode",room.RoomType.RoomCode},
+                                        {"rateCode",room.RateCode},
+                                        {"chargeableRate",room.RateInfos.RateInfo.ChargeableRateInfo.Total},
+                                        {"bedTypeId",room.BedTypes.BedType[0].Id},
+                                        {"smokingPreferences",room.SmokingPreferences},
+                                        {"city",Model.HotelCity},
+                                        {"stateProvinceCode",Model.HotelStateProvince},
+                                        {"countryCode",Model.HotelCountry},
+                                        {"numberOfAdults",Session["NumberOfAdults"]},
+                                        {"NumberOfChildren",Session["NumberOfChildren"]},
+                                        {"Age", Session["Ages"]}
 
-                                        var roomsValueDictionary = new RouteValueDictionary();
-                                        var c = 0;
-                                        foreach (var r in room.RateInfos.RateInfo.RoomGroup.Room)
-                                        {
-                                            roomsValueDictionary.Add("Rooms[" + c + "].NumberOfAdults", r.NumberOfAdults);
-                                            roomsValueDictionary.Add("Rooms[" + c + "].RateKey", r.RateKey);
-                                            roomsValueDictionary.Add("Rooms[" + c + "].BedTypeId", r.BedTypeId);
-                                            c++;
-                                        }
-                                        
-                                        
-                                        var route = new RouteValueDictionary
-                                        {
-                                            {"Id", Model.HotelId},
-                                            {"CurrencyCode", room.RateInfos.RateInfo.ChargeableRateInfo.CurrencyCode},
-                                            {"StandardCheckin", Model.ArrivalDate},
-                                            {"StandardCheckout", Model.DepartureDate},
-                                            {"SelectedPrice", room.RateInfos.RateInfo.ChargeableRateInfo.Total},
-                                            {"SupplierType", room.SupplierType},
-                                            {"RateCode", room.RateCode},
-                                            {"RoomTypeCode", room.RoomType.RoomCode},
-                                            {"RoomsCount", Model.NumberOfRoomsRequested},
-                                            //{"Rooms[0].NumberOfAdults", room.RateInfos.RateInfo.RoomGroup.Room[0].NumberOfAdults},
-                                            //{"Rooms[0].RateKey", room.RateInfos.RateInfo.RoomGroup.Room[0].RateKey},
-                                            {"Name", Server.UrlEncode(Model.HotelName.Replace('-', ' ').Replace("  ", " ").Replace(' ', '-'))},
-                                            {"City", Model.HotelCity},
-                                            {"Country", Model.HotelCountry}
-                                        };
+                                    };
 
-                                        route.Extend(roomsValueDictionary);
                                     }
                                     <div class="pull-right">
                                         @*<a class="btn btn-small btn-success" href="@Server.HtmlDecode(room.DeepLink)">
                                                 Book Now <i class="icon-chevron-right"></i>
                                             </a>*@
-                                        <a href="@Url.Action("Reservation", "Rooms", route)" class="btn btn-small btn-success">
-                                            <span>Book Now <i class="icon-chevron-right"></i></span>
+                                        @*<a href="@Url.Action("Reservation", "Rooms", route)" class="btn btn-small btn-success">
+                                                <span>Book Now <i class="icon-chevron-right"></i></span>
+                                            </a>*@
+                                        <a href="@Url.Action("bookRooms", "BookingReservation", route)" class="btn btn-mini btn-info">
+                                            <span>Book Now</span><i class="icon-arrow-right"></i>
                                         </a>
                                     </div>
                                 </div>

@@ -90,6 +90,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http.Formatting, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -172,6 +173,7 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\BookingReservationController.cs" />
     <Compile Include="Controllers\DistanceController.cs" />
     <Compile Include="Helpers\Alerts.cs" />
     <Compile Include="Helpers\ControlGroupExtensions.cs" />
@@ -193,7 +195,13 @@
     <Compile Include="Models\HotelDistanceViewModel.cs" />
     <Compile Include="Models\ModelInitializer.cs" />
     <Compile Include="Models\ResultsViewModel.cs" />
+    <Compile Include="Models\RoomReservationModel.cs" />
     <Compile Include="Models\SearchViewModels.cs" />
+    <Compile Include="Models\tblRoomsReservation.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>tblRoomsReservation.dbml</DependentUpon>
+    </Compile>
     <Compile Include="NavigationRoutes\INavigationRouteFilter.cs" />
     <Compile Include="NavigationRoutes\NamedRoute.cs" />
     <Compile Include="NavigationRoutes\NavigationExtensions.cs" />
@@ -596,6 +604,11 @@
     <Content Include="Scripts\cultures\globalize.culture.zu.js" />
     <Content Include="Scripts\cultures\globalize.cultures.js" />
     <Content Include="Scripts\html5shiv.js" />
+    <Content Include="Models\tblRoomsReservation.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>tblRoomsReservation.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Properties\PublishProfiles\hotello.pubxml" />
     <None Include="Scripts\jquery-1.9.0.intellisense.js" />
     <Content Include="Scripts\jquery-1.9.0.js" />
@@ -644,6 +657,7 @@
     <Content Include="Views\Search\_pagination.cshtml" />
     <Content Include="Views\Shared\_search.cshtml" />
     <Content Include="Views\Shared\_validationSummary.cshtml" />
+    <Content Include="Views\BookingReservation\bookRooms.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -652,7 +666,13 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Models\tblRoomsReservation.dbml.layout">
+      <DependentUpon>tblRoomsReservation.dbml</DependentUpon>
+    </None>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

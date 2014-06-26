@@ -1,0 +1,56 @@
+﻿@model H724.UI.Web.Models.tblRoomsReservation
+@{
+    ViewBag.Title = "bookRooms";
+}
+<h2> Your room has reserved </h2>
+
+<table style="width:100%" border="1">
+    <tr style="background:#ccc;">
+        <td style="width:70px;">
+            ItineraryId
+        </td>
+        <td>
+            SessionId
+        </td>
+        <td>
+            ConfirmationNumbers
+        </td>
+        <td>
+            ReservationStatus
+        </td>
+        <td>
+            ArrivalDate
+        </td>
+        <td>
+            DepartureDate
+        </td>
+        <td>
+            HotelName
+        </td>
+        <td>
+            HotelAddress
+        </td>
+        <td>
+            HotelCity
+        </td>
+        <td>
+            RoomDescription
+        </td>
+    </tr>
+    <tr>
+        <td>@Model.ItineraryId</td>
+        <td>@Model.CustomerSessionId</td>
+        <td>@Model.ConfirmationNo</td>
+        <td>@Model.ReservationStatus</td>
+        <td>@Model.ArrivalDate</td>
+        <td>@Model.DepartureDate</td>
+        <td>@Model.HotelName</td>
+        <td>@Model.HotelAddress</td>
+        <td>@Model.HotelCity</td>
+        <td>@Model.RoomDescription</td>
+
+    </tr>
+</table>
+
+
+

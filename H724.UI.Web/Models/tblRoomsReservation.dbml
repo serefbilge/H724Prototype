@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Hotels" Class="tblRoomsReservationDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=Mubbaram-Pc;Initial Catalog=Hotels;Integrated Security=True;MultipleActiveResultSets=True;Application Name=EntityFramework" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="HotelsConnectionString1" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.tblRoomsReservation" Member="tblRoomsReservations">
+    <Type Name="tblRoomsReservation">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CustomerSessionId" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="ItineraryId" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
+      <Column Name="ConfirmationNo" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="ReservationStatus" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="ArrivalDate" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="DepartureDate" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="HotelName" Type="System.String" DbType="VarChar(400)" CanBeNull="true" />
+      <Column Name="HotelAddress" Type="System.String" DbType="VarChar(300)" CanBeNull="true" />
+      <Column Name="HotelCity" Type="System.String" DbType="VarChar(300)" CanBeNull="true" />
+      <Column Name="RoomDescription" Type="System.String" DbType="VarChar(400)" CanBeNull="true" />
+    </Type>
+  </Table>
+</Database>

@@ -39,7 +39,6 @@ namespace H724.UI.Web.Controllers
         public ActionResult Availability(int id)
         {
             var model = Session["Search"] as SearchViewModel;
-
             if (model == null)
             {
                 //Information("Please enter your criteria for room availability");
@@ -77,10 +76,28 @@ namespace H724.UI.Web.Controllers
                 RoomGroup = roomGroup
             };
 
+
+            Session["NumberOfAdults"] = roomGroup.Room[0].NumberOfAdults;
+            Session["NumberOfChildren"] = roomGroup.Room[0].NumberOfChildren;
+            if (roomGroup.Room[0].ChildAges[0] != 0)
+            {
+                Session["ChildAges"] += "," + Convert.ToString(roomGroup.Room[0].ChildAges[0]);
+            }
+            if (roomGroup.Room[0].ChildAges[1] != 0)
+            {
+                Session["ChildAges"] += "," + Convert.ToString(roomGroup.Room[0].ChildAges[1]);
+            }
+            if (roomGroup.Room[0].ChildAges[2] != 0)
+            {
+                Session["ChildAges"] += "," + Convert.ToString(roomGroup.Room[0].ChildAges[2]);
+            }
+            int length = Session["ChildAges"].ToString().Length;
+            Session["Ages"] = (Convert.ToString(Session["ChildAges"]).Substring(1, length-1));
+
             //var bt = new BedType();
             //var ri = new RateInfo();
             var response = _expediaService.GetHotelRoomAvailability(request);
-            
+
             //var hotelRoomResponse = new HotelRoomResponse();
             //hotelRoomResponse = response.HotelRoomResponse[0];
             //var rg = new RoomGroup();
@@ -128,7 +145,7 @@ namespace H724.UI.Web.Controllers
         }
 
         [HttpGet]
-        public ActionResult Reservation(HotelReservationParameters param )
+        public ActionResult Reservation(HotelReservationParameters param)
         {
             var model = Session["Search"] as SearchViewModel;
 
@@ -141,7 +158,6 @@ namespace H724.UI.Web.Controllers
                 model.CheckoutDate = model.CheckinDate.AddDays(7);
                 model.RoomViewModels.First().Adults = 1;
                 model.RoomViewModels.First().Children = 0;
-
                 Session["Search"] = model;
             }
 
@@ -158,6 +174,7 @@ namespace H724.UI.Web.Controllers
                 RoomsCount = param.RoomsCount,
                 RoomGroup = new RoomGroup { Room = param.Rooms }
             };
+
 
             var response = _expediaService.GetHotelRoomReservation(request);
 
