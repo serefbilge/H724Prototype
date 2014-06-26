@@ -341,6 +341,13 @@ namespace H724.Services.Expedia.Hotels.Api.Impl
             request.AddParameter("roomTypeCode", roomReservationRequest.RoomTypeCode);
             request.AddParameter("roomsCount", roomReservationRequest.RoomsCount);
 
+            // Should be bound
+            request.AddParameter("creditCardType", "CA");
+            request.AddParameter("creditCardNumber", "5401999999999999");
+            request.AddParameter("creditCardIdentifier", "123");
+            request.AddParameter("creditCardExpirationMonth", 11);
+            request.AddParameter("creditCardExpirationYear", 2012);
+
             if (roomReservationRequest.RoomGroup != null && roomReservationRequest.RoomGroup.Room != null)
             {
                 foreach (var room in roomReservationRequest.RoomGroup.Room)
