@@ -61,16 +61,6 @@ namespace H724.UI.Web.Controllers
                     db.tblRoomsReservations.InsertOnSubmit(objRoomRes);
                     db.SubmitChanges();
                     //lstUserData.Add(objRoomRes);
-                    //objroomReservationModel.customerSessionId = Convert.ToString(ds.Tables[0].Rows[0]["customerSessionId"]);
-                    //objroomReservationModel.arrivalDate = Convert.ToString(ds.Tables[0].Rows[0]["arrivalDate"]);
-                    //objroomReservationModel.departureDate = Convert.ToString(ds.Tables[0].Rows[0]["departureDate"]);
-                    //objroomReservationModel.confirmationNumbers = Convert.ToString(ds.Tables[0].Rows[0]["confirmationNumbers"]);
-                    //objroomReservationModel.hotelAddress = Convert.ToString(ds.Tables[0].Rows[0]["hotelAddress"]);
-                    //objroomReservationModel.hotelCity = Convert.ToString(ds.Tables[0].Rows[0]["hotelCity"]);
-                    //objroomReservationModel.hotelName = Convert.ToString(ds.Tables[0].Rows[0]["hotelName"]);
-                    //objroomReservationModel.itineraryId = Convert.ToString(ds.Tables[0].Rows[0]["itineraryId"]);
-                    //objroomReservationModel.reservationStatus = Convert.ToString(ds.Tables[0].Rows[0]["reservationStatusCode"]);
-                    //objroomReservationModel.roomDescription = Convert.ToString(ds.Tables[0].Rows[0]["roomDescription"]);
                 }
             }
             catch (Exception ex) { }

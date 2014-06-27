@@ -193,20 +193,24 @@
                                         {"numberOfAdults",Session["NumberOfAdults"]},
                                         {"NumberOfChildren",Session["NumberOfChildren"]},
                                         {"Age", Session["Ages"]}
-
                                     };
 
                                     }
                                     <div class="pull-right">
+                                        <a href="@Url.Action("SetRoomsData", "RoomReservation", route)" class="btn btn-mini btn-info">
+                                            <span>Book Now</span><i class="icon-arrow-right"></i>
+                                        </a>
                                         @*<a class="btn btn-small btn-success" href="@Server.HtmlDecode(room.DeepLink)">
                                                 Book Now <i class="icon-chevron-right"></i>
                                             </a>*@
                                         @*<a href="@Url.Action("Reservation", "Rooms", route)" class="btn btn-small btn-success">
                                                 <span>Book Now <i class="icon-chevron-right"></i></span>
                                             </a>*@
-                                        <a href="@Url.Action("bookRooms", "BookingReservation", route)" class="btn btn-mini btn-info">
+                                        @*<a href="@Url.Action("bookRooms", "BookingReservation", route)" class="btn btn-mini btn-info">
                                             <span>Book Now</span><i class="icon-arrow-right"></i>
-                                        </a>
+                                        </a>*@
+                                        
+
                                     </div>
                                 </div>
                             </div>

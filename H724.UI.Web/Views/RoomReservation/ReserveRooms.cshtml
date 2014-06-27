@@ -1,0 +1,44 @@
+﻿@model H724.UI.Web.Models.RoomReservationModel
+@{
+    ViewBag.Title = "ReserveRooms";
+}
+
+<h2>Index</h2>
+<form action="RoomReservation/RoomBooking" method="post">
+    <table>
+        <tr>
+
+            <td>@Html.TextBox("email");</td>
+        </tr>
+    </table>
+   
+    @Html.TextBoxFor(x =>x.email)
+    @Html.TextBox("firstName");
+    @Html.TextBox("lastName");
+    @Html.TextBox("homePhone");
+    @Html.TextBox("workPhone") ;
+    @Html.TextBox("creditCardType") ;
+    @Html.TextBox("creditCardIdentifier") ;
+    @Html.TextBox("creditCardExpirationMonth") ;
+    @Html.TextBox("creditCardExpirationYear") ;
+    @Html.HiddenFor(x => x.currencyCode) ;
+    @Html.HiddenFor(x => x.hotelId) ;
+    @Html.HiddenFor(x => x.arrivalDate) ;
+    @Html.HiddenFor(x => x.departureDate) ;
+    @Html.HiddenFor(x => x.supplierType) ;
+    @Html.HiddenFor(x => x.rateKey) ;
+    @Html.HiddenFor(x => x.roomTypeCode) ;
+    @Html.HiddenFor(x => x.rateCode) ;
+    @Html.HiddenFor(x => x.chargeableRate) ;
+    @Html.HiddenFor(x => x.bedTypeId) ;
+    @Html.HiddenFor(x => x.smokingPreferences) ;
+    @Html.HiddenFor(x => x.city) ;
+    @Html.HiddenFor(x => x.stateProvinceCode) ;
+    @Html.HiddenFor(x => x.countryCode) ;
+    @Html.HiddenFor(x => x.numberOfAdults) ;
+    @Html.HiddenFor(x => x.numberOfChildren) ;
+    @Html.HiddenFor(x => x.Age) ;
+    @Html.HiddenFor(x => x.address) ;
+    @Html.HiddenFor(x => x.creditCardNumber) ;
+    <input type="submit" value="Book" />
+</form>
