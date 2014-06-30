@@ -63,7 +63,6 @@ namespace H724.UI.Web.Controllers
                         ChildAges = room.AgeViewModels.Select(a => a.Age != null ? a.Age.Value : 0).ToList()
                     }).ToList()
             };
-
             var request = new HotelRoomAvailabilityRequest
             {
                 HotelId = id,
@@ -108,40 +107,7 @@ namespace H724.UI.Web.Controllers
             {
                 Error(response.EanWsError.PresentationMessage);
             }
-
             return View(response);
-
-            //string[] strArrivalDate = response.ArrivalDate.ToString().Split(' ');
-            //string[] strDepartureDate = response.DepartureDate.ToString().Split(' ');
-
-
-            ////---------
-            //string urll = "https://api.eancdn.com/ean-services/rs/hotel/v3/res?cid=55505&minorRev=99&apiKey=rs3m6mzwdz2sxuxtmsqtup8r&locale=en_US&currencyCode="+hotelRoomResponse.RateInfos.RateInfo.ChargeableRateInfo.CurrencyCode+"&xml=<HotelRoomReservationRequest><hotelId>" + response.HotelId + "</hotelId><arrivalDate>" + strArrivalDate[0] + "</arrivalDate><departureDate>" + strDepartureDate[0] + "</departureDate><supplierType>" + hotelRoomResponse.SupplierType + "</supplierType><rateKey>" + r.RateKey + "></rateKey><roomTypeCode>"+hotelRoomResponse.RoomType.RoomCode+"</roomTypeCode><rateCode>" + hotelRoomResponse.RateCode + "</rateCode><chargeableRate>"+hotelRoomResponse.RateInfos.RateInfo.ChargeableRateInfo.Total+"</chargeableRate><RoomGroup><Room><numberOfAdults>1</numberOfAdults><firstName>test</firstName><lastName>tester</lastName><bedTypeId>" + bt.Id + "</bedTypeId><smokingPreference>" + hotelRoomResponse.SmokingPreferences + "</smokingPreference></Room></RoomGroup><ReservationInfo><email>test@travelnow.com</email><firstName>test</firstName><lastName>tester</lastName><homePhone>2145370159</homePhone><workPhone>2145370159</workPhone><creditCardType>CA</creditCardType><creditCardNumber>5401999999999999</creditCardNumber><creditCardIdentifier>123</creditCardIdentifier><creditCardExpirationMonth>11</creditCardExpirationMonth><creditCardExpirationYear>2016</creditCardExpirationYear></ReservationInfo><AddressInfo><address1>travelnow</address1><city>" + response.HotelCity + "</city><stateProvinceCode>" + response.HotelStateProvince + "</stateProvinceCode><countryCode>" + response.HotelCountry + "</countryCode><postalCode>98004</postalCode></AddressInfo></HotelRoomReservationRequest>";
-            //WebRequest requestt = WebRequest.Create(urll);
-            //requestt.ContentType = "text/xml";
-            //requestt.Timeout = 1400000;
-            //requestt.Method = "POST";
-            //requestt.ContentLength = 0;
-            //WebResponse responsee = requestt.GetResponse();
-            //Stream dataStreamm = responsee.GetResponseStream();
-            //StreamReader readerr = new StreamReader(dataStreamm);
-            //string responseFromServerr = readerr.ReadToEnd();
-            //string outputtt = JsonConvert.SerializeObject(responseFromServerr);
-
-            //var deserializedProducttt = JsonConvert.DeserializeObject(outputtt);// .DeserializeObject<DataSet>(output);
-            //XmlDocument doccc = JsonConvert.DeserializeXmlNode(responseFromServerr);
-            //string xmlll = Convert.ToString(doccc.InnerXml);
-            //DataSet dss = new DataSet();
-            //dss.ReadXml(new StringReader(xmlll));
-
-
-            //using (HotelsEntities db = new HotelsEntities())
-            //{
-            //    //tblRoomsReservation objRooms = new tblRoomsReservation();
-
-            //}
-            //return View(response);
-
         }
 
         [HttpGet]
@@ -161,6 +127,17 @@ namespace H724.UI.Web.Controllers
                 Session["Search"] = model;
             }
 
+            var roomGroup = new RoomGroup
+            {
+                Room = model.RoomViewModels
+                    .Where(room => room.Adults > 0 || room.Children > 0)
+                    .Select(room => new Room()
+                    {
+                        NumberOfAdults = room.Adults.HasValue ? room.Adults.Value : 0,
+                        NumberOfChildren = room.Children.HasValue ? room.Children.Value : 0,
+                        ChildAges = room.AgeViewModels.Select(a => a.Age != null ? a.Age.Value : 0).ToList()
+                    }).ToList()
+            };
             var request = new HotelRoomReservationRequest
             {
                 HotelId = param.Id,
@@ -171,8 +148,9 @@ namespace H724.UI.Web.Controllers
                 RoomTypeCode = param.RoomTypeCode,
                 RateCode = param.RateCode,
                 ChargeableRate = param.SelectedPrice,
-                RoomsCount = param.RoomsCount,
-                RoomGroup = new RoomGroup { Room = param.Rooms }
+                RoomsCount = 2,
+                RoomGroup = roomGroup
+               // RateKey = 
             };
 
 

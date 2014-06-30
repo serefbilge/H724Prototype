@@ -94,7 +94,7 @@ namespace H724.Services.Expedia.Hotels.Api.Impl
             return response.Data;
         }
 
-        private const string Pattern = @"(@{1})(?=[A-Za-z]{1,}"":)"; // Remove that fucking attribute
+        private const string Pattern = @"(@{1})(?=[A-Za-z]{1,}"":)"; 
         private static readonly Regex Regex = new Regex(Pattern, RegexOptions.Compiled);
 
         private string Md5GenerateHash(string strInput)

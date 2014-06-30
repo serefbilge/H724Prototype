@@ -24,7 +24,6 @@ namespace H724.UI.Web.Controllers
         [HttpGet]
         public ActionResult bookRooms(string currencyCode, string hotelId, string arrivalDate, string departureDate, string supplierType, string rateKey, string roomTypeCode, string rateCode, string chargeableRate, string bedTypeId, string smokingPreferences, string city, string stateProvinceCode, string countryCode, string numberOfAdults, string numberOfChildren, string Age)
         {
-
             List<tblRoomsReservation> lstUserData = new List<tblRoomsReservation>();
             string url = "https://api.eancdn.com/ean-services/rs/hotel/v3/res?cid=55505&minorRev=99&apiKey=rs3m6mzwdz2sxuxtmsqtup8r&locale=en_US&currencyCode=" + currencyCode + "&xml=<HotelRoomReservationRequest><hotelId>" + hotelId + "</hotelId><arrivalDate>" + arrivalDate + "</arrivalDate><departureDate>" + departureDate + "</departureDate><supplierType>" + supplierType + "</supplierType><rateKey>" + rateKey + "></rateKey><roomTypeCode>" + roomTypeCode + "</roomTypeCode><rateCode>" + rateCode + "</rateCode><chargeableRate>" + chargeableRate + "</chargeableRate><RoomGroup><Room><numberOfAdults>" + numberOfAdults + "</numberOfAdults><numberOfChildren>" + numberOfChildren + "</numberOfChildren><childAges>" +Age + "</childAges><firstName>test</firstName><lastName>tester</lastName><bedTypeId>" + bedTypeId + "</bedTypeId><smokingPreference>" + smokingPreferences + "</smokingPreference></Room></RoomGroup><ReservationInfo><email>test@travelnow.com</email><firstName>test</firstName><lastName>tester</lastName><homePhone>2145370159</homePhone><workPhone>2145370159</workPhone><creditCardType>CA</creditCardType><creditCardNumber>5401999999999999</creditCardNumber><creditCardIdentifier>123</creditCardIdentifier><creditCardExpirationMonth>11</creditCardExpirationMonth><creditCardExpirationYear>2016</creditCardExpirationYear></ReservationInfo><AddressInfo><address1>travelnow</address1><city>" + city + "</city><stateProvinceCode>" + stateProvinceCode + "</stateProvinceCode><countryCode>" + countryCode + "</countryCode><postalCode>98004</postalCode></AddressInfo></HotelRoomReservationRequest>";
             WebRequest request = WebRequest.Create(url);
@@ -63,7 +62,10 @@ namespace H724.UI.Web.Controllers
                     //lstUserData.Add(objRoomRes);
                 }
             }
-            catch (Exception ex) { }
+            catch (Exception ex) 
+            {
+
+            }
             return View(objRoomRes);
         }
     }

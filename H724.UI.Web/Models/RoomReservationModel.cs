@@ -8,6 +8,30 @@ namespace H724.UI.Web.Models
 {
     public class RoomReservationModel
     {
+        [Required]
+        public string email { get; set; }
+        [Required]
+        public string firstName { get; set; }
+        [Required]
+        public string lastName { get; set; }
+        [Required]
+        public string homePhone { get; set; }
+        [Required]
+        public string workPhone { get; set; }
+        [Required]
+        public string creditCardType { get; set; }
+        [Required]
+        public string creditCardNumber { get; set; }
+        [Required]
+        public string creditCardIdentifier { get; set; }
+        [Required]
+        public string creditCardExpirationMonth { get; set; }
+        [Required]
+        public string creditCardExpirationYear { get; set; }
+        [Required]
+        public string postalCode { get; set; }
+        [Required]
+        public string address { get; set; }
         public string currencyCode { get; set; }
         public string hotelId { get; set; }
         public string arrivalDate { get; set; }
@@ -26,31 +50,7 @@ namespace H724.UI.Web.Models
         public string numberOfChildren { get; set; }
         
         public string Age { get; set; }
-        [Required]
-        public string email { get; set; }
-        [Required]
-        public string firstName { get; set; }
-        [Required]
-        public string lastName { get; set; }
-        [Required]
-        public string homePhone { get; set; }
-        [Required]
-        public string workPhone { get; set; }
-        [Required]
-        public string creditCardType { get; set; }
-        [Required]
-        public string creditCardNumber { get; set; }
-        [Required]
-
-        public string creditCardIdentifier { get; set; }
-        [Required]
-        public string creditCardExpirationMonth { get; set; }
-        [Required]
-        public string creditCardExpirationYear { get; set; }
-        [Required]
-        public string postalCode { get; set; }
-        [Required]
-        public string address { get; set; }
+        
 
 
 
