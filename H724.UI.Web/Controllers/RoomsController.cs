@@ -90,8 +90,12 @@ namespace H724.UI.Web.Controllers
             {
                 Session["ChildAges"] += "," + Convert.ToString(roomGroup.Room[0].ChildAges[2]);
             }
-            int length = Session["ChildAges"].ToString().Length;
-            Session["Ages"] = (Convert.ToString(Session["ChildAges"]).Substring(1, length-1));
+
+            if (Session["ChildAges"] != null)
+            {
+                int length = Session["ChildAges"].ToString().Length;
+                Session["Ages"] = (Convert.ToString(Session["ChildAges"]).Substring(1, length - 1));
+            }
 
             //var bt = new BedType();
             //var ri = new RateInfo();

@@ -385,7 +385,7 @@ namespace H724.Services.Expedia.Hotels.Api.Impl
                 }
             }
 
-            const string bookingBaseUrl = "https://book.api.eancdn.com/ean-services/rs/hotel/v3";
+            const string bookingBaseUrl = "https://api.eancdn.com/ean-services/rs/hotel/v3";
 
             return Execute<HotelRoomReservationResponse>(request, bookingBaseUrl);
         }
