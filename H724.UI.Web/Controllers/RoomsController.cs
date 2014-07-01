@@ -131,17 +131,19 @@ namespace H724.UI.Web.Controllers
                 Session["Search"] = model;
             }
 
-            var roomGroup = new RoomGroup
-            {
-                Room = model.RoomViewModels
-                    .Where(room => room.Adults > 0 || room.Children > 0)
-                    .Select(room => new Room()
-                    {
-                        NumberOfAdults = room.Adults.HasValue ? room.Adults.Value : 0,
-                        NumberOfChildren = room.Children.HasValue ? room.Children.Value : 0,
-                        ChildAges = room.AgeViewModels.Select(a => a.Age != null ? a.Age.Value : 0).ToList()
-                    }).ToList()
-            };
+            //var roomGroup = new RoomGroup
+            //{
+            //    Room = model.RoomViewModels
+            //        .Where(room => room.Adults > 0 || room.Children > 0)
+            //        .Select(room => new Room()
+            //        {
+            //            NumberOfAdults = room.Adults.HasValue ? room.Adults.Value : 0,
+            //            NumberOfChildren = room.Children.HasValue ? room.Children.Value : 0,
+            //            ChildAges = room.AgeViewModels.Select(a => a.Age != null ? a.Age.Value : 0).ToList()
+            //        }).ToList()
+            //};
+
+            var roomGroup = new RoomGroup { Room = param.Rooms };
             var request = new HotelRoomReservationRequest
             {
                 HotelId = param.Id,

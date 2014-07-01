@@ -16,7 +16,7 @@ namespace H724.Services.Expedia.Hotels.Models.Response
         public string SupplierType { get; set; }
         public string ReservationStatusCode { get; set; }
         public bool ExistingItinerary { get; set; }
-        public int NumberOfRoomsBooked { get; set; }
+        public int? NumberOfRoomsBooked { get; set; }
         public DrivingDirections DrivingDirections { get; set; }
         public CheckInstructions CheckInstructions { get; set; }
         public DateTime ArrivalDate { get; set; }
@@ -29,9 +29,9 @@ namespace H724.Services.Expedia.Hotels.Models.Response
         public string HotelCountryCode { get; set; }
         public string RoomDescription { get; set; }
         public decimal TripAdvisorRating { get; set; }
-        public int TripAdvisorReviewCount { get; set; }
+        public int? TripAdvisorReviewCount { get; set; }
         public string TripAdvisorRatingUrl { get; set; }
-        public int RateOccupancyPerRoom { get; set; }
+        public int? RateOccupancyPerRoom { get; set; }
         public RateInfos RateInfos { get; set; }
     }
 }

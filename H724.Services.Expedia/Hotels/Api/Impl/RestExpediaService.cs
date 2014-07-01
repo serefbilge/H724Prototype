@@ -335,23 +335,18 @@ namespace H724.Services.Expedia.Hotels.Api.Impl
             request.AddParameter("currencyCode", roomReservationRequest.CurrencyCode);
             request.AddParameter("arrivalDate", roomReservationRequest.ArrivalDate.ToShortDateString());
             request.AddParameter("departureDate", roomReservationRequest.DepartureDate.ToShortDateString());
-            request.AddParameter("selectedPrice", roomReservationRequest.ChargeableRate);
+            request.AddParameter("chargeableRate", roomReservationRequest.ChargeableRate);
             request.AddParameter("supplierType", roomReservationRequest.SupplierType);
-            request.AddParameter("rateCode", roomReservationRequest.RateCode);
+            request.AddParameter("rateCode", roomReservationRequest.RateCode);            
             request.AddParameter("roomTypeCode", roomReservationRequest.RoomTypeCode);
             request.AddParameter("roomsCount", roomReservationRequest.RoomsCount);
-
-            // Should be bound
-            request.AddParameter("creditCardType", "CA");
-            request.AddParameter("creditCardNumber", "5401999999999999");
-            request.AddParameter("creditCardIdentifier", "123");
-            request.AddParameter("creditCardExpirationMonth", 11);
-            request.AddParameter("creditCardExpirationYear", 2012);
-
+             
             if (roomReservationRequest.RoomGroup != null && roomReservationRequest.RoomGroup.Room != null)
             {
                 foreach (var room in roomReservationRequest.RoomGroup.Room)
                 {
+                    var roomNo = (roomReservationRequest.RoomGroup.Room.IndexOf(room) + 1);
+
                     // Adult and Childs
                     var adultAndChilds = new Parameter
                     {
@@ -361,16 +356,34 @@ namespace H724.Services.Expedia.Hotels.Api.Impl
                                 ? ""
                                 : ("," + String.Join(",", room.ChildAges.Take(room.NumberOfChildren).ToList()))),
                         Type = ParameterType.GetOrPost,
-                        Name = "room" + (roomReservationRequest.RoomGroup.Room.IndexOf(room) + 1)
+                        Name = "room" + roomNo
                     };
                     request.AddParameter(adultAndChilds);
+
+                    // FirstName
+                    var firstname = new Parameter
+                    {
+                        Value = "Test",
+                        Type = ParameterType.GetOrPost,
+                        Name = "room" + roomNo + "FirstName"
+                    };
+                    request.AddParameter(firstname);
+
+                    // LastName
+                    var lastname = new Parameter
+                    {
+                        Value = "Tester",
+                        Type = ParameterType.GetOrPost,
+                        Name = "room" + roomNo + "LastName"
+                    };
+                    request.AddParameter(lastname);
 
                     // RateKey
                     var rateKey = new Parameter
                     {
                         Value = room.RateKey,
                         Type = ParameterType.GetOrPost,
-                        Name = "room" + (roomReservationRequest.RoomGroup.Room.IndexOf(room) + 1) + "RateKey"
+                        Name = "room" + roomNo + "RateKey"
                     };
                     request.AddParameter(rateKey);
 
@@ -379,11 +392,35 @@ namespace H724.Services.Expedia.Hotels.Api.Impl
                     {
                         Value = room.BedTypeId,
                         Type = ParameterType.GetOrPost,
-                        Name = "room" + (roomReservationRequest.RoomGroup.Room.IndexOf(room) + 1) + "BedTypeId"
+                        Name = "room" + roomNo + "BedTypeId"
                     };
                     request.AddParameter(bedTypeId);
                 }
             }
+            
+            //********* ReservationInfo *********//
+
+            // Person Info
+            request.AddParameter("email", "test@yourSite.com");
+            request.AddParameter("firstName", "tester");
+            request.AddParameter("lastName", "testing");
+            request.AddParameter("homePhone", "2145370159");
+            request.AddParameter("workPhone", "2145370159");
+
+            // Credit Card Info
+            request.AddParameter("creditCardType", "CA");
+            request.AddParameter("creditCardNumber", "5401999999999999");
+            request.AddParameter("creditCardIdentifier", "123");
+            request.AddParameter("creditCardExpirationMonth", 11);
+            request.AddParameter("creditCardExpirationYear", 2016);
+
+            //********* AddressInfo *********//
+
+            request.AddParameter("address1", "travelnow");
+            request.AddParameter("city", "Seattle");
+            request.AddParameter("stateProvinceCode", "WA");
+            request.AddParameter("countryCode", "US");
+            request.AddParameter("postalCode", "98004");
 
             const string bookingBaseUrl = "https://api.eancdn.com/ean-services/rs/hotel/v3";
 
