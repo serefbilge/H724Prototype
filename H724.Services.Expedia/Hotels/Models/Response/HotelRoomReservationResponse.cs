@@ -17,8 +17,8 @@ namespace H724.Services.Expedia.Hotels.Models.Response
         public string ReservationStatusCode { get; set; }
         public bool ExistingItinerary { get; set; }
         public int? NumberOfRoomsBooked { get; set; }
-        public DrivingDirections DrivingDirections { get; set; }
-        public CheckInstructions CheckInstructions { get; set; }
+        //public DrivingDirections DrivingDirections { get; set; }
+        //public CheckInstructions CheckInstructions { get; set; }
         public DateTime ArrivalDate { get; set; }
         public DateTime DepartureDate { get; set; }
         public string HotelName { get; set; }

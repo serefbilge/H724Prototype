@@ -100,13 +100,13 @@ namespace H724.Services.Expedia.Hotels.Api.Impl
         private string Md5GenerateHash(string strInput)
         {
             // Create a new instance of the MD5CryptoServiceProvider object.
-            MD5 md5Hasher = MD5.Create();
+            var md5Hasher = MD5.Create();
 
             // Convert the input string to a byte array and compute the hash.
-            byte[] data = md5Hasher.ComputeHash(Encoding.Default.GetBytes(strInput));
+            var data = md5Hasher.ComputeHash(Encoding.Default.GetBytes(strInput));
 
             // Create a new Stringbuilder to collect the bytes and create a string.
-            StringBuilder sBuilder = new StringBuilder();
+            var sBuilder = new StringBuilder();
 
             // Loop through each byte of the hashed data and format each one as a hexadecimal string.
             for (int nIndex = 0; nIndex < data.Length; ++nIndex)
@@ -220,7 +220,7 @@ namespace H724.Services.Expedia.Hotels.Api.Impl
         {
             Require.Argument("hotelListRequest", hotelListRequest);  // Guard Clause
 
-            RestRequest restRequest = new RestRequest
+            var restRequest = new RestRequest
                 {
                     Resource = "list",
                     Method = Method.GET,
@@ -289,7 +289,7 @@ namespace H724.Services.Expedia.Hotels.Api.Impl
         {
             Require.Argument("roomAvailabilityRequest", roomAvailabilityRequest);
 
-            RestRequest request = new RestRequest
+            var request = new RestRequest
             {
                 Resource = "avail",
                 Method = Method.GET,
@@ -308,10 +308,18 @@ namespace H724.Services.Expedia.Hotels.Api.Impl
             {
                 for (int i = 0; i < roomAvailabilityRequest.NumberOfBedrooms; i++)
                 {
-                    var parameter = new Parameter();
-                    parameter.Value = roomAvailabilityRequest.RoomGroup.Room[i].NumberOfAdults + (roomAvailabilityRequest.RoomGroup.Room[i].ChildAges == null ? "" : ("," + String.Join(",", roomAvailabilityRequest.RoomGroup.Room[i].ChildAges.Take(roomAvailabilityRequest.RoomGroup.Room[i].NumberOfChildren).ToArray())));
-                    parameter.Type = ParameterType.GetOrPost;
-                    parameter.Name = "room" + (roomAvailabilityRequest.RoomGroup.Room.IndexOf(roomAvailabilityRequest.RoomGroup.Room[i]) + 1);
+                    var currentRoom = roomAvailabilityRequest.RoomGroup.Room[i];
+                    var parameter = new Parameter
+                    {
+                        Value =
+                            roomAvailabilityRequest.RoomGroup.Room[i].NumberOfAdults +
+                            (roomAvailabilityRequest.RoomGroup.Room[i].ChildAges == null
+                                ? ""
+                                : ("," +
+                                   String.Join(",", currentRoom.ChildAges.Take(currentRoom.NumberOfChildren).ToArray()))),
+                        Type = ParameterType.GetOrPost,
+                        Name = "room" + (roomAvailabilityRequest.RoomGroup.Room.IndexOf(currentRoom) + 1)
+                    };
                     request.AddParameter(parameter);
                 }
             }
@@ -326,9 +334,8 @@ namespace H724.Services.Expedia.Hotels.Api.Impl
             var request = new RestRequest
             {
                 Resource = "res",
-                Method = Method.GET,
-                RootElement = "HotelRoomReservationResponse",
-                RequestFormat = DataFormat.Json
+                Method = Method.POST,
+                RootElement = "HotelRoomReservationResponse"
             };
 
             request.AddParameter("hotelId", roomReservationRequest.HotelId);
@@ -431,10 +438,12 @@ namespace H724.Services.Expedia.Hotels.Api.Impl
         {
             Require.Argument("locationInfoRequest", locationInfoRequest);
 
-            RestRequest request = new RestRequest();
-            request.Resource = "geoSearch";
-            request.Method = Method.GET;
-            request.RootElement = "LocationInfoResponse";
+            var request = new RestRequest
+            {
+                Resource = "geoSearch",
+                Method = Method.GET,
+                RootElement = "LocationInfoResponse"
+            };
 
             // LOCATION REQUESTS
 

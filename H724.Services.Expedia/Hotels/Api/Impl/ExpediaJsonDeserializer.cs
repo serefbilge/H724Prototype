@@ -16,10 +16,10 @@ namespace H724.Services.Expedia.Hotels.Api.Impl
         {
             T target;
 
-            using (MemoryStream ms = new MemoryStream(Encoding.UTF8.GetBytes(response.Content)))
+            using (var ms = new MemoryStream(Encoding.UTF8.GetBytes(response.Content)))
             {
-                DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(T));
-                target = (T)ser.ReadObject(ms);
+                var serializer = new DataContractJsonSerializer(typeof(T));
+                target = (T)serializer.ReadObject(ms);
             }
 
             return target;
