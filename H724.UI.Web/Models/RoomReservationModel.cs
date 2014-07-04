@@ -1,4 +1,5 @@
-﻿using System;
+﻿using H724.Services.Expedia.Hotels.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -8,51 +9,38 @@ namespace H724.UI.Web.Models
 {
     public class RoomReservationModel
     {
-        [Required]
-        public string email { get; set; }
-        [Required]
-        public string firstName { get; set; }
-        [Required]
-        public string lastName { get; set; }
-        [Required]
-        public string homePhone { get; set; }
-        [Required]
-        public string workPhone { get; set; }
-        [Required]
-        public string creditCardType { get; set; }
-        [Required]
-        public string creditCardNumber { get; set; }
-        [Required]
-        public string creditCardIdentifier { get; set; }
-        [Required]
-        public string creditCardExpirationMonth { get; set; }
-        [Required]
-        public string creditCardExpirationYear { get; set; }
-        [Required]
-        public string postalCode { get; set; }
-        [Required]
-        public string address { get; set; }
-        public string currencyCode { get; set; }
-        public string hotelId { get; set; }
-        public string arrivalDate { get; set; }
-        public string departureDate { get; set; }
-        public string supplierType { get; set; }
-        public string rateKey { get; set; }
-        public string roomTypeCode { get; set; }
-        public string rateCode { get; set; }
-        public string chargeableRate { get; set; }
-        public string bedTypeId { get; set; }
-        public string smokingPreferences { get; set; }
-        public string city { get; set; }
-        public string stateProvinceCode { get; set; }
-        public string countryCode { get; set; }
-        public string numberOfAdults { get; set; }
-        public string numberOfChildren { get; set; }
-        
-        public string Age { get; set; }
-        
+        public string Id { get; set; }
+        public string CurrencyCode { get; set; }
+        public string StandardCheckin { get; set; }
+        public string StandardCheckout { get; set; }
+        public string SelectedPrice { get; set; }
+        public string SupplierType { get; set; }
+        public string RateCode { get; set; }
+        public string RoomTypeCode { get; set; }
+        public string RoomsCount { get; set; }
+        public string Name { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string SmokingPreferences { get; set; }
+        public string Email { get; set; }
+        public string PhoneNumber { get; set; }
+        public string HomePhone { get; set; }
+        public string WorkPhone { get; set; }
 
-
-
+        public string CardType { get; set; }
+        public string Cardnumber { get; set; }
+        public string CardHolderFirstName { get; set; }
+        public string CardHolderLastName { get; set; }
+        public string CardExpirationMonth { get; set; }
+        public string CardExpirationYear { get; set; }
+        public string Country { get; set; }
+        public string StreetAddress { get; set; }
+        public string City { get; set; }
+        public string PostalCode { get; set; }
+        public string State { get; set; }
+        public RoomGroup RoomGroup { get; set; }
+        public ReservationInfo ReservationInfo { get; set; }
+        public AddressInfo AddressInfo { get; set; }
+        public List<H724.Services.Expedia.Hotels.Models.Room> Rooms { get; set; }
     }
 }

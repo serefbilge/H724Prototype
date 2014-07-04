@@ -1,56 +1,160 @@
-﻿@model H724.UI.Web.Models.tblRoomsReservation
+﻿@model H724.UI.Web.Models.RoomReservationModel
 @{
     ViewBag.Title = "RoomBooking";
 }
-<h2> Your room has reserved </h2>
+<style>
+    .main-form {
+        width: 500px;
+        margin-top: 30px;
+        clear: both;
+    }
 
-<table style="width:100%" border="1">
-    <tr style="background:#ccc;">
-        <td style="width:70px;">
-            ItineraryId
-        </td>
-        <td>
-            SessionId
-        </td>
-        <td>
-            ConfirmationNumbers
-        </td>
-        <td>
-            ReservationStatus
-        </td>
-        <td>
-            ArrivalDate
-        </td>
-        <td>
-            DepartureDate
-        </td>
-        <td>
-            HotelName
-        </td>
-        <td>
-            HotelAddress
-        </td>
-        <td>
-            HotelCity
-        </td>
-        <td>
-            RoomDescription
-        </td>
-    </tr>
-    <tr>
-        <td>@Model.ItineraryId</td>
-        <td>@Model.CustomerSessionId</td>
-        <td>@Model.ConfirmationNo</td>
-        <td>@Model.ReservationStatus</td>
-        <td>@Model.ArrivalDate</td>
-        <td>@Model.DepartureDate</td>
-        <td>@Model.HotelName</td>
-        <td>@Model.HotelAddress</td>
-        <td>@Model.HotelCity</td>
-        <td>@Model.RoomDescription</td>
+    .inner-form {
+        width: 500px;
+        margin-bottom: 5px;
+        margin-top: 15px;
+    }
 
-    </tr>
-</table>
+    .text-area {
+        float: left;
+        font: 14px Arial, Helvetica, sans-serif;
+        color: #333;
+        margin: 0px 10px 0px 0px;
+        padding: 8px 0px 0px 0px;
+        width: 250px;
+    }
 
+    .form-input {
+        height: 25px;
+        border: #999 solid 2px;
+        background: #CCC;
+        width: 230px;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+        border-radius: 3px;
+    }
 
+    .heading {
+        background-color: #EEF3F9;
+        height: 32px;
+        padding-top: 8px;
+        padding-left: 3px;
+        font-weight: bold !important;
+        border-color: #C1D5EB;
+        color: #0D447F;
+        margin-top:20px;
+    }
 
+    .main-heading {
+        font-weight: bold;
+        font-size: 25px;
+        margin-top: 20px;
+    }
+</style>
+<form action="../../Rooms/RoomBookingFinal/" method="get">
+    <label class="main-heading">Complete Your Booking</label>
+    <div class="main-form">
+        <div class="heading">
+            Credit Card Information
+        </div>
+
+        <div class="inner-form">
+            <div class="text-area">
+                Card Type
+            </div>
+
+            @Html.TextBox("CardType")
+        </div>
+        <div class="inner-form">
+            <div class="text-area">
+                Card number
+            </div>
+            @Html.TextBox("Cardnumber")
+        </div>
+        <div class="inner-form">
+            <div class="text-area">
+                Cardholder First name
+            </div>
+            @Html.TextBox("CardHolderFirstName")
+        </div>
+        <div class="inner-form">
+            <div class="text-area">
+                Cardholder Last name
+            </div>
+            @Html.TextBox("CardHolderLastName")
+        </div>
+        <div class="inner-form">
+            <div class="text-area">
+                Expiration month
+            </div>
+            @Html.TextBox("CardExpirationMonth")
+        </div>
+        <div class="inner-form">
+            <div class="text-area">
+                Expiriation year
+            </div>
+            @Html.TextBox("CardExpirationYear")
+        </div>
+        <div class="heading">
+            Billing Address:
+        </div>
+
+        <div class="inner-form">
+            <div class="text-area">
+                Country code
+            </div>
+            @Html.TextBox("Country")
+        </div>
+        <div class="inner-form">
+            <div class="text-area">
+                Street address
+            </div>
+
+            @Html.TextBox("StreetAddress")
+        </div>
+        <div class="inner-form">
+            <div class="text-area">
+                City
+            </div>
+
+            @Html.TextBox("City")
+        </div>
+        <div class="inner-form">
+            <div class="text-area">
+                Postal code
+            </div>
+            @Html.TextBox("PostalCode")
+        </div>
+        <div class="inner-form">
+            <div class="text-area">
+                State
+            </div>
+            @Html.TextBox("State")
+        </div>
+
+        @Html.HiddenFor(x => x.Id)
+        @Html.HiddenFor(x => x.CurrencyCode)
+        @Html.HiddenFor(x => x.StandardCheckin)
+        @Html.HiddenFor(x => x.StandardCheckout)
+        @Html.HiddenFor(x => x.SelectedPrice)
+
+        @Html.HiddenFor(x => x.SupplierType)
+        @Html.HiddenFor(x => x.RateCode)
+        @Html.HiddenFor(x => x.RoomTypeCode)
+        @Html.HiddenFor(x => x.RoomsCount)
+        @Html.HiddenFor(x => x.Name)
+        @Html.HiddenFor(x => x.City)
+        @Html.HiddenFor(x => x.Country)
+
+        @Html.HiddenFor(x => x.Email)
+        @Html.HiddenFor(x => x.FirstName)
+        @Html.HiddenFor(x => x.LastName)
+        @Html.HiddenFor(x => x.HomePhone)
+        <div class="inner-form">
+            <div class="text-area">
+
+            </div>
+            <input type="submit" value="Book" />
+        </div>
+    </div>
+</form>

@@ -173,9 +173,8 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\BookingReservationController.cs" />
-    <Compile Include="Controllers\RoomReservationController.cs" />
     <Compile Include="Controllers\DistanceController.cs" />
+    <Compile Include="Controllers\RoomReservationController.cs" />
     <Compile Include="Helpers\Alerts.cs" />
     <Compile Include="Helpers\ControlGroupExtensions.cs" />
     <Compile Include="Helpers\Extensions.cs" />
@@ -658,11 +657,12 @@
     <Content Include="Views\Search\_pagination.cshtml" />
     <Content Include="Views\Shared\_search.cshtml" />
     <Content Include="Views\Shared\_validationSummary.cshtml" />
-    <Content Include="Views\BookingReservation\BookRooms.cshtml" />
     <Content Include="Views\RoomReservation\Index.cshtml" />
-    <Content Include="Views\RoomReservation\ReserveRooms.cshtml" />
-    <Content Include="Views\RoomReservation\SetRoomsData.cshtml" />
+    <Content Include="Views\Rooms\ReserveRooms.cshtml" />
+    <Content Include="Views\Rooms\Reservation.cshtml" />
     <Content Include="Views\RoomReservation\RoomBooking.cshtml" />
+    <Content Include="Views\RoomReservation\RoomBooking1.cshtml" />
+    <Content Include="Views\Rooms\RoomBookingFinal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

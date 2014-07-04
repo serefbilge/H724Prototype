@@ -1,159 +1,281 @@
-﻿@model H724.Services.Expedia.Hotels.Models.Response.HotelRoomReservationResponse
-
+﻿@model H724.UI.Web.Models.RoomReservationModel
 @{
     ViewBag.Title = "Reservation";
 }
+<style>
+    .main-form {
+        width: 500px;
+        margin-top: 30px;
+        clear: both;
+    }
 
-<h2>Reservation</h2>
+    .inner-form {
+        width: 500px;
+        margin-bottom: 5px;
+        margin-top: 15px;
+    }
 
-<fieldset>
-    <legend>HotelRoomReservationResponse</legend>
+    .text-area {
+        float: left;
+        font: 14px Arial, Helvetica, sans-serif;
+        color: #333;
+        margin: 0px 10px 0px 0px;
+        padding: 8px 0px 0px 0px;
+        width: 250px;
+    }
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.CustomerSessionId)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.CustomerSessionId)
-    </div>
+    .form-input {
+        height: 25px;
+        border: #999 solid 2px;
+        background: #CCC;
+        width: 230px;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+        border-radius: 3px;
+    }
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.ItineraryId)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.ItineraryId)
-    </div>
+    .heading {
+        background-color: #EEF3F9;
+        height: 32px;
+        padding-top: 8px;
+        padding-left: 3px;
+        font-weight: bold !important;
+        border-color: #C1D5EB;
+        color: #0D447F;
+    }
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.ConfirmationNumbers)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.ConfirmationNumbers)
-    </div>
+    .main-heading {
+        font-weight: bold;
+        font-size: 25px;
+        margin-top: 20px;
+    }
+</style>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.ProcessedWithConfirmation)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.ProcessedWithConfirmation)
-    </div>
+<form action="../../RoomReservation/RoomBooking" method="get">
+    <label class="main-heading">Complete Your Booking</label>
+    <div class="main-form">
+        <div class="heading">
+            Guest Details
+        </div>
+        <div class="inner-form">
+            <div class="text-area">
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.SupplierType)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.SupplierType)
-    </div>
+                First name
+            </div>
+            @Html.TextBox("FirstName")
+        </div>
+        <div class="inner-form">
+            <div class="text-area">
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.ReservationStatusCode)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.ReservationStatusCode)
-    </div>
+                Last name
+            </div>
+            @Html.TextBox("LastName")
+        </div>
+        <div class="heading">
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.ExistingItinerary)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.ExistingItinerary)
-    </div>
+            Contact Details
+        </div>
+        <div class="inner-form">
+            <div class="text-area">
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.NumberOfRoomsBooked)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.NumberOfRoomsBooked)
-    </div>
+                Email
+            </div>
+            @Html.TextBox("Email")
+        </div>
+        <div class="inner-form">
+            <div class="text-area">
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.ArrivalDate)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.ArrivalDate)
-    </div>
+                Confirm Email
+            </div>
+            @Html.TextBox("ConfirmEmail")
+        </div>
+        <div class="inner-form">
+            <div class="text-area">
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.DepartureDate)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.DepartureDate)
-    </div>
+                Home phone
+            </div>
+            @Html.TextBox("HomePhone")
+        </div>
+        <div class="inner-form">
+            <div class="text-area">
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.HotelName)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.HotelName)
-    </div>
+                work phone
+            </div>
+            @Html.TextBox("WorkPhone")
+        </div>
+        @Html.HiddenFor(x => x.Id)
+        @Html.HiddenFor(x => x.CurrencyCode)
+        @Html.HiddenFor(x => x.StandardCheckin)
+        @Html.HiddenFor(x => x.StandardCheckout)
+        @Html.HiddenFor(x => x.SelectedPrice)
+        @Html.HiddenFor(x => x.SupplierType)
+        @Html.HiddenFor(x => x.RateCode)
+        @Html.HiddenFor(x => x.RoomTypeCode)
+        @Html.HiddenFor(x => x.RoomsCount)
+        @*@Html.HiddenFor(x => x.Name)
+            @Html.HiddenFor(x => x.City)
+            @Html.HiddenFor(x => x.Country)*@
+        @Html.HiddenFor(x => x.RoomGroup)
+        @{
+            var b = Model.RoomGroup;
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.HotelAddress)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.HotelAddress)
-    </div>
+        }
+        <div class="inner-form">
+            <div class="text-area">
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.HotelCity)
+            </div>
+            <input type="submit" value="Book" />
+        </div>
     </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.HotelCity)
-    </div>
+</form>
+@*<fieldset>
+        <legend>HotelRoomReservationResponse</legend>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.HotelStateProvinceCode)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.HotelStateProvinceCode)
-    </div>
+        <div class="display-label">
+             @Html.DisplayNameFor(model => model.CustomerSessionId)
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.CustomerSessionId)
+        </div>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.HotelPostalCode)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.HotelPostalCode)
-    </div>
+        <div class="display-label">
+             @Html.DisplayNameFor(model => model.ItineraryId)
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.ItineraryId)
+        </div>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.HotelCountryCode)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.HotelCountryCode)
-    </div>
+        <div class="display-label">
+             @Html.DisplayNameFor(model => model.ConfirmationNumbers)
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.ConfirmationNumbers)
+        </div>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.RoomDescription)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.RoomDescription)
-    </div>
+        <div class="display-label">
+             @Html.DisplayNameFor(model => model.ProcessedWithConfirmation)
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.ProcessedWithConfirmation)
+        </div>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.TripAdvisorRating)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.TripAdvisorRating)
-    </div>
+        <div class="display-label">
+             @Html.DisplayNameFor(model => model.SupplierType)
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.SupplierType)
+        </div>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.TripAdvisorReviewCount)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.TripAdvisorReviewCount)
-    </div>
+        <div class="display-label">
+             @Html.DisplayNameFor(model => model.ReservationStatusCode)
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.ReservationStatusCode)
+        </div>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.TripAdvisorRatingUrl)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.TripAdvisorRatingUrl)
-    </div>
+        <div class="display-label">
+             @Html.DisplayNameFor(model => model.ExistingItinerary)
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.ExistingItinerary)
+        </div>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.RateOccupancyPerRoom)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.RateOccupancyPerRoom)
-    </div>
-</fieldset>
+        <div class="display-label">
+             @Html.DisplayNameFor(model => model.NumberOfRoomsBooked)
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.NumberOfRoomsBooked)
+        </div>
+
+        <div class="display-label">
+             @Html.DisplayNameFor(model => model.ArrivalDate)
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.ArrivalDate)
+        </div>
+
+        <div class="display-label">
+             @Html.DisplayNameFor(model => model.DepartureDate)
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.DepartureDate)
+        </div>
+
+        <div class="display-label">
+             @Html.DisplayNameFor(model => model.HotelName)
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.HotelName)
+        </div>
+
+        <div class="display-label">
+             @Html.DisplayNameFor(model => model.HotelAddress)
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.HotelAddress)
+        </div>
+
+        <div class="display-label">
+             @Html.DisplayNameFor(model => model.HotelCity)
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.HotelCity)
+        </div>
+
+        <div class="display-label">
+             @Html.DisplayNameFor(model => model.HotelStateProvinceCode)
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.HotelStateProvinceCode)
+        </div>
+
+        <div class="display-label">
+             @Html.DisplayNameFor(model => model.HotelPostalCode)
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.HotelPostalCode)
+        </div>
+
+        <div class="display-label">
+             @Html.DisplayNameFor(model => model.HotelCountryCode)
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.HotelCountryCode)
+        </div>
+
+        <div class="display-label">
+             @Html.DisplayNameFor(model => model.RoomDescription)
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.RoomDescription)
+        </div>
+
+        <div class="display-label">
+             @Html.DisplayNameFor(model => model.TripAdvisorRating)
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.TripAdvisorRating)
+        </div>
+
+        <div class="display-label">
+             @Html.DisplayNameFor(model => model.TripAdvisorReviewCount)
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.TripAdvisorReviewCount)
+        </div>
+
+        <div class="display-label">
+             @Html.DisplayNameFor(model => model.TripAdvisorRatingUrl)
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.TripAdvisorRatingUrl)
+        </div>
+
+        <div class="display-label">
+             @Html.DisplayNameFor(model => model.RateOccupancyPerRoom)
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.RateOccupancyPerRoom)
+        </div>
+    </fieldset>*@
 

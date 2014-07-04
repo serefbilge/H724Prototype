@@ -337,7 +337,7 @@ namespace H724.Services.Expedia.Hotels.Api.Impl
                 Method = Method.POST,
                 RootElement = "HotelRoomReservationResponse"
             };
-
+            
             request.AddParameter("hotelId", roomReservationRequest.HotelId);
             request.AddParameter("currencyCode", roomReservationRequest.CurrencyCode);
             request.AddParameter("arrivalDate", roomReservationRequest.ArrivalDate.ToShortDateString());
@@ -408,26 +408,48 @@ namespace H724.Services.Expedia.Hotels.Api.Impl
             //********* ReservationInfo *********//
 
             // Person Info
-            request.AddParameter("email", "test@yourSite.com");
-            request.AddParameter("firstName", "tester");
-            request.AddParameter("lastName", "testing");
-            request.AddParameter("homePhone", "2145370159");
-            request.AddParameter("workPhone", "2145370159");
+
+            request.AddParameter("email", roomReservationRequest.Email);
+            request.AddParameter("firstName", roomReservationRequest.CardHolderFirstName);
+            request.AddParameter("lastName", roomReservationRequest.CardHolderLastName);
+            request.AddParameter("homePhone", roomReservationRequest.HomePhone);
+            request.AddParameter("workPhone", roomReservationRequest.WorkPhone);
 
             // Credit Card Info
-            request.AddParameter("creditCardType", "CA");
-            request.AddParameter("creditCardNumber", "5401999999999999");
+            request.AddParameter("creditCardType", roomReservationRequest.CardType);
+            request.AddParameter("creditCardNumber", roomReservationRequest.Cardnumber);
             request.AddParameter("creditCardIdentifier", "123");
-            request.AddParameter("creditCardExpirationMonth", 11);
-            request.AddParameter("creditCardExpirationYear", 2016);
+            request.AddParameter("creditCardExpirationMonth", roomReservationRequest.CardExpirationMonth);
+            request.AddParameter("creditCardExpirationYear", roomReservationRequest.CardExpirationYear);
 
             //********* AddressInfo *********//
 
-            request.AddParameter("address1", "travelnow");
-            request.AddParameter("city", "Seattle");
-            request.AddParameter("stateProvinceCode", "WA");
-            request.AddParameter("countryCode", "US");
-            request.AddParameter("postalCode", "98004");
+            request.AddParameter("address1", roomReservationRequest.StreetAddress);
+            request.AddParameter("city", roomReservationRequest.City);
+            request.AddParameter("stateProvinceCode", roomReservationRequest.State);
+            request.AddParameter("countryCode", roomReservationRequest.Country);
+            request.AddParameter("postalCode", roomReservationRequest.PostalCode);
+
+            //request.AddParameter("email", "test@yourSite.com");
+            //request.AddParameter("firstName", "tester");
+            //request.AddParameter("lastName", "testing");
+            //request.AddParameter("homePhone", "2145370159");
+            //request.AddParameter("workPhone", "2145370159");
+
+            //// Credit Card Info
+            //request.AddParameter("creditCardType", "CA");
+            //request.AddParameter("creditCardNumber", "5401999999999999");
+            //request.AddParameter("creditCardIdentifier", "123");
+            //request.AddParameter("creditCardExpirationMonth", 11);
+            //request.AddParameter("creditCardExpirationYear", 2016);
+
+            ////********* AddressInfo *********//
+
+            //request.AddParameter("address1", "travelnow");
+            //request.AddParameter("city", "Seattle");
+            //request.AddParameter("stateProvinceCode", "WA");
+            //request.AddParameter("countryCode", "US");
+            //request.AddParameter("postalCode", "98004");
 
             const string bookingBaseUrl = "https://api.eancdn.com/ean-services/rs/hotel/v3";
 

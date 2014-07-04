@@ -36,7 +36,6 @@ namespace H724.UI.Web.Controllers
             {
                 throw new ArgumentNullException("geoLookupService");
             }
-
             _lookUpService = geoLookupService;
             _expediaService = expediaService;
         }
@@ -54,12 +53,10 @@ namespace H724.UI.Web.Controllers
             try
             {
                 HotelInformationResponse response = _expediaService.GetHotelInformation(request);
-
                 if (response.EanWsError != null)
                 {
                     Error(response.EanWsError.PresentationMessage);
                 }
-
                 return View(response);
             }
             catch (Exception e)

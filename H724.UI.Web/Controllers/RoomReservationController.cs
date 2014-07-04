@@ -1,36 +1,32 @@
 ﻿using H724.Services.Expedia.Hotels.Api;
 using H724.Services.Expedia.Hotels.Api.Impl;
+using H724.Services.Expedia.Hotels.Models;
 using H724.Services.Expedia.Hotels.Models.Request;
-using H724.Services.Expedia.Hotels.Models.Response;
+using H724.Services.Expedia.Hotels.Models.RouteParameters;
 using H724.UI.Web.Models;
-using Newtonsoft.Json;
-using Ninject;
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using System.Xml;
 
 namespace H724.UI.Web.Controllers
 {
     public class RoomReservationController : Controller
     {
         //
-        // GET: /CreditCardInfo/
+        // GET: /RoomReservation/
 
         public ActionResult Index()
         {
             return View();
         }
-        public ActionResult SetRoomsData(string currencyCode, string hotelId, string arrivalDate, string departureDate, string supplierType, 
+        public ActionResult SetRoomsData(string currencyCode, string hotelId, string arrivalDate, string departureDate, string supplierType,
             string rateKey, string roomTypeCode, string rateCode, string chargeableRate, string bedTypeId, string smokingPreferences,
             string city, string stateProvinceCode, string countryCode, string numberOfAdults, string numberOfChildren, string Age)
         {
-       
+
             HotelRoomReservationRequest objRoomReservation = new HotelRoomReservationRequest();
             //AbstractExpediaService expediaService;
             //Models.RoomReservationModel objRoomReservation = new Models.RoomReservationModel();
@@ -56,11 +52,18 @@ namespace H724.UI.Web.Controllers
             //objRoomReservation.NumberOfAdults = numberOfAdults;
             //objRoomReservation.NumberOfChildren = numberOfChildren;
             //objRoomReservation.Age = Age;
-       
+
             return View(objRoomReservation);
         }
 
-        [HttpPost]
+        //[HttpPost]
+        //public ActionResult Booking(Models.RoomReservationModel objRoomReserve)
+        //{
+
+        //    return View(objRoomReserve);
+        //}
+
+        [HttpGet]
 
         public ActionResult RoomBooking(Models.RoomReservationModel objRoomReserve)
         {
@@ -70,13 +73,8 @@ namespace H724.UI.Web.Controllers
             //expedia.ApiKey = "rs3m6mzwdz2sxuxtmsqtup8r";
             //expedia.Locale = "en_US";
             //expedia.CurrencyCode = objRoomReserve.currencyCode;
-
-            var request = new HotelRoomReservationRequest
-            {
-                //HotelId = objRoomReserve.hotelId;
-
-                
-            };
+            
+            var b = Session["roomGroup"];
             return View();
             //tblRoomsReservation objRoomRes = new tblRoomsReservation();
 
@@ -125,7 +123,7 @@ namespace H724.UI.Web.Controllers
             //    }
             //}
             //    return View(objRoomRes);
-            
+
         }
 
         public AbstractExpediaService _expediaService { get; set; }
