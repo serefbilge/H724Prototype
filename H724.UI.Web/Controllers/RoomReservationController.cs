@@ -26,7 +26,6 @@ namespace H724.UI.Web.Controllers
             string rateKey, string roomTypeCode, string rateCode, string chargeableRate, string bedTypeId, string smokingPreferences,
             string city, string stateProvinceCode, string countryCode, string numberOfAdults, string numberOfChildren, string Age)
         {
-
             HotelRoomReservationRequest objRoomReservation = new HotelRoomReservationRequest();
             //AbstractExpediaService expediaService;
             //Models.RoomReservationModel objRoomReservation = new Models.RoomReservationModel();
@@ -64,17 +63,20 @@ namespace H724.UI.Web.Controllers
         //}
 
         [HttpGet]
-
         public ActionResult RoomBooking(Models.RoomReservationModel objRoomReserve)
         {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("Reservation", "Rooms", objRoomReserve);
+
+            }
+            var b = Session["roomGroup"];
             //AbstractExpediaService expedia;
             //expedia.Cid = 55505;
             //expedia.MinorRev = 99;
             //expedia.ApiKey = "rs3m6mzwdz2sxuxtmsqtup8r";
             //expedia.Locale = "en_US";
             //expedia.CurrencyCode = objRoomReserve.currencyCode;
-            
-            var b = Session["roomGroup"];
             return View();
             //tblRoomsReservation objRoomRes = new tblRoomsReservation();
 
@@ -112,8 +114,7 @@ namespace H724.UI.Web.Controllers
             //            objRoomRes.ItineraryId = Convert.ToString(ds.Tables[0].Rows[0]["itineraryId"]);
             //            objRoomRes.ReservationStatus = Convert.ToString(ds.Tables[0].Rows[0]["reservationStatusCode"]);
             //            objRoomRes.RoomDescription = Convert.ToString(ds.Tables[0].Rows[0]["roomDescription"]);
-            //            db.tblRoomsReservations.InsertOnSubmit(objRoomRes);
-            //            db.SubmitChanges();
+            //            db.tblRoomsReservations.InsertOnSubmit(objRoomRes);            //            db.SubmitChanges();
             //            //lstUserData.Add(objRoomRes);
             //        }
             //    }

@@ -53,6 +53,16 @@
 </style>
 <form action="../../Rooms/RoomBookingFinal/" method="get">
     <label class="main-heading">Complete Your Booking</label>
+    @{
+        if(Session["Error"]!=null)
+        {
+            var a = Session["Error"];
+            <div style="font-size:20px;font-weight:bold;color:red;margin-top:10px">@Session["Error"]</div>
+            @*@Html.Label(Convert.ToString(Session["Error"]));*@
+            Session["Error"] = null;
+    }
+
+    }
     <div class="main-form">
         <div class="heading">
             Credit Card Information

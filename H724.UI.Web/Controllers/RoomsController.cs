@@ -165,6 +165,11 @@ namespace H724.UI.Web.Controllers
             //expedia.ApiKey = "rs3m6mzwdz2sxuxtmsqtup8r";
             //expedia.Locale = "en_US";
             //expedia.CurrencyCode = objRoomReserve.currencyCode;
+            //if (!ModelState.IsValid)
+            //{
+            //    return RedirectToAction("RoomBooking", "RoomReservation", param);
+
+            //}
             var model = Session["Search"] as SearchViewModel;
             var b = Session["roomGroup"] as List<H724.Services.Expedia.Hotels.Models.Room>;
 
@@ -216,11 +221,18 @@ namespace H724.UI.Web.Controllers
 
             if (response.EanWsError != null)
             {
+                string error = Convert.ToString(response.EanWsError.PresentationMessage);
+                Session["Error"] = error;
+                return RedirectToAction("RoomBooking", "RoomReservation", param);
                 //Error(response.EanWsError.PresentationMessage);
             }
-
-
             return View(response);
+            //else
+            //{
+            //    string error = Convert.ToString(response.EanWsError.PresentationMessage);
+            //}
+
+           // return View(response);
             //tblRoomsReservation objRoomRes = new tblRoomsReservation();
 
             //if (ModelState.IsValid)

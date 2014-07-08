@@ -80,7 +80,8 @@
 
                 Email
             </div>
-            @Html.TextBox("Email")
+            @Html.TextBoxFor(model => model.Email, new { required = "required " })
+            @*@Html.TextBoxFor(,"Email")*@
         </div>
         <div class="inner-form">
             <div class="text-area">
