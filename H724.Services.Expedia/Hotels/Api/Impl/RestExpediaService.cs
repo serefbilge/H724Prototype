@@ -424,11 +424,11 @@ namespace H724.Services.Expedia.Hotels.Api.Impl
 
             //********* AddressInfo *********//
 
-            request.AddParameter("address1", roomReservationRequest.StreetAddress);
-            request.AddParameter("city", roomReservationRequest.City);
-            request.AddParameter("stateProvinceCode", roomReservationRequest.State);
-            request.AddParameter("countryCode", roomReservationRequest.Country);
-            request.AddParameter("postalCode", roomReservationRequest.PostalCode);
+            request.AddParameter("address1", roomReservationRequest.AddressInfo.Address1);
+            request.AddParameter("city", roomReservationRequest.AddressInfo.City);
+            request.AddParameter("stateProvinceCode", roomReservationRequest.AddressInfo.StateProvinceCode);
+            request.AddParameter("countryCode", roomReservationRequest.AddressInfo.CountryCode);
+            request.AddParameter("postalCode", roomReservationRequest.AddressInfo.PostalCode);
 
             //request.AddParameter("email", "test@yourSite.com");
             //request.AddParameter("firstName", "tester");

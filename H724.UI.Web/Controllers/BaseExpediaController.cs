@@ -7,7 +7,7 @@ using H724.UI.Web.Filters;
 namespace H724.UI.Web.Controllers
 {
     [SessionFilter]
-    public class BaseExpediaController : BootstrapBaseController
+    public class BaseExpediaController : BaseController
     {
         /// <summary>
         /// The injected implementation

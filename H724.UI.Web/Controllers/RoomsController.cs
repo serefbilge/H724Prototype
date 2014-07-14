@@ -8,6 +8,7 @@ using H724.Services.Expedia.Hotels.Models.Request;
 using H724.Services.Expedia.Hotels.Models.Response;
 using H724.Services.Expedia.Hotels.Models.RouteParameters;
 using H724.UI.Web.Models;
+using Microsoft.Web.Mvc;
 using Ninject;
 using System.Net;
 using System.Xml;
@@ -115,65 +116,44 @@ namespace H724.UI.Web.Controllers
         }
 
         [HttpGet]
-        public ActionResult Reservation(Models.RoomReservationModel param)
+        public ActionResult RoomBookingFirst(HotelInfo hotelInfo)
         {
-            //var model = Session["Search"] as SearchViewModel;
-            //if (model == null)
-            //{
-            //    //Information("Please enter your criteria for room availability");
-            //    //return RedirectToAction("Index", "Search");
-            //    model = ModelInitializer.CreateSearchModel();
-            //    model.CheckinDate = DateTime.Today.AddDays(1);
-            //    model.CheckoutDate = model.CheckinDate.AddDays(7);
-            //    model.RoomViewModels.First().Adults = 1;
-            //    model.RoomViewModels.First().Children = 0;
-            //    Session["Search"] = model;
-            //}
-            //Session["roomGroup"] = roomGroup;
-            List<H724.Services.Expedia.Hotels.Models.Room> li = param.Rooms;
-            Session["roomGroup"] = li;
-            //var request = new HotelRoomReservationRequest
-            //{
-            //    HotelId = param.Id,
-            //    CurrencyCode = param.CurrencyCode,
-            //    ArrivalDate = param.StandardCheckin,
-            //    DepartureDate = param.StandardCheckout,
-            //    SupplierType = param.SupplierType,
-            //    RoomTypeCode = param.RoomTypeCode,
-            //    RateCode = param.RateCode,
-            //    ChargeableRate = param.SelectedPrice,
-            //    RoomsCount = 2,
-            //    RoomGroup = roomGroup
-            //   // RateKey = 
-            //};
+            var bookingWizard = new RoomBookingWizard();
 
-            //var response = _expediaService.GetHotelRoomReservation(request);
-
-            //if (response.EanWsError != null)
-            //{
-            //    Error(response.EanWsError.PresentationMessage);
-            //}
-
-            return View(param);
+            if (TempData["bookingWizard"] != null) bookingWizard = (RoomBookingWizard)TempData["bookingWizard"];
+            else bookingWizard.HotelInfo = hotelInfo;
+            
+            return View(bookingWizard);
         }
+
         [HttpGet]
-        public ActionResult RoomBookingFinal(Models.RoomReservationModel param)
+        public ActionResult RoomBookingSecond([Deserialize] RoomBookingWizard bookingWizard, PersonalInfo personalInfo)
         {
-            //AbstractExpediaService expedia;
-            //expedia.Cid = 55505;
-            //expedia.MinorRev = 99;
-            //expedia.ApiKey = "rs3m6mzwdz2sxuxtmsqtup8r";
-            //expedia.Locale = "en_US";
-            //expedia.CurrencyCode = objRoomReserve.currencyCode;
-            //if (!ModelState.IsValid)
-            //{
-            //    return RedirectToAction("RoomBooking", "RoomReservation", param);
+            if (TempData["bookingWizard"] != null) bookingWizard = (RoomBookingWizard)TempData["bookingWizard"];
+            else bookingWizard.PersonalInfo = personalInfo;
+            
+            if (!ModelState.IsValid)
+            {
+                SetViewDataError();
 
-            //}
+                TempData["bookingWizard"] = bookingWizard;
+
+                return RedirectToAction("RoomBookingFirst", "Rooms");
+            }
+
+            return View(bookingWizard);
+        }
+
+        [HttpPost]
+        public ActionResult RoomBookingFinal([Deserialize] RoomBookingWizard bookingWizard, PaymentInfo paymentInfo, AddressInfo addressInfo)
+        {
+            bookingWizard.PaymentInfo = paymentInfo;
+            bookingWizard.AddressInfo = addressInfo;
+
             var model = Session["Search"] as SearchViewModel;
-            var b = Session["roomGroup"] as List<H724.Services.Expedia.Hotels.Models.Room>;
 
-            var roomGroup = new RoomGroup { Room =b };
+            var roomGroup = new RoomGroup { Room = bookingWizard.HotelInfo.Rooms };
+
             if (model == null)
             {
                 //Information("Please enter your criteria for room availability");
@@ -183,105 +163,46 @@ namespace H724.UI.Web.Controllers
                 model.CheckoutDate = model.CheckinDate.AddDays(7);
                 model.RoomViewModels.First().Adults = 1;
                 model.RoomViewModels.First().Children = 0;
+
                 Session["Search"] = model;
             }
-           // var roomGroup = Session["roomGroup"];
-            RoomReservationModel rr = new RoomReservationModel();
+
             var request = new HotelRoomReservationRequest
             {
-                HotelId = Convert.ToInt64(param.Id),
-                CurrencyCode = param.CurrencyCode,
-                ArrivalDate = Convert.ToDateTime(param.StandardCheckin),
-                DepartureDate = Convert.ToDateTime(param.StandardCheckout),
-                SupplierType = param.SupplierType,
-                RoomTypeCode = param.RoomTypeCode,
-                RateCode = param.RateCode,
-                ChargeableRate = Convert.ToDecimal(param.SelectedPrice),
-                RoomsCount = 2,
+                HotelId = Convert.ToInt64(bookingWizard.HotelInfo.HotelId),
+                CurrencyCode = bookingWizard.HotelInfo.CurrencyCode,
+                ArrivalDate = Convert.ToDateTime(bookingWizard.HotelInfo.StandardCheckin),
+                DepartureDate = Convert.ToDateTime(bookingWizard.HotelInfo.StandardCheckout),
+                SupplierType = bookingWizard.HotelInfo.SupplierType,
+                RoomTypeCode = bookingWizard.HotelInfo.RoomTypeCode,
+                RateCode = bookingWizard.HotelInfo.RateCode,
+                ChargeableRate = Convert.ToDecimal(bookingWizard.HotelInfo.SelectedPrice),
+                RoomsCount = bookingWizard.HotelInfo.RoomsCount,
                 RoomGroup = roomGroup,
-                Email = param.Email,
-                CardHolderFirstName = param.CardHolderFirstName,
-                CardHolderLastName = param.CardHolderLastName,
-                HomePhone = param.HomePhone,
-                WorkPhone = param.WorkPhone,
-                CardType = param.CardType,
-                Cardnumber = param.Cardnumber,
-                CardExpirationMonth = param.CardExpirationMonth,
-                CardExpirationYear = param.CardExpirationYear,
-                AddressInfo = param.AddressInfo,
-                City = param.City,
-                State = param.State,
-                Country = param.Country,
-                PostalCode = param.PostalCode,
-                StreetAddress = param.StreetAddress
-                // RateKey = 
+                Email = bookingWizard.PersonalInfo.Email,
+                HomePhone = bookingWizard.PersonalInfo.HomePhone,
+                WorkPhone = bookingWizard.PersonalInfo.WorkPhone,
+                AddressInfo = bookingWizard.AddressInfo,
+                CardHolderFirstName = bookingWizard.PaymentInfo.CardHolderFirstName,
+                CardHolderLastName = bookingWizard.PaymentInfo.CardHolderLastName,
+                CardType = bookingWizard.PaymentInfo.CardType,
+                Cardnumber = bookingWizard.PaymentInfo.Cardnumber,
+                CardExpirationMonth = bookingWizard.PaymentInfo.CardExpirationMonth,
+                CardExpirationYear = bookingWizard.PaymentInfo.CardExpirationYear
             };
 
             var response = _expediaService.GetHotelRoomReservation(request);
 
             if (response.EanWsError != null)
             {
-                string error = Convert.ToString(response.EanWsError.PresentationMessage);
-                Session["Error"] = error;
-                return RedirectToAction("RoomBooking", "RoomReservation", param);
-                //Error(response.EanWsError.PresentationMessage);
+                Error(response.EanWsError.PresentationMessage);
+
+                TempData["bookingWizard"] = bookingWizard;
+
+                return RedirectToAction("RoomBookingSecond", "Rooms");
             }
+
             return View(response);
-            //else
-            //{
-            //    string error = Convert.ToString(response.EanWsError.PresentationMessage);
-            //}
-
-           // return View(response);
-            //tblRoomsReservation objRoomRes = new tblRoomsReservation();
-
-            //if (ModelState.IsValid)
-            //{
-            //    List<tblRoomsReservation> lstUserData = new List<tblRoomsReservation>();
-            //    string url = "https://api.eancdn.com/ean-services/rs/hotel/v3/res?cid=55505&minorRev=99&apiKey=rs3m6mzwdz2sxuxtmsqtup8r&locale=en_US&currencyCode=" + objRoomReserve.currencyCode + "&xml=<HotelRoomReservationRequest><hotelId>" + objRoomReserve.hotelId + "</hotelId><arrivalDate>" + objRoomReserve.arrivalDate + "</arrivalDate><departureDate>" + objRoomReserve.departureDate + "</departureDate><supplierType>" + objRoomReserve.supplierType + "</supplierType><rateKey>" + objRoomReserve.rateKey + "></rateKey><roomTypeCode>" + objRoomReserve.roomTypeCode + "</roomTypeCode><rateCode>" + objRoomReserve.rateCode + "</rateCode><chargeableRate>" + objRoomReserve.chargeableRate + "</chargeableRate><RoomGroup><Room><numberOfAdults>" + objRoomReserve.numberOfAdults + "</numberOfAdults><numberOfChildren>" + objRoomReserve.numberOfChildren + "</numberOfChildren><childAges>" + objRoomReserve.Age + "</childAges><firstName>test</firstName><lastName>tester</lastName><bedTypeId>" + objRoomReserve.bedTypeId + "</bedTypeId><smokingPreference>" + objRoomReserve.smokingPreferences + "</smokingPreference></Room></RoomGroup><ReservationInfo><email>" + objRoomReserve.email + "</email><firstName>" + objRoomReserve.firstName + "</firstName><lastName>" + objRoomReserve.lastName + "</lastName><homePhone>" + objRoomReserve.homePhone + "</homePhone><workPhone>" + objRoomReserve.workPhone + "</workPhone><creditCardType>" + objRoomReserve.creditCardType + "</creditCardType><creditCardNumber>" + objRoomReserve.creditCardNumber + "</creditCardNumber><creditCardIdentifier>" + objRoomReserve.creditCardIdentifier + "</creditCardIdentifier><creditCardExpirationMonth>" + objRoomReserve.creditCardExpirationMonth + "</creditCardExpirationMonth><creditCardExpirationYear>" + objRoomReserve.creditCardExpirationYear + "</creditCardExpirationYear></ReservationInfo><AddressInfo><address1>" + objRoomReserve.address + "</address1><city>" + objRoomReserve.city + "</city><stateProvinceCode>" + objRoomReserve.stateProvinceCode + "</stateProvinceCode><countryCode>" + objRoomReserve.countryCode + "</countryCode><postalCode>" + objRoomReserve.postalCode + "</postalCode></AddressInfo></HotelRoomReservationRequest>";
-            //    WebRequest request = WebRequest.Create(url);
-            //    request.ContentType = "text/xml";
-            //    request.Timeout = 1400000;
-            //    request.Method = "POST";
-            //    request.ContentLength = 0;
-            //    WebResponse response = request.GetResponse();
-            //    Stream dataStream = response.GetResponseStream();
-            //    StreamReader reader = new StreamReader(dataStream);
-            //    string responseFromServer = reader.ReadToEnd();
-            //    string output = JsonConvert.SerializeObject(responseFromServer);
-            //    var deserializedProducttt = JsonConvert.DeserializeObject(output);// .DeserializeObject<DataSet>(output);
-            //    XmlDocument doc = JsonConvert.DeserializeXmlNode(responseFromServer);
-            //    string xml = Convert.ToString(doc.InnerXml);
-            //    DataSet ds = new DataSet();
-            //    ds.ReadXml(new StringReader(xml));
-            //    RoomReservationModel objroomReservationModel = new RoomReservationModel();
-            //    try
-            //    {
-            //        using (tblRoomsReservationDataContext db = new tblRoomsReservationDataContext())
-            //        {
-            //            objRoomRes.CustomerSessionId = Convert.ToString(ds.Tables[0].Rows[0]["customerSessionId"]);
-            //            objRoomRes.ArrivalDate = Convert.ToString(ds.Tables[0].Rows[0]["arrivalDate"]);
-            //            objRoomRes.DepartureDate = Convert.ToString(ds.Tables[0].Rows[0]["departureDate"]);
-            //            objRoomRes.ConfirmationNo = Convert.ToString(ds.Tables[0].Rows[0]["confirmationNumbers"]);
-            //            objRoomRes.HotelAddress = Convert.ToString(ds.Tables[0].Rows[0]["hotelAddress"]);
-            //            objRoomRes.HotelCity = Convert.ToString(ds.Tables[0].Rows[0]["hotelCity"]);
-            //            objRoomRes.HotelName = Convert.ToString(ds.Tables[0].Rows[0]["hotelName"]);
-            //            objRoomRes.ItineraryId = Convert.ToString(ds.Tables[0].Rows[0]["itineraryId"]);
-            //            objRoomRes.ReservationStatus = Convert.ToString(ds.Tables[0].Rows[0]["reservationStatusCode"]);
-            //            objRoomRes.RoomDescription = Convert.ToString(ds.Tables[0].Rows[0]["roomDescription"]);
-            //            db.tblRoomsReservations.InsertOnSubmit(objRoomRes);
-            //            db.SubmitChanges();
-            //            //lstUserData.Add(objRoomRes);
-            //        }
-            //    }
-            //    catch (Exception ex)
-            //    {
-
-            //    }
-            //}
-            //    return View(objRoomRes);
-
         }
-
     }
 }

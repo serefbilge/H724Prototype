@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace H724.Services.Expedia.Hotels.Models
 {
+    [Serializable]
     public class AddressInfo
     {
         public string Address1 { get; set; }

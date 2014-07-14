@@ -137,7 +137,7 @@
                                 <div class="span2">
                                     <div class="pull-right">
                                         @{
-                                            var roomsValueDictionary = new RouteValueDictionary();
+                                        var roomsValueDictionary = new RouteValueDictionary();
                                         var c = 0;
                                         foreach (var r in room.RateInfos.RateInfo.RoomGroup.Room)
                                         {
@@ -149,7 +149,7 @@
                                         
                                         var route = new RouteValueDictionary
                                         {
-                                            {"Id", Model.HotelId},
+                                            {"HotelId", Model.HotelId},
                                             {"CurrencyCode", room.RateInfos.RateInfo.ChargeableRateInfo.CurrencyCode},
                                             {"StandardCheckin", Model.ArrivalDate},
                                             {"StandardCheckout", Model.DepartureDate},
@@ -191,7 +191,7 @@
                                         @*<a href="@Url.Action("bookRooms", "BookingReservation", route)" class="btn btn-mini btn-info">
                                             <span>Book Now</span><i class="icon-arrow-right"></i>
                                         </a>*@
-                                        <a href="@Url.Action("Reservation", "Rooms", route)" class="btn btn-mini btn-info">
+                                        <a href="@Url.Action("RoomBookingFirst", "Rooms", route)" class="btn btn-mini btn-info">
                                             <span>Book Now</span><i class="icon-arrow-right"></i>
                                         </a>
                                     </div>
