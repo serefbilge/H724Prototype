@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using H724.Services.Expedia.Hotels.Models.Request;
 using H724.Services.Google.Places.Api;
 using H724.Services.Google.Places.Models.Autocomplete;
 using H724.UI.Web.Helpers;
 using Ninject;
+using H724.Services.Expedia.Hotels.Api;
 
 namespace H724.UI.Web.Controllers
 {
@@ -19,18 +21,24 @@ namespace H724.UI.Web.Controllers
     /// at compile time but the injection is done at runtime
     /// per http web request
     /// </summary>
-    public class PlacesController : Controller
+    public class PlacesController : BaseExpediaController
     {
         private readonly IPlacesService _placesService;
 
         [Inject]
-        public PlacesController(IPlacesService placesService)
+        public PlacesController(AbstractExpediaService expediaService, IPlacesService placesService)
         {
+            if (expediaService == null) // Guard clause
+            {
+                throw new ArgumentNullException("expediaService");
+            }
+
             if (placesService == null) // Guard Clause
             {
                 throw new ArgumentNullException("placesService");
             }
 
+            _expediaService = expediaService;
             _placesService = placesService;
         }
 
@@ -43,9 +51,14 @@ namespace H724.UI.Web.Controllers
         [HttpGet]
         public JsonResult AutoSuggestDestination(string text)
         {
-            AutocompletionRequest request = new AutocompletionRequest { Sensor = false, Input = text, Types = "geocode" };
-            AutocompletionResponse response = _placesService.Autocomplete(request);
+            var request = new AutocompletionRequest { Sensor = false, Input = text, Types = "geocode" };
+            var response = _placesService.Autocomplete(request);
             var projection = response.Predictions.Select(prediction => new { destination = prediction.Description, suggestion = prediction.Description });
+
+            var request2 = new LocationInfoRequest { DestinationString = text };
+
+            var response2 = _expediaService.GetGeoSearch(request2);
+
             return Json(projection.ToList(), JsonRequestBehavior.AllowGet);
         }
 
@@ -59,10 +72,11 @@ namespace H724.UI.Web.Controllers
         [HttpGet]
         public JsonResult AutoSuggestCity(string text)
         {
-            AutocompletionRequest request = new AutocompletionRequest { Sensor = false, Input = text };
-            AutocompletionResponse response = _placesService.Autocomplete(request);
-            IEnumerable<Prediction> predictions = response.Predictions.Where((prediction) => prediction.Types.Any((type) => type.Equals("sublocality") || type.Equals("locality")));
+            var request = new AutocompletionRequest { Sensor = false, Input = text };
+            var response = _placesService.Autocomplete(request);
+            var predictions = response.Predictions.Where((prediction) => prediction.Types.Any((type) => type.Equals("sublocality") || type.Equals("locality")));
             var projection = predictions.Select(prediction => new { description = prediction.Description, suggestion = prediction.Terms.First().Value });
+
             return Json(projection.ToList(), JsonRequestBehavior.AllowGet);
         }
 
@@ -77,12 +91,12 @@ namespace H724.UI.Web.Controllers
         [HttpGet]
         public JsonResult AutoSuggestCounty(string text)
         {
-            AutocompletionRequest request = new AutocompletionRequest { Sensor = false,  Input = text };
-            AutocompletionResponse response = _placesService.Autocomplete(request);
-            IEnumerable<Prediction> predictions = response.Predictions.Where(prediction => prediction.Types.Any(type => type.Equals("administrative_area_level_2")));
+            var request = new AutocompletionRequest { Sensor = false,  Input = text };
+            var response = _placesService.Autocomplete(request);
+            var predictions = response.Predictions.Where(prediction => prediction.Types.Any(type => type.Equals("administrative_area_level_2")));
             var projection = predictions.Select(prediction => new { suggestion = prediction.Terms.First().Value, description = prediction.Description });
+
             return Json(projection.ToList(), JsonRequestBehavior.AllowGet);
         }
-
     }
 }

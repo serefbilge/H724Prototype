@@ -12,7 +12,8 @@
 @{   
     
     ViewBag.Title = "Hotel Results";
-    CultureInfo culture = new CultureInfo("en-GB");
+    
+    var culture = new CultureInfo("en-GB");
     const string googleApiKey = "AIzaSyDm7lXUQTaEvPo-eghcFIo2VjJvyKawKUo";
     
 }
@@ -236,10 +237,8 @@
         <p style="text-align: center">Note: It is the responsibility of the hotel to ensure accuracy of photos.</p>
     </div>
     <div class="modal-footer">
-         
         <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
     </div>
-   
 </div>
 
 @section Scripts {

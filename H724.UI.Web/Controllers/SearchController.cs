@@ -68,13 +68,13 @@ namespace H724.UI.Web.Controllers
                 {
                     // Build the request
 
-                    HotelListRequest request = new HotelListRequest();
+                    var request = new HotelListRequest();
 
                     // Arriving on...
                     request.ArrivalDate = new DateTime(model.CheckinDate.Year, model.CheckinDate.Month, model.CheckinDate.Day);
                     // Departing on...
                     request.DepartureDate = new DateTime(model.CheckoutDate.Year, model.CheckoutDate.Month, model.CheckoutDate.Day);
-                    
+
                     // At this address
                     request.City = model.City;
                     request.StateProvinceCode = model.Province;
@@ -101,7 +101,7 @@ namespace H724.UI.Web.Controllers
                             ChildAges = room.AgeViewModels.Select(a => a.Age != null ? a.Age.Value : 0).ToList(),
                         })
                         .ToList();
-                    
+
                     // Sort the request by prices
                     request.Sort = "PRICE";
 
@@ -116,7 +116,7 @@ namespace H724.UI.Web.Controllers
                     {
                         request.PropertyCategories = model.PropertyCategories.Select(c => (PropertyCategory)Enum.Parse(typeof(PropertyCategory), Convert.ToString(c))).ToList();
                     }
-                    
+
                     // Response
                     HotelListResponse response = _expediaService.GetHotelAvailabilityList(request);
 
@@ -156,16 +156,14 @@ namespace H724.UI.Web.Controllers
                     Session["ResultUrl"] = Request.Url.PathAndQuery;
                 }
 
-                HotelListResponse hotelListResponse = Session["Response"] as HotelListResponse;
+                var hotelListResponse = Session["Response"] as HotelListResponse;
 
                 if (hotelListResponse != null)
                 {
                     // This is where we update our current list of results with more from the remote ip with the specific key
                     if (cacheKey != null && cacheLocation != null)
                     {
-                        HotelListRequest request = new HotelListRequest();
-                        request.CacheKey = cacheKey;
-                        request.CacheLocation = cacheLocation;
+                        var request = new HotelListRequest { CacheKey = cacheKey, CacheLocation = cacheLocation };
 
                         var pagedResponseResults = _expediaService.GetHotelAvailabilityList(request);
 
@@ -196,60 +194,50 @@ namespace H724.UI.Web.Controllers
                     switch (sortOrder)
                     {
                         case "Price desc":
-                            hotelSummaries = hotelSummaries
-                                .OrderByDescending(s => s.HighRate)
-                                .ThenByDescending(s => s.HotelRating);
+                            hotelSummaries = hotelSummaries.OrderByDescending(s => s.HighRate).ThenByDescending(s => s.HotelRating);
 
                             break;
 
                         case "Price asce":
-                            hotelSummaries = hotelSummaries
-                                .OrderBy(s => s.HighRate)
-                                .ThenByDescending(s => s.HighRate);
+                            hotelSummaries = hotelSummaries.OrderBy(s => s.HighRate).ThenByDescending(s => s.HighRate);
 
                             break;
 
                         case "Rating desc":
-                            hotelSummaries = hotelSummaries
-                                .OrderByDescending(s => s.HotelRating)
-                                .ThenByDescending(s => s.HighRate);
+                            hotelSummaries = hotelSummaries.OrderByDescending(s => s.HotelRating).ThenByDescending(s => s.HighRate);
 
                             break;
 
                         case "Rating asce":
-                            hotelSummaries = hotelSummaries
-                                .OrderBy(s => s.HotelRating)
-                                .ThenByDescending(s => s.HighRate);
+                            hotelSummaries = hotelSummaries.OrderBy(s => s.HotelRating).ThenByDescending(s => s.HighRate);
 
                             break;
 
                         default:
-                            hotelSummaries = hotelSummaries
-                                .OrderBy(s => s.Name)
-                                .ThenByDescending(s => s.HighRate);
+                            hotelSummaries = hotelSummaries.OrderBy(s => s.Name).ThenByDescending(s => s.HighRate);
 
                             break;
                     }
 
 
-                    int pageSize = 10;
-                    int pageNumber = (page ?? 1);
+                    var pageSize = 10;
+                    var pageNumber = (page ?? 1);
 
-                    IPagedList<HotelSummary> pagedList = hotelSummaries.ToPagedList(pageNumber, pageSize);
+                    var pagedList = hotelSummaries.ToPagedList(pageNumber, pageSize);
 
                     if (!pagedList.HasNextPage && (bool)Session["MoreResultsAvailable"])
                     {
-                        string info = "<p>Hey, we have more results for you! Would you like to see more results?</p>";
-                        info += "<br/>";
-                        info += "<a class='btn btn-small btn-info btn-block'";
-                        info += " href='" + Url.Action("Results", new { cacheKey = Session["CacheKey"], cacheLocation = Session["CacheLocation"], page = pagedList.PageNumber + 1 }) + "'";
-                        info += ">Yes, I want to see more!</a>";
-                        
+                        var info = "<p>Hey, we have more results for you! Would you like to see more results?</p>";
+                            info += "<br/>";
+                            info += "<a class='btn btn-small btn-info btn-block'";
+                            info += " href='" + Url.Action("Results", new { cacheKey = Session["CacheKey"], cacheLocation = Session["CacheLocation"], page = pagedList.PageNumber + 1 }) + "'";
+                            info += ">Yes, I want to see more!</a>";
+
                         Information(new MvcHtmlString(info));
                     }
 
                     return View("Results", pagedList);
-                }    
+                }
             }
             return RedirectToAction("Index");
         }
@@ -259,22 +247,21 @@ namespace H724.UI.Web.Controllers
         [OutputCache(Location = OutputCacheLocation.ServerAndClient, Duration = 60, NoStore = true, VaryByParam = "destinationString")]
         public JsonResult Landmarks(string destinationString)
         {
-            LocationInfoRequest request = new LocationInfoRequest();
-            request.DestinationString = destinationString;
+            var request = new LocationInfoRequest { DestinationString = destinationString };
 
             try
             {
-                LocationInfoResponse response = _expediaService.GetGeoSearch(request);
+                var response = _expediaService.GetGeoSearch(request);
 
                 var landmarks = response.LocationInfos.LocationInfo
-                    .Where(info => info.Active && info.GeoAccuracy >= 1 && info.LocationInDestination && info.ActivePropertyCount > 0)
-                        .Select(info => new
-                        {
-                            destinationId = info.DestinationId,
-                            description = info.Description
-                        })
-                        .OrderBy(arg => arg.description) // Order by landmark description
-                        .ToList();
+                                        .Where(info => info.Active && info.GeoAccuracy >= 1 && info.LocationInDestination && info.ActivePropertyCount > 0)
+                                        .Select(info => new
+                                        {
+                                            destinationId = info.DestinationId,
+                                            description = info.Description
+                                        })
+                                        .OrderBy(arg => arg.description) // Order by landmark description
+                                        .ToList();
 
                 return Json(landmarks, JsonRequestBehavior.AllowGet);
 
