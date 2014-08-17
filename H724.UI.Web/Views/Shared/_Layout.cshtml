@@ -235,7 +235,6 @@
                 $('ol.rooms > :not(li:first)').hide(); // hide all rooms except first
 
                 function roomSort() {
-
                     var idx = $('select#NumberOfBedrooms').val();
 
                     $('ol.rooms > li:gt(' + (idx - 1) + ')').each(function() {
@@ -322,19 +321,15 @@
                 $('#destinationId').closest('.controls').find('span.add-on');
 
                 if ($('input#Destination').length > 0) {
-
                     console.log("Pre-populating any landmarks...");
                     populateNearbyLandmarks($('input#Destination').val());
 
                 } else {
-
                     console.log("No destination selected...");
                     $('select#destinationId').append($("<option></option>").attr("value", "").text("Enter a destination"));
                 }
-
-
+                
                 function populateNearbyLandmarks(destination) {
-
                     // Set the loading text in the select list
                     $('select#destinationId').html("<option value=''>" + 'Checking for landmarks...' + "</option>");
 
@@ -342,7 +337,6 @@
                     $('#destinationId').closest('div.controls').find('span.add-on').show();
 
                     // Get nearby landmarks based on the users input destination string
-
                     $.ajax({
                         url: '@Url.Action("Landmarks", "Search")',
                         type: "GET", // HTTP GET
@@ -351,41 +345,30 @@
                             destinationString: destination
                         },
                         success: function(data) {
-
                             // Remove any pre-populated options
                             $('select#destinationId option').remove();
 
                             if (data.length > 0) {
-
                                 // Ok, so we have some results to show
-
                                 $.each(data, function(index, landmark) {
-
                                     // console.log(landmark.description + "[" + landmark.destinationId + "]");
-
                                     var option = "<option value='" + landmark.destinationId + "'>" + landmark.description + "</option>";
                                     $('select#destinationId').append(option);
-
                                 });
 
                                 $('select#destinationId').prepend("<option value='' selected='selected'>All</option>");
                                 $('select#destinationId').scrollTop(10);
 
                             } else {
-
                                 $('select#destinationId').html($("<option></option>").attr("value", "").text("No landmarks available"));
-
                             }
 
                             $('select#destinationId').effect("highlight", {
                                 color: '#3a87ad' // Bootstrap Info Colour
                             }, 500);
-
                         },
                         error: function(e) {
-
                             console.log("Error populating landmarks from response: " + e);
-
                             $('select#destinationId').html($("<option></option>").attr("value", "").text("No landmarks available"));
                         }
                     });

@@ -494,6 +494,64 @@ namespace H724.Services.Expedia.Hotels.Api.Impl
             return Execute<LocationInfoResponse>(request);
         }
 
+        public override LocationInfoResponse GetGeoSearchWithString(string destinationString, int type)
+        {
+            var request = new RestRequest
+            {
+                Resource = "geoSearch",
+                Method = Method.GET,
+                RootElement = "LocationInfoResponse"
+            };
+
+            // LOCATION REQUESTS
+
+            //Values: 
+            //0: unknown
+            //1: city
+            //2: landmark
+            //3: neighborhood
+            //4: airport
+            //5: address
+
+            if (destinationString.HasValue())
+            {
+                // Get Landmarks by Destination String
+                request.AddParameter("destinationString", destinationString);
+                request.AddParameter("type", type); // Landmarks I presume
+            }
+
+            return Execute<LocationInfoResponse>(request);
+        }
+
+        public override LocationInfoResponse GetGeoSearchWithId(string destinationId, int type)
+        {
+            var request = new RestRequest
+            {
+                Resource = "geoSearch",
+                Method = Method.GET,
+                RootElement = "LocationInfoResponse"
+            };
+
+            // LOCATION REQUESTS
+
+            //Values: 
+            //0: unknown
+            //1: city
+            //2: landmark
+            //3: neighborhood
+            //4: airport
+            //5: address
+
+            if (destinationId.HasValue())
+            {
+                // Return information about an already known destination Id, something specific for a stored session
+                request.AddParameter("destinationId", destinationId);
+                request.AddParameter("type", type); // Landmarks I presume
+            }
+
+            return Execute<LocationInfoResponse>(request);
+        }
+
 
         /// <summary>
         /// <a href="http://developer.ean.com/docs/hotels/version_3/cancel_reservation/">Cancel Reservation</a>

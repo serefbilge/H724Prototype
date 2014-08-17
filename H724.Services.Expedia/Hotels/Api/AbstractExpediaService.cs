@@ -110,6 +110,8 @@ namespace H724.Services.Expedia.Hotels.Api
         public abstract HotelRoomAvailabilityResponse GetHotelRoomAvailability(HotelRoomAvailabilityRequest roomAvailabilityRequest);
         public abstract HotelRoomReservationResponse GetHotelRoomReservation(HotelRoomReservationRequest roomReservationRequest);
         public abstract LocationInfoResponse GetGeoSearch(LocationInfoRequest locationInfoRequest);
+        public abstract LocationInfoResponse GetGeoSearchWithString(string destinationString, int type);
+        public abstract LocationInfoResponse GetGeoSearchWithId(string destinationId, int type);
         public abstract HotelRoomCancellationResponse GetHotelRoomCancel(HotelRoomCancellationRequest hotelRoomCancellationRequest);
         public abstract PingResponse GetPing(PingRequest pingRequest);
 
