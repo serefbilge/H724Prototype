@@ -171,8 +171,8 @@ namespace H724.UI.Web.Controllers
             {
                 HotelId = Convert.ToInt64(bookingWizard.HotelInfo.HotelId),
                 CurrencyCode = bookingWizard.HotelInfo.CurrencyCode,
-                ArrivalDate = Convert.ToDateTime(bookingWizard.HotelInfo.StandardCheckin),
-                DepartureDate = Convert.ToDateTime(bookingWizard.HotelInfo.StandardCheckout),
+                ArrivalDate = DateTime.Parse(bookingWizard.HotelInfo.StandardCheckin).Date,
+                DepartureDate = DateTime.Parse(bookingWizard.HotelInfo.StandardCheckout).Date,
                 SupplierType = bookingWizard.HotelInfo.SupplierType,
                 RoomTypeCode = bookingWizard.HotelInfo.RoomTypeCode,
                 RateCode = bookingWizard.HotelInfo.RateCode,
