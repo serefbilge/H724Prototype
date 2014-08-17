@@ -67,44 +67,38 @@ namespace H724.UI.Web.Controllers
                 try
                 {
                     // Build the request
-
-                    var request = new HotelListRequest();
-
-                    // Arriving on...
-                    request.ArrivalDate = new DateTime(model.CheckinDate.Year, model.CheckinDate.Month, model.CheckinDate.Day);
-                    // Departing on...
-                    request.DepartureDate = new DateTime(model.CheckoutDate.Year, model.CheckoutDate.Month, model.CheckoutDate.Day);
-
-                    // At this address
-                    request.City = model.City;
-                    request.StateProvinceCode = model.Province;
-                    request.CountryCode = model.Country;
-
-                    // Or this location
-                    request.DestinationString = model.Destination;
-
-                    // Or hotels around this destination
-                    request.DestinationId = model.DestinationId;
-
-                    // With ratings of the following
-                    request.MaxStarRating = model.MaximumStarRating;
-                    request.MinStarRating = model.MinimumStarRating;
-
-                    // And to cater this many rooms/adults/children
-                    request.NumberOfBedRooms = model.NumberOfBedrooms;
-                    request.RoomGroup = model.RoomViewModels
-                        .Where(room => room.Adults > 0 || room.Children > 0)
-                        .Select(room => new Room()
-                        {
-                            NumberOfAdults = room.Adults.HasValue ? room.Adults.Value : 0,
-                            NumberOfChildren = room.Children.HasValue ? room.Children.Value : 0,
-                            ChildAges = room.AgeViewModels.Select(a => a.Age != null ? a.Age.Value : 0).ToList(),
-                        })
-                        .ToList();
-
-                    // Sort the request by prices
-                    request.Sort = "PRICE";
-
+                    var request = new HotelListRequest
+                    {
+                        // Arriving on...
+                        ArrivalDate = new DateTime(model.CheckinDate.Year, model.CheckinDate.Month, model.CheckinDate.Day),
+                        // Departing on...
+                        DepartureDate = new DateTime(model.CheckoutDate.Year, model.CheckoutDate.Month, model.CheckoutDate.Day),
+                        // At this address
+                        // Or this location
+                        // Or hotels around this destination
+                        City = model.City,
+                        StateProvinceCode = model.Province,
+                        CountryCode = model.Country,
+                        DestinationString = model.Destination,
+                        DestinationId = model.DestinationId,
+                        // With ratings of the following
+                        MaxStarRating = model.MaximumStarRating,
+                        MinStarRating = model.MinimumStarRating,
+                        // And to cater this many rooms/adults/children
+                        NumberOfBedRooms = model.NumberOfBedrooms,
+                        RoomGroup = model.RoomViewModels
+                            .Where(room => room.Adults > 0 || room.Children > 0)
+                            .Select(room => new Room()
+                            {
+                                NumberOfAdults = room.Adults.HasValue ? room.Adults.Value : 0,
+                                NumberOfChildren = room.Children.HasValue ? room.Children.Value : 0,
+                                ChildAges = room.AgeViewModels.Select(a => a.Age != null ? a.Age.Value : 0).ToList(),
+                            })
+                            .ToList(),
+                        // Sort the request by prices
+                        Sort = "PRICE"
+                    };
+                    
                     // Hotel should have these chosen amenities in the results
                     if (model.Amenities != null)
                     {
@@ -118,14 +112,14 @@ namespace H724.UI.Web.Controllers
                     }
 
                     // Response
-                    HotelListResponse response = _expediaService.GetHotelAvailabilityList(request);
+                    var response = _expediaService.GetHotelAvailabilityList(request);
 
                     if (response.EanWsError != null)
                     {
                         Error(response.EanWsError.PresentationMessage);
                         return View(model);
                     }
-
+                    
                     Session["Search"] = model;
                     Session["Response"] = response;
                     Session["DestinationId"] = model.DestinationId;

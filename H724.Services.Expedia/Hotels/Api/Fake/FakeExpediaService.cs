@@ -112,6 +112,16 @@ namespace H724.Services.Expedia.Hotels.Api.Fake
             return locationInfoResponse;
         }
 
+        public override LocationInfoResponse GetGeoSearchWithString(string destinationString, int type)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override LocationInfoResponse GetGeoSearchWithId(string destinationId, int type)
+        {
+            throw new NotImplementedException();
+        }
+
         public override HotelRoomCancellationResponse GetHotelRoomCancel(HotelRoomCancellationRequest hotelRoomCancellationRequest)
         {
             throw new NotImplementedException();

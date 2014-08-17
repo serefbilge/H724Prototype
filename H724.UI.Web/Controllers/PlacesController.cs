@@ -57,7 +57,9 @@ namespace H724.UI.Web.Controllers
 
             var request2 = new LocationInfoRequest { DestinationString = text };
 
-            var response2 = _expediaService.GetGeoSearch(request2);
+            var response2 = _expediaService.GetGeoSearchWithString(request2.DestinationString, 2);
+
+            var destinations = response2.LocationInfos.LocationInfo.Select(x => x.DestinationId).Distinct();
 
             return Json(projection.ToList(), JsonRequestBehavior.AllowGet);
         }

@@ -10,8 +10,7 @@ namespace H724.Services.GeoIp
 
         private T Execute<T>(RestRequest request) where T : new()
         {
-            var client = new RestClient();
-            client.BaseUrl = new Uri(BaseUrl).AbsoluteUri;
+            var client = new RestClient {BaseUrl = new Uri(BaseUrl).AbsoluteUri};
 
             var response = client.Execute<T>(request);
 
@@ -27,11 +26,11 @@ namespace H724.Services.GeoIp
         {
             Require.Argument("geoLookUpRequest", geoLookUpRequest);
 
-            RestRequest restRequest = new RestRequest("/?{ip}");
+            var restRequest = new RestRequest("/?{ip}");
+
             restRequest.AddParameter("ip", geoLookUpRequest.IpAddress, ParameterType.UrlSegment);
             restRequest.RootElement = "";
             
-
             return Execute<GeoLookUpResponse>(restRequest);
         }
     }

@@ -54,6 +54,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{C0C8A2
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "H724.Services.GeoData", "H724.Services.GeoData\H724.Services.GeoData.csproj", "{AAD59E42-CBCD-4EE1-B9A9-1DABAF00ADA9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -104,6 +106,10 @@ Global
 		{40190C3D-B4D4-4D1E-B198-26598F7E6A2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{40190C3D-B4D4-4D1E-B198-26598F7E6A2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{40190C3D-B4D4-4D1E-B198-26598F7E6A2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AAD59E42-CBCD-4EE1-B9A9-1DABAF00ADA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AAD59E42-CBCD-4EE1-B9A9-1DABAF00ADA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AAD59E42-CBCD-4EE1-B9A9-1DABAF00ADA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AAD59E42-CBCD-4EE1-B9A9-1DABAF00ADA9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
