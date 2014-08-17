@@ -114,26 +114,29 @@
             <div class="text-area">
                 Country code
             </div>
-            @Html.TextBoxFor(model => model.AddressInfo.CountryCode)
+            @*Html.TextBoxFor(model => model.AddressInfo.CountryCode)*@
+        <input id="AddressInfo_CountryCode" type="text" value="UK" name="AddressInfo.CountryCode">
+    </div>
+    <div class="inner-form">
+        <div class="text-area">
+            Street address
         </div>
-        <div class="inner-form">
-            <div class="text-area">
-                Street address
-            </div>
-            @*@Html.TextBoxFor(model => model.AddressInfo.Address1)*@
+         @*Html.TextBoxFor(model => model.AddressInfo.Address1)*@
             <input id="AddressInfo_Address1" type="text" value="travelnow" name="AddressInfo.Address1">
         </div>
         <div class="inner-form">
             <div class="text-area">
                 City
             </div>
-            @Html.TextBoxFor(model => model.AddressInfo.City)
+            @*Html.TextBoxFor(model => model.AddressInfo.City)*@
+            <input id="AddressInfo_City" type="text" value="Leeds" name="AddressInfo.City">
         </div>
         <div class="inner-form">
             <div class="text-area">
                 Postal code
             </div>
-            @Html.TextBoxFor(model => model.AddressInfo.PostalCode)
+            @*Html.TextBoxFor(model => model.AddressInfo.PostalCode)*@
+            <input id="AddressInfo_PostalCode" type="text" value="LS18" name="AddressInfo.PostalCode">
         </div>
         <div class="inner-form">
             <div class="text-area">
