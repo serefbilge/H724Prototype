@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace H724.Services.GeoData.Models
 {
-    public class AirportCoordinatesList
+    public class AirportCoordinatesList : BaseEntity
     {
         public string AirportID { get; set; }
         public string AirportCode { get; set; }

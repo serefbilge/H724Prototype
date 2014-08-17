@@ -20,6 +20,4 @@ namespace H724.Services.Expedia.Hotels.Models
         public double Longitude { get; set; }
         public double RefLocationMileage { get; set; }
     }
-
-
 }

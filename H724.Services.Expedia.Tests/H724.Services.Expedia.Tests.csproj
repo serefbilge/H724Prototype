@@ -75,6 +75,7 @@
     <Compile Include="RequestBuildingTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="SampleData\HotelRoomAvailabilityResponse2.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

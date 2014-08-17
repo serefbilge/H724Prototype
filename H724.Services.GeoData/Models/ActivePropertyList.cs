@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace H724.Services.GeoData.Models
 {
-    public class ActivePropertyList
+    public class ActivePropertyList: BaseEntity
     {
         public string EANHotelID { get; set; }
         public string SequenceNumber { get; set; }

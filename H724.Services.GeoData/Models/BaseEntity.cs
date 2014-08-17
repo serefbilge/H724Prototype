@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace H724.Services.GeoData.Models
 {
-    public class RegionEANHotelIDMapping : BaseEntity
+    public abstract class BaseEntity
     {
-        public string RegionID { get; set; }
-        public string EANHotelID { get; set; }
+        public int Id { get; set; }
+        public DateTime DateCreated { set; get; }
     }
 }

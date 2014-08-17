@@ -1,10 +1,13 @@
 using System;
 using System.Diagnostics;
 using System.Web;
+using H724.Repository.Module;
 using H724.Services.Expedia.Hotels.Api;
+using H724.Services.GeoData.Module;
 using H724.Services.Google.DistanceMatrix.Api;
 using H724.Services.Google.Places.Api;
 using H724.UI.Web.Controllers;
+using H724.UI.Web.Module;
 using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 using Ninject;
 using Ninject.Web.Common;
@@ -13,10 +16,10 @@ using H724.Services.GeoIp.Module;
 using H724.Services.Google.Module;
 using Ninject.Modules;
 
-[assembly: WebActivator.PreApplicationStartMethod(typeof(H724.UI.Web.App_Start.NinjectWebCommon), "Start")]
-[assembly: WebActivator.ApplicationShutdownMethodAttribute(typeof(H724.UI.Web.App_Start.NinjectWebCommon), "Stop")]
+[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(H724.UI.Web.NinjectWebCommon), "Start")]
+[assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(H724.UI.Web.NinjectWebCommon), "Stop")]
 
-namespace H724.UI.Web.App_Start
+namespace H724.UI.Web
 {
     public static class NinjectWebCommon 
     {
@@ -62,9 +65,12 @@ namespace H724.UI.Web.App_Start
         {
             kernel.Load(new INinjectModule[]
                 {
+                    new RepositoryModule(),
+                    new GeoDataModule(),
                     new GeoModule(),
                     new ExpediaModule(),
-                    new GoogleModule()
+                    new GoogleModule(),
+                    new CommonModule() 
                 });
         }        
     }

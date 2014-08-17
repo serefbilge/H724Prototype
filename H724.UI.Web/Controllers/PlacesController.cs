@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using H724.Services.Expedia.Hotels.Models.Request;
+using H724.Services.GeoData.Services;
 using H724.Services.Google.Places.Api;
 using H724.Services.Google.Places.Models.Autocomplete;
 using H724.UI.Web.Helpers;
@@ -23,10 +24,8 @@ namespace H724.UI.Web.Controllers
     /// </summary>
     public class PlacesController : BaseExpediaController
     {
-        private readonly IPlacesService _placesService;
-
         [Inject]
-        public PlacesController(AbstractExpediaService expediaService, IPlacesService placesService)
+        public PlacesController(AbstractExpediaService expediaService, IPlacesService placesService, IGeoDataService geoDataService)
         {
             if (expediaService == null) // Guard clause
             {
@@ -38,8 +37,14 @@ namespace H724.UI.Web.Controllers
                 throw new ArgumentNullException("placesService");
             }
 
+            if (placesService == null) // Guard Clause
+            {
+                throw new ArgumentNullException("geoDataService");
+            }
+
             _expediaService = expediaService;
             _placesService = placesService;
+            _geoDataService = geoDataService;
         }
 
         /// <summary>
@@ -59,9 +64,17 @@ namespace H724.UI.Web.Controllers
 
             var response2 = _expediaService.GetGeoSearchWithString(request2.DestinationString, 2);
 
-            var destinations = response2.LocationInfos.LocationInfo.Select(x => x.DestinationId).Distinct();
+            var testResult = GetActivePropertyCity(request2.DestinationString);
 
             return Json(projection.ToList(), JsonRequestBehavior.AllowGet);
+        }
+
+        // Test
+        private string GetActivePropertyCity(string key)
+        {
+            var result = _geoDataService.GetActivePropertyCity(key);
+
+            return result;
         }
 
         /// <summary>

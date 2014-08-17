@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace H724.Services.GeoData.Models
 {
-    public class ParentRegionList
+    public class ParentRegionList : BaseEntity
     {
         public string RegionID { get; set; }
         public string RegionType { get; set; }

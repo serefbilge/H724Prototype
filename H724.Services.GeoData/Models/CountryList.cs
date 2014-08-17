@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace H724.Services.GeoData.Models
 {
-    public class CountryList
+    public class CountryList : BaseEntity
     {
         public string CountryID { get; set; }
         public string LanguageCode { get; set; }
