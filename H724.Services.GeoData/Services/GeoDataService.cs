@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using H724.Repository;
@@ -21,11 +22,32 @@ namespace H724.Services.GeoData.Services
             _parentRegionRepository = parentRegionRepository;
         }
 
-        public string GetActivePropertyCity(string key)
+        public List<ActivePropertyList> GetActivePropertyCity(string key)
         {
-            var obj = _activePropertyRepository.Table().FirstOrDefault();
+            var subKeyList = key.Split(' ').ToList().Select(x => x.Trim()).ToList();
+            var actTable = _activePropertyRepository.Table();
+            var poiTable = _pointOfInterestCoordinatesRepository.Table();
+            var parentTable = _parentRegionRepository.Table();
 
-            return obj != null ? obj.City : "";
+            var resultList = new List<ActivePropertyList>();
+
+            foreach (var subKey in subKeyList)
+            {
+                var kl = subKey.ToLower();
+                var ku = subKey.ToUpper();
+
+                var query = from ac in actTable
+                            from po in poiTable
+                            from pa in parentTable
+                            where (po.RegionName.ToLower().Contains(kl) || po.RegionName.ToUpper().Contains(ku))
+                                  &&po.RegionID == pa.RegionID 
+                                  && pa.ParentRegionID == ac.RegionID
+                            select ac;
+
+                resultList.AddRange(query.Distinct().ToList());
+            }
+            
+            return resultList;
         }
     }
 }

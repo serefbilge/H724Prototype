@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using H724.Services.Expedia.Hotels.Models.Request;
+using H724.Services.GeoData.Models;
 using H724.Services.GeoData.Services;
 using H724.Services.Google.Places.Api;
 using H724.Services.Google.Places.Models.Autocomplete;
@@ -70,11 +71,9 @@ namespace H724.UI.Web.Controllers
         }
 
         // Test
-        private string GetActivePropertyCity(string key)
+        private List<ActivePropertyList> GetActivePropertyCity(string key)
         {
-            var result = _geoDataService.GetActivePropertyCity(key);
-
-            return result;
+            return _geoDataService.GetActivePropertyCity(key);
         }
 
         /// <summary>

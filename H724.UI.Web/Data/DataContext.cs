@@ -17,16 +17,16 @@ namespace H724.UI.Web.Data
         {
         }
 
-        public IDbSet<ActivePropertyList> ActivePropertyList { get; set; }
-        public IDbSet<AirportCoordinatesList> AirportCoordinatesList { get; set; }
-        public IDbSet<AliasRegionList> AliasRegionList { get; set; }
-        public IDbSet<CityCoordinatesList> CityCoordinatesList { get; set; }
-        public IDbSet<CountryList> CountryList { get; set; }
-        public IDbSet<NeighborhoodCoordinatesList> NeighborhoodCoordinatesList { get; set; }
-        public IDbSet<ParentRegionList> ParentRegionList { get; set; }
-        public IDbSet<PointsOfInterestCoordinatesList> PointsOfInterestCoordinatesList { get; set; }
-        public IDbSet<RegionCenterCoordinatesList> RegionCenterCoordinatesList { get; set; }
-        public IDbSet<RegionEANHotelIDMapping> RegionEANHotelIDMapping { get; set; }
+        public IDbSet<ActivePropertyList> ActivePropertyLists { get; set; }
+        public IDbSet<AirportCoordinatesList> AirportCoordinatesLists { get; set; }
+        public IDbSet<AliasRegionList> AliasRegionLists { get; set; }
+        public IDbSet<CityCoordinatesList> CityCoordinatesLists { get; set; }
+        public IDbSet<CountryList> CountryLists { get; set; }
+        public IDbSet<NeighborhoodCoordinatesList> NeighborhoodCoordinatesLists { get; set; }
+        public IDbSet<ParentRegionList> ParentRegionLists { get; set; }
+        public IDbSet<PointsOfInterestCoordinatesList> PointsOfInterestCoordinatesLists { get; set; }
+        public IDbSet<RegionCenterCoordinatesList> RegionCenterCoordinatesLists { get; set; }
+        public IDbSet<RegionEANHotelIDMapping> RegionEANHotelIDMappings { get; set; }
 
         public override int SaveChanges()
         {
