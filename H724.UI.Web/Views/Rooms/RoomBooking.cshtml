@@ -1,0 +1,837 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotels 7/24</title>
+    <!-- Bootstrap -->
+    <link href="@Url.Content("~/ContentNew/assets/bootstrap3.0.3/css/bootstrap.min.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/ContentNew/custom.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/ContentNew/style01.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/ContentNew/examples/carousel/carousel.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/ContentNew/searchbox/main.css")" rel="stylesheet" />
+    <script src="@Url.Content("~/ContentNew/searchbox/home_page_alljs_v.55.53132.js")"></script>
+    <script src="@Url.Content("~/ContentNew/searchbox/home_page_searchbox_children_en_row.js")"></script>
+    <link href="@Url.Content("~/ContentNew/searchbox/home_page_allcss_v.55.53132.css")" rel="stylesheet" />
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+          <script src="@Url.Content("~/ContentNew/assets/html5shiv.js")"></script>
+          <script src="@Url.Content("~/ContentNew/assets/respond.min.js")"></script>
+        <![endif]-->
+    <!-- Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Lato:400,100,100italic,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:700,400,300,300italic' rel='stylesheet' type='text/css'>
+    <!-- Font-Awesome -->
+    <link href="@Url.Content("~/ContentNew/assets/font-awesome-4.0.3/css/font-awesome.min.css")" rel="stylesheet" />
+
+    <!-- REVOLUTION BANNER CSS SETTINGS -->
+    <link href="@Url.Content("~/ContentNew/fullscreen.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/ContentNew/assets/rs-plugin/css/settings.css")" rel="stylesheet" />
+    <!-- Picker UI-->
+    <link href="@Url.Content("~/ContentNew/assets/jquery-ui/jquery-ui.css")" rel="stylesheet" />
+    <!-- bin/jquery.slider.min.css -->
+    <link rel="stylesheet" href="@Url.Content("~/ContentNew/assets/plugins/jslider/css/jslider.css")" type="text/css">
+    <link rel="stylesheet" href="@Url.Content("~/ContentNew/assets/plugins/jslider/css/jslider.round.css")" type="text/css">
+    <!-- jQuery-->
+    <script src="@Url.Content("~/ContentNew/assets/jquery/jquery.v2.0.3.js")"></script>
+    <script src="@Url.Content("~/ContentNew/assets/jquery-ui/jquery-ui.js")"></script>
+    <script src="@Url.Content("~/ContentNew/searchbox/main.js")"></script>
+    <script src="@Url.Content("~/ContentNew/chosen.jquery.js")" type="text/javascript"></script>
+    <link href="@Url.Content("~/ContentNew/assets/Masonry/masonry.css")" rel="stylesheet" />
+</head>
+<body id="top" class="thebg">
+    <div class="navbar-wrapper3 navbar-fixed-top2">
+        <div class="container">
+            <div class="navbar">
+                <!-- Navigation-->
+                <div class="navbar-header">
+                    <button data-target=".navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a href="\" class="navbar-brand"> <img src="@Url.Content("~/ContentNew/images/logo.png")" alt="Hotels 7/24 Logo" class="logo" /> </a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="bordernone hovernone jointcontact visible-sm">
+                            <div class="contactnumber">
+                                <span class="glyphicon glyphicon-earphone"></span> <span> US and Canada:</span>1-800-780-5733 <br>
+                                <span>Europe:</span> 00-800-11-20-11-40
+                            </div>
+                        </li>
+                        <li class="bordernone hovernone hidden-sm">
+                            <div class="contactnumber"> <span class="glyphicon glyphicon-earphone"></span> <span> US and Canada:</span>1-800-780-5733 </div>
+                        </li>
+                        <li class="hovernone  hidden-sm">
+                            <div class="contactnumber"> <span class="glyphicon glyphicon-earphone"></span> <span>Europe:</span> 00-800-11-20-11-40 </div>
+                        </li>
+                        <li class="currency">
+                            <select data-placeholder="USD $ " class="chosen-select" tabindex="17" id="single-label-example">
+                                <option value=""></option>
+                                <option>USD $ </option>
+                                <option>EUR € </option>
+                                <option>GBP £</option>
+                                <option>AED AED</option>
+                                <option>ARS ARS</option>
+                                <option>AUD A$</option>
+                                <option>BRL R$</option>
+                                <option>CAD C$</option>
+                                <option>CHF CHF</option>
+                                <option>CLP CLP</option>
+                                <option>CNY ¥</option>
+                                <option>DKK kr</option>
+                                <option>HKD HK$</option>
+                                <option>IDR Rp</option>
+                                <option>ILS ₪</option>
+                            </select>
+                        </li>
+                        <li class="language">
+                            <select data-placeholder="English" class="chosen-select " tabindex="17" id="single-label-example">
+                                <option value=""></option>
+                                <option> <img alt="" src="@Url.Content("~/ContentNew/images/it_flag.gif")">Italiano</option>
+                                <option> <img alt="" src="@Url.Content("~/ContentNew/images/de_flag.gif")">Deutsch</option>
+                                <option> <img alt="" src="@Url.Content("~/ContentNew/images/es_flag.gif")">Español</option>
+                                <option> <img alt="" src="@Url.Content("~/ContentNew/images/fr_flag.gif")">Français</option>
+                                <option> <img alt="" src="@Url.Content("~/ContentNew/images/nl_flag.gif")">Nederlands</option>
+                                <option> <img alt="" src="@Url.Content("~/ContentNew/images/no_flag.gif")">Norsk</option>
+                                <option> <img alt="" src="@Url.Content("~/ContentNew/images/sv_flag.gif")">Svenska</option>
+                                <option> <img alt="" src="@Url.Content("~/ContentNew/images/ja_flag.gif")">日本語</option>
+                                <option> <img alt="" src="@Url.Content("~/ContentNew/images/zh_flag.gif")">中文</option>
+                            </select>
+                        </li>
+                        <li>
+                            <a href="#">Manage Booking</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /Navigation-->
+            </div>
+        </div>
+    </div>
+    <div class="row clearfix">
+        <div class="container mt25 offset-0 paymentform">
+            <!-- RIGHT CONTENT -->
+            <div class="col-md-4 col-sm-push-8">
+
+                <div class="pagecontainer2 paymentbox grey">
+                    <h4>Trip Summary</h4>
+                    <div class="padding30 text-left">
+                        <img alt="" class="left margright20" src="@Url.Content("~/ContentNew/images/thumb.png")">
+                        <span class="opensans size14 dark bold">Mabely Grand Hotel <img class="lrnmoreimg" src="@Url.Content("~/ContentNew/images/lrnmore.gif")" /></span>
+                        <span class="opensans size12 grey">Zakynthos, Greece</span><br>
+                        <img alt="" src="@Url.Content("~/ContentNew/images/smallrating-5.png")">
+                    </div>
+                    <div class="line3"></div>
+
+                    <div class="hpadding20 margtop30">
+                        <table class="table margbottom20">
+                            <tbody>
+                                <tr>
+                                    <td colspan="2" class="text-left"><span class="dark">Room 1</span>: Standard Double Room</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" class="text-left"><span class="dark">5 Nights</span>: Sep/10/2013 - Sep/14/2013</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-left">
+                                        <span class="dark">Room 1</span>: 2 Adults<br>
+                                        <span class="lred2">
+                                            5 Nights
+                                            <!-- Collapse 1 -->
+                                            <button data-target="#collapse1" data-toggle="collapse" class="collapsebtn3 mt-5 collapsed" type="button"></button>
+                                        </span>
+                                        <div class="collapse" id="collapse1" style="height: 0px;">
+                                            <div class="left size12 lblue">
+                                                Thu Nov 14<br>
+                                                Fri Nov 15
+                                            </div>
+                                            <div class="right size12 lblue">
+                                                $15.92<br>
+                                                $20.00
+                                            </div><div class="clearfix"></div>
+                                        </div>
+                                        <!-- End of collapse 1 -->
+                                        <div class="clearfix"></div>
+
+
+                                        <span class="lred2">Taxes &amp; Fees <img class="lrnmoreimg" src="@Url.Content("~/ContentNew/images/lrnmore.gif")" /></span>
+                                        <div class="collapse" id="collapse2" style="height: 0px;">
+                                            <div class="left size12 lred">
+                                                Thu Nov 14<br>
+                                                Fri Nov 15
+                                            </div>
+                                            <div class="right size12 lred">
+                                                $1.51<br>
+                                                $1.00
+                                            </div><div class="clearfix"></div>
+                                        </div>
+                                        <!-- End of collapse 1 -->
+                                        <div class="clearfix"></div>
+
+                                    </td>
+                                    <td class="text-right">
+                                        avg./night<br>
+                                        $35.92<br>
+                                        $2.51<br>
+                                    </td>
+                                </tr>
+                                <tr style="border-top:1px solid #eeeeee;">
+                                    <td class="text-left">Total due today:</td>
+                                    <td class="text-right dark">$38.43</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-left">
+                                        <span class="lred2">Due at Hotel <button data-target="#collapseN" data-toggle="collapse" class="collapsebtn3 mt-5 collapsed" type="button"></button></span>
+                                        <div class="collapse" id="collapseN" style="height: 0px;">
+                                            <div class="left size12 lblue">
+                                                Thu Nov 14<br>
+                                                Fri Nov 15
+                                            </div>
+                                            <div class="right size12 lblue">
+                                                $1.51<br>
+                                                $1.00
+                                            </div><div class="clearfix"></div>
+                                        </div>
+                                        <!-- End of collapse 1 -->
+                                        <div class="clearfix"></div>
+
+                                    </td>
+                                    <td class="text-right dark">$0.00</td>
+                                </tr>
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="line3"></div>
+                    <div class="padding30">
+                        <span class="left size14 dark">Trip Total:</span>
+                        <span class="right lred2 bold size18">$192.15</span>
+                        <div class="clearfix"></div>
+                    </div>
+
+
+                </div><br>
+
+                <div class="pagecontainer2 needassistancebox text-left">
+                    <div class="gurantee">
+                        <ul>
+                            <li><a href=""><span><img src="@Url.Content("~/ContentNew/images/check.png")" /></span> Best Price Guarantee</a></li>
+                        </ul>
+                        <p>Find a lower price -<a href="#" class="lred2">we refund twice the difference.</a></p>
+
+                    </div>
+                </div><br>
+                <div class="pagecontainer2 needassistancebox">
+                    <div class="cpadding1 paddingtop">
+                        <span class="icon-help"></span>
+                        <p class="opensans size30 lblue xslim text-left">1860-500-2121</p>
+                        <p class="size14 grey text-left">Same great rates plus expert advice</p>
+
+                    </div>
+                </div>
+                <br />
+                <!--div class="pagecontainer2 loginbox">
+                    <div class="cpadding1">
+                        <span class="icon-lockk"></span>
+                        <h3 class="opensans">Log in</h3>
+                        <input type="text" placeholder="Username" class="form-control logpadding">
+                        <br>
+                        <input type="text" placeholder="Password" class="form-control logpadding">
+                        <div class="margtop20">
+                            <div class="left">
+                                <div class="checkbox padding0">
+                                    <label>
+                                      <input type="checkbox">Remember
+                                    </label>
+                                </div>
+                                <a class="greylink" href="#">Lost password?</a><br>
+                            </div>
+                            <div class="right">
+                                <button onclick="errorMessage()" type="submit" class="btn-search5">Login</button>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div><br>
+                    </div>
+                </div-->
+                <a href="#" class="lred2">Give your feedback to help us make improvements <img class="lrnmoreimg" src="@Url.Content("~/ContentNew/images/lrnmore.gif")" /></a>
+
+            </div><br />
+            <!-- END OF RIGHT CONTENT -->
+            <!-- LEFT CONTENT -->
+            <div class="col-md-8 pagecontainer2 offset-0 col-sm-pull-4">
+
+                <div class="padding30 grey">
+                    <span class="size16px bold dark left">Who's traveling? </span>
+                    <div class="roundstep active right">1</div>
+                    <div class="clearfix"></div>
+                    <div class="line4"></div>
+                    <p class="text-left">
+                        Sign in to your <a href="#" class="lred2">Hotels724 Account</a> or connect using <a href="#" class="lred2">
+                            <img src="@Url.Content("~/ContentNew/images/facebookLogo.png")" /> Facebook
+                        </a> to book faster!
+                    </p>
+                    <p class="text-left">Please tell us who will be checking in. Must be 18 or older.</p> <br>
+                    <div class="h4 form_row text-left">
+                        <span class="bold">
+                            Room 1:
+                        </span>
+                        2 Adults, 1 Child, 1 double<input type="hidden" class="book" value="13" name="hotelTripPreferences.hotelRoomPreferences[0].bedType"><input type="hidden" class="book" value="NON_SMOKING" name="hotelTripPreferences.hotelRoomPreferences[0].smokingPreference">
+                    </div>
+                    <br>
+                    <div class="col-md-4 textalign">
+                        <div class="margtop15"><span class="dark">Contact Name:</span><span class="red">*</span></div>
+                    </div>
+                    <div class="col-md-4 text-left">
+                        <span class="size12">First and Last Name*</span>
+                        <input type="text" placeholder="" class="form-control ">
+                    </div>
+                    <div class="col-md-4 textleft margtop15">
+                    </div>
+                    <div class="clearfix"></div>
+
+                    <br>
+                    <div class="col-md-4 textalign">
+                        <div class="margtop15"><span class="dark">Phone Number:</span><span class="red">*</span></div>
+                    </div>
+                    <div class="col-md-3 text-left">
+                        <span class="size12">Country code*</span>
+                        <select class="form-control mySelectBoxClass hasCustomSelect" style="width: 203px; position: absolute; opacity: 0; height: 34px; font-size: 14px;">
+                            <option selected="">xxx-xxx-xxx-772</option>
+                            <option>xxx-xxx-xxx-039</option>
+                        </select><span class="customSelect form-control mySelectBoxClass" style="display: inline-block;"><span class="customSelectInner" style="width: 132px; display: inline-block;">xxx-xxx-xxx-039</span></span>
+                    </div>
+                    <div class="col-md-5 textleft">
+                        <span class="size12">Preferred Phone Number -for SMS confirmation<span class="red">*</span></span>
+                        <input type="text" placeholder="" class="form-control">
+                    </div>
+                    <div class="clearfix"></div>
+
+                    <br>
+                    <div class="col-md-4">
+                    </div>
+                    <div class="col-md-8 textleft lred">
+                        Smoking Request (optional)
+                        <!-- Collapse 3 -->
+                        <button data-target="#collapse3" data-toggle="collapse" class="collapsebtn3 mt-5 collapsed" type="button"></button>
+                        <div class="collapse" id="collapse3" style="height: 0px; margin:10px 0px;">
+                            <select>
+                                <option>Non-Smoking</option>
+                                <option>Smoking</option>
+                            </select>
+                        </div>
+                        <!-- End of collapse 3 -->
+                        <div class="clearfix"></div>
+
+                        Special Requests (optional)
+                        <!-- Collapse 4 -->
+                        <button data-target="#collapse4" data-toggle="collapse" class="collapsebtn3 mt-5 collapsed" type="button"></button>
+                        <div class="collapse" id="collapse4" style="height: 0px;">
+                            <p class="size10 dark" style="margin:10px 0px;">Special requests (e.g. Roll-away beds, late check-in) are not guaranteed, and additional charges may apply. We recommend confirming your request with the hotel just to be safe.</p>
+                            <textarea class="form-control margtop10" rows="3"></textarea>
+                        </div>
+                        <!-- End of collapse 4 -->
+                        <div class="clearfix"></div>
+
+                    </div>
+                    <div class="clearfix"></div>
+
+
+                    <br>
+                    <br>
+                    <div class="h4 form_row text-left">
+                        <span class="bold">
+                            Room 2:
+                        </span>
+                        3 Adults,1 double<input type="hidden" class="book" value="13" name="hotelTripPreferences.hotelRoomPreferences[0].bedType"> <input type="hidden" class="book" value="NON_SMOKING" name="hotelTripPreferences.hotelRoomPreferences[0].smokingPreference">
+                    </div>
+                    <br>
+                    <div class="col-md-4 textalign">
+                        <div class="margtop15"><span class="dark">Contact Name:</span><span class="red">*</span></div>
+                    </div>
+                    <!--div class="col-md-4 text-left">
+                        <span class="size12">First and Last Name*</span>
+                        <input type="text" placeholder="" class="form-control ">
+                    </div-->
+                    <div class="col-md-4 text-left">
+                        <br>
+                        <span class="size12">Same as Room 1 <a href="#" class="lred2">(Make Changes)</a></span>
+
+                    </div>
+                    <div class="col-md-4 textleft margtop15">
+                    </div>
+                    <div class="clearfix"></div>
+
+                    <br>
+                    <div class="col-md-4">
+                    </div>
+                    <div class="col-md-8 textleft lred">
+                        Smoking Request (optional)
+                        <!-- Collapse 3 -->
+                        <button data-target="#collapse5" data-toggle="collapse" class="collapsebtn3 mt-5 collapsed" type="button"></button>
+                        <div class="collapse" id="collapse5" style="height: 0px; margin:10px 0px;">
+                            <select>
+                                <option>Non-Smoking</option>
+                                <option>Smoking</option>
+                            </select>
+                        </div>
+                        <!-- End of collapse 3 -->
+                        <div class="clearfix"></div>
+
+                        Special Requests (optional)
+                        <!-- Collapse 4 -->
+                        <button data-target="#collapse6" data-toggle="collapse" class="collapsebtn3 mt-5 collapsed" type="button"></button>
+                        <div class="collapse" id="collapse6" style="height: 0px;">
+                            <p class="size10 dark" style="margin:10px 0px;">Special requests (e.g. Roll-away beds, late check-in) are not guaranteed, and additional charges may apply. We recommend confirming your request with the hotel just to be safe.</p>
+                            <textarea class="form-control margtop10" rows="3"></textarea>
+                        </div>
+                        <!-- End of collapse 4 -->
+                        <div class="clearfix"></div>
+
+                    </div>
+                    <div class="clearfix"></div>
+
+
+                    <br>
+                    <br>
+                    <div class="h4 form_row text-left">
+                        <span class="bold">
+                            Room 3:
+                        </span>
+                        2 Adults,1 double<input type="hidden" class="book" value="13" name="hotelTripPreferences.hotelRoomPreferences[0].bedType"><input type="hidden" class="book" value="NON_SMOKING" name="hotelTripPreferences.hotelRoomPreferences[0].smokingPreference">
+                    </div>
+                    <br>
+                    <div class="col-md-4 textalign">
+                        <div class="margtop15"><span class="dark">Contact Name:</span><span class="red">*</span></div>
+                    </div>
+                    <!--div class="col-md-4 text-left">
+                        <span class="size12">First and Last Name*</span>
+                        <input type="text" placeholder="" class="form-control ">
+                    </div-->
+                    <div class="col-md-4 text-left">
+                        <br>
+                        <span class="size12">Same as Room 1 <a href="#" class="lred2">(Make Changes)</a></span>
+
+                    </div>
+                    <div class="col-md-4 textleft margtop15">
+                    </div>
+                    <div class="clearfix"></div>
+
+                    <br>
+                    <div class="col-md-4">
+                    </div>
+                    <div class="col-md-8 textleft lred">
+                        Smoking Request (optional)
+                        <!-- Collapse 3 -->
+                        <button data-target="#collapse7" data-toggle="collapse" class="collapsebtn3 mt-5 collapsed" type="button"></button>
+                        <div class="collapse" id="collapse7" style="height: 0px; margin:10px 0px;">
+                            <select>
+                                <option>Non-Smoking</option>
+                                <option>Smoking</option>
+                            </select>
+                        </div>
+                        <!-- End of collapse 3 -->
+                        <div class="clearfix"></div>
+
+                        Special Requests (optional)
+                        <!-- Collapse 4 -->
+                        <button data-target="#collapse8" data-toggle="collapse" class="collapsebtn3 mt-5 collapsed" type="button"></button>
+                        <div class="collapse" id="collapse8" style="height: 0px;">
+                            <p class="size10 dark" style="margin:10px 0px;">Special requests (e.g. Roll-away beds, late check-in) are not guaranteed, and additional charges may apply. We recommend confirming your request with the hotel just to be safe.</p>
+                            <textarea class="form-control margtop10" rows="3"></textarea>
+                        </div>
+                        <!-- End of collapse 4 -->
+                        <div class="clearfix"></div>
+
+                    </div>
+                    <div class="clearfix"></div>
+
+
+                    <br>
+                    <br>
+                    <span class="size16px bold dark left">How would you like to pay?</span>
+                    <div class="roundstep right">2</div>
+                    <div class="clearfix"></div>
+                    <div class="line4"></div>
+
+
+
+                    <br>
+                    <div class="col-md-4">
+                    </div>
+                    <div class="col-md-4 lred">
+                        Enter a coupon code
+                        <!-- Collapse 5 -->
+                        <button data-target="#collapse9" data-toggle="collapse" class="collapsebtn3 mt-5 collapsed" type="button"></button>
+                        <div class="collapse" id="collapse9" style="height: 0px;">
+                            <input type="text" placeholder="" class="form-control margtop10">
+                        </div>
+                        <!-- End of collapse 5 -->
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="col-md-4 textleft">
+                    </div>
+                    <div class="clearfix"></div>
+
+
+                    <br>
+                    <!-- Nav tabs -->
+                    <ul class="nav navigation-tabs">
+                        <li class="active"><a data-toggle="tab" href="#card">Credit/Debit card</a></li>
+                        <!--li><a data-toggle="tab" href="#paypal">Paypal</a></li-->
+                    </ul>
+
+                    <!-- Tab panes -->
+                    <div class="tab-content4">
+
+                        <!-- Tab 1 -->
+                        <div id="card" class="tab-pane active">
+                            <div class="col-md-4 textleft">
+                            </div>
+                            <div class="col-md-8">
+                                <span class="textleft">
+                                    <a href="#"><img src="@Url.Content("~/ContentNew/images/mastercard.gif")" /></a>
+                                    <a href="#"><img src="@Url.Content("~/ContentNew/images/AMEX.gif")" /></a>
+                                    <a href="#"><img src="@Url.Content("~/ContentNew/images/Visa.gif")" /></a>
+                                </span>
+                                <span class="pull-right">
+                                    <a href="#"><img src="@Url.Content("~/ContentNew/images/verifiedbyvisa.png")" /></a>
+                                    <a href="#"><img src="@Url.Content("~/ContentNew/images/mastercardsecure.png")" /></a>
+                                </span>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="col-md-4 textalign">
+                                <div class="margtop15"><span class="dark">Debit/Credit Card Number:</span><span class="red">*</span></div>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" placeholder="" class="form-control margtop10">
+                            </div>
+                            <div class="col-md-4 textleft">
+                            </div>
+                            <div class="clearfix"></div>
+
+                            <br>
+                            <div class="col-md-4 textalign">
+                                <div class="margtop7"><span class="dark">Card Type:</span><span class="red">*</span></div>
+                            </div>
+                            <div class="col-md-4">
+                                <select class="form-control mySelectBoxClass hasCustomSelect" style="width: 203px; position: absolute; opacity: 0; height: 34px; font-size: 14px;">
+                                    <option selected="">xxx-xxx-xxx-772</option>
+                                    <option>xxx-xxx-xxx-039</option>
+                                </select><span class="customSelect form-control mySelectBoxClass" style="display: inline-block;"><span class="customSelectInner" style="width: 132px; display: inline-block;">xxx-xxx-xxx-772</span></span>
+                            </div>
+                            <div class="col-md-4 textleft">
+                            </div>
+                            <div class="clearfix"></div>
+
+                            <br>
+                            <div class="col-md-4 textalign">
+                                <div class="margtop7"><span class="dark">Expiration Date:</span><span class="red">*</span></div>
+                            </div>
+                            <div class="col-md-4">
+
+                                <div class="w50percent">
+                                    <div class="wh90percent">
+                                        <select class="form-control mySelectBoxClass hasCustomSelect" style="width: 91px; position: absolute; opacity: 0; height: 34px; font-size: 14px;">
+                                            <option selected="">01 JAN</option>
+                                            <option>02 FEB</option>
+                                            <option>03 MAR</option>
+                                            <option>04 APR</option>
+                                            <option>05 MAY</option>
+                                            <option>06 JUN</option>
+                                            <option>07 JUL</option>
+                                            <option>08 AUG</option>
+                                            <option>09 SEP</option>
+                                            <option>10 OCT</option>
+                                            <option>11 NOV</option>
+                                            <option>12 DEC</option>
+                                        </select><span class="customSelect form-control mySelectBoxClass" style="display: inline-block;"><span class="customSelectInner" style="width: 51px; display: inline-block;">01 JAN</span></span>
+                                    </div>
+                                </div>
+                                <div class="w50percentlast">
+                                    <div class="wh90percent right">
+                                        <select class="form-control mySelectBoxClass hasCustomSelect" style="width: 91px; position: absolute; opacity: 0; height: 34px; font-size: 14px;">
+                                            <option selected="">14</option>
+                                            <option>15</option>
+                                            <option>16</option>
+                                            <option>17</option>
+                                            <option>18</option>
+                                            <option>19</option>
+                                            <option>20</option>
+                                            <option>21</option>
+                                            <option>22</option>
+                                            <option>23</option>
+                                            <option>24</option>
+                                            <option>25</option>
+                                            <option>26</option>
+                                        </select><span class="customSelect form-control mySelectBoxClass" style="display: inline-block;"><span class="customSelectInner" style="width: 51px; display: inline-block;">14</span></span>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="col-md-4 textleft">
+                            </div>
+                            <div class="clearfix"></div>
+
+
+                            <br>
+                            <div class="col-md-4 textalign">
+                                <div class="margtop15"><span class="dark">Card Identification Number:</span><span class="red">*</span></div>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" placeholder="" class="form-control margtop10">
+                            </div>
+                            <div class="col-md-4 textleft margtop20">
+                                <small><a href="#" class="lred2">What's this? <img class="lrnmoreimg" src="@Url.Content("~/ContentNew/images/lrnmore.gif")" /></a></small>
+                            </div>
+                            <div class="clearfix"></div>
+
+
+                            <!--div class="col-md-4 textright">
+                                <div class="margtop15"><span class="dark">Billing ZIP Code:</span><span class="red">*</span></div>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" placeholder="" class="form-control margtop10">
+                            </div-->
+                            <div class="col-md-4 textleft margtop15">
+                            </div>
+                            <div class="clearfix"></div>
+
+
+                            <div class="col-md-4 textalign">
+                                <div class="margtop15"><span class="dark"> Cardholder Name:</span><span class="red">*</span></div>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" placeholder="" class="form-control margtop10">
+                            </div>
+                            <div class="col-md-4 textleft margtop20">
+                                <small>(as it appears on the card)</small>
+                            </div>
+                            <div class="clearfix"></div>
+
+                        </div>
+                        <!-- End of Tab 1 -->
+                        <!-- Tab 2 -->
+                        <div id="paypal" class="tab-pane">
+
+                            <div class="alert alert-warning fade in">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                <strong>Important:</strong> You will be redirected to PayPal's website to securely complete your payment.
+                            </div>
+
+                            <button class="btn-search5" type="submit">Proceed to paypal</button>
+
+                        </div>
+                        <!-- End of Tab 2 -->
+                    </div>
+
+
+                    <br>
+                    <br>
+                    <span class="size16px bold dark left">Where should we send your confirmation?</span>
+                    <div class="roundstep right">3</div>
+                    <div class="clearfix"></div>
+                    <div class="line4"></div>
+                    Please enter the email address where you would like to receive your confirmation.<br>
+
+
+                    <div class="col-md-4 textalign">
+                        <div class="mt15 email_address"><span class="dark">Email Address:</span><span class="red">*</span></div>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" placeholder="" class="form-control margtop10">
+                    </div>
+                    <div class="col-md-4 textleft">
+                    </div>
+                    <div class="clearfix"></div><br />
+                    <div class="col-md-4"></div>
+                    <div class="col-md-8 text-left">
+                        <input id="opt_in_1st" class="checkbox_field book state" type="checkbox" name="opt_in_1st">
+                        <label id="opt_in_neg" class="checkbox_label_right size12" for="opt_in_1st"> Check the box if you do not want to receive emails from Hotels724 with travel deals, special offers, and other information. </label>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="padded_grey " id="account_creation_options">
+                        <span id="account_creation_text">
+                            <div class="h4 indented">
+                                <span class="italicized">(Optional)</span>
+                                <span class="bold" id="create_account_title">
+                                    Create an Hotels 724 account
+                                </span>
+                                for faster checkout and easy itinerary access.<small><a href="#" class="lred2">Learn More <img class="lrnmoreimg" src="@Url.Content("~/ContentNew/images/lrnmore.gif")" /></a></small>
+                            </div>
+                        </span>
+                        <div class="indented">
+                            <a class="uitk-popups tip trigger tooltip" data-qtopts="{ position: {my:'bottom left',at:'left top', adjust: { x: 16, y: 0 }},style: {classes:'ui-tooltip-392 ui-tooltip-rounded'}}" href="#enrollment_benefits" tabindex="-1"> Learn more<span class="icon"></span></a> <div class="visually-hidden">
+                                <div id="enrollment_benefits">
+                                    <p>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="indented" id="enter_password_message">
+                            Enter a password to create an account using the email address above.
+                        </div>
+
+                        <form class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 col-md-4 control-label">Password:</label>
+                                <div class="col-sm-4 col-md-4 ">
+                                    <input type="email" class="form-control" id="inputEmail3" placeholder="Password">
+                                    <small>(6 to 30 characters, no spaces)</small>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputPassword3" class="col-sm-4 col-md-4 control-label">Confirm Password:</label>
+                                <div class="col-sm-4 col-md-4 ">
+                                    <input type="password" class="form-control" id="inputPassword3" placeholder="Confirm Password:">
+                                </div>
+                            </div>
+                        </form>
+                        <div class="clear"></div>
+                        <div id="rewards_enrollment_container">
+                        </div>
+                    </div>
+
+                    <br>
+                    <br>
+                    <span class="size16px bold dark left">Review and book your trip</span>
+                    <div class="roundstep right">4</div>
+                    <div class="clearfix"></div>
+                    <div class="line4"></div>
+
+                    <div class="alert  text-left">
+                        Important information about your booking:<br><br>
+                        <p class="size12">•<span> To register at this property, guests who are Indian citizens must provide a valid photo identity card issued by the Government of India; guests who are foreign nationals must present a valid passport and visa.</span></p>
+                        <div class="clearfix"></div><br />
+                        <p class="size12">
+                            •<span>
+                                This reservation is non-refundable and cannot be changed or canceled.
+                                A tourism fee is imposed by the city and collected at the property. The fee is AED 20 for the first bedroom per night, and increases by AED 20 per night for each additional bedroom. For further details, please contact the property using the information contained in your confirmation email.
+                            </span>
+                        </p>
+                    </div>
+                    <div class="clearfix"></div><br />
+                    <p class="text-left padding15 bookingacknowledgement">
+                        By selecting to complete this booking I acknowledge that I have read and accept the <a class="lred2" href="#">
+                            rules &amp;
+                            restrictions <img class="lrnmoreimg" src="@Url.Content("~/ContentNew/images/lrnmore.gif")" />
+                        </a> <a class="lred2" href="#">terms &amp; conditions <img class="lrnmoreimg" src="@Url.Content("~/ContentNew/images/lrnmore.gif")" /></a> , and <a class="lred2" href="#">privacy policy <img class="lrnmoreimg" src="@Url.Content("~/ContentNew/images/lrnmore.gif")" /></a>.
+                    <p>
+
+                        <button class="margtop20 btn-search4" type="submit">Complete booking</button>
+                </div>
+
+            </div>
+            <!-- END OF LEFT CONTENT -->
+        </div>
+    </div>
+    <!-- CONTENT -->
+    <!-- END OF CONTENT -->
+    <br>
+    <br>
+    <br>
+    <!-- FOOTER -->
+    <div class="footerbgblack mobileview">
+        <div class="container">
+            <!-- End of column 1-->
+            <div class="col-md-3">
+                <ul class="footerlistblack">
+                    <li><span><img src="@Url.Content("~/ContentNew/images/li2.png")"></span><a href="#">Dubai </a></li>
+                    <li><span><img src="@Url.Content("~/ContentNew/images/li2.png")"></span><a href="#">Istanbul </a></li>
+                </ul>
+            </div>
+            <!-- End of column 2-->
+            <div class="col-md-3">
+                <ul class="footerlistblack">
+                    <li><span><img src="@Url.Content("~/ContentNew/images/li2.png")"></span><a href="#">Las Vegas </a></li>
+                    <li><span><img src="@Url.Content("~/ContentNew/images/li2.png")"></span><a href="#">Antalya </a></li>
+                </ul>
+            </div>
+            <div class="col-md-3">
+                <ul class="footerlistblack">
+                    <li><span><img src="@Url.Content("~/ContentNew/images/li2.png")"></span><a href="#">Maldives </a></li>
+                    <li><span><img src="@Url.Content("~/ContentNew/images/li2.png")"></span><a href="#">Kiev</a></li>
+                    <li><span><img src="@Url.Content("~/ContentNew/images/li2.png")"></span><a href="#">Delhi</a></li>
+                </ul>
+            </div>
+            <!-- End of column 3-->
+            <div class="col-md-3 socialicons">
+                <div class="scont">
+                    <a class="social1b img" href="#"><img alt="" src="@Url.Content("~/ContentNew/images/icon-facebook.png")"></a>
+                    <a class="social2b img" href="#"><img alt="" src="@Url.Content("~/ContentNew/images/icon-twitter.png")"></a>
+                    <a class="social3b img" href="#"><img alt="" src="@Url.Content("~/ContentNew/images/icon-gplus.png")"></a> <br>
+                    <br>
+                    <a href="\" class="footerlogo"><img alt="" src="@Url.Content("~/ContentNew/images/logobk2.png")"></a><br>
+                    <br>
+                    <span class="grey2">
+                        <a href="#">HOTELS724</a> | &copy; 2014 <br>
+                        All Rights Reserved
+                    </span> <br>
+                    <br>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- footer with dark background-->
+    <div class="footer_wrapper text-center">
+        <ul>
+            <li><a href="#">ABOUT HOTELS724</a></li>
+            <li>|</li>
+            <li><a href="#">PRIVACY POLICY</a></li>
+            <li>|</li>
+            <li><a href="#">TERMS OF USE</a></li>
+            <li>|</li>
+            <li><a href="#">FAQ</a></li>
+        </ul>
+    </div>
+    <!-- Javascript -->
+    <!-- bin/jquery.slider.min.js -->
+    <script type="text/javascript" src="@Url.Content("~/ContentNew/assets/plugins/jslider/js/jshashtable-2.1_src.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/ContentNew/assets/plugins/jslider/js/jquery.numberformatter-1.2.3.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/ContentNew/assets/plugins/jslider/js/tmpl.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/ContentNew/assets/plugins/jslider/js/jquery.dependClass-0.1.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/ContentNew/assets/plugins/jslider/js/draggable-0.1.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/ContentNew/assets/plugins/jslider/js/jquery.slider.js")"></script>
+    <!-- end -->
+    <script src="@Url.Content("~/ContentNew/js/js-new-homepage.js")"></script>
+    <!--script src="ContentNew/js/js-details.js"></script-->
+    <!-- Googlemap -->
+    <script src="@Url.Content("~/ContentNew/js/initialize-google-map.js")"></script>
+    <!-- Custom Select -->
+    <script src="@Url.Content("~/ContentNew/assets/jquery/jquery.customSelect.js")"></script>
+    <!-- Cus        <!-- Cus        <!-- Cus        <!-- Cus        <!-- Cus        <!-- Cus        <!-- Custom functions -->
+    <script src="@Url.Content("~/ContentNew/js/functions.js")"></script>
+    <script src="@Url.Content("~/ContentNew/scrolltotop.js")"></script>
+    <!-- Nicescroll  -->
+    <script src="@Url.Content("~/ContentNew/assets/jquery/jquery.nicescroll.min.js")"></script>
+    <!-- jQuery KenBurn Slider  -->
+    <script type="text/javascript" src="@Url.Content("~/ContentNew/assets/rs-plugin/js/jquery.themepunch.revolution.min.js")"></script>
+    <!-- CarouFredSel -->
+    <script src="@Url.Content("~/ContentNew/js/jquery.carouFredSel-6.2.1-packed.js")"></script>
+    <script src="@Url.Content("~/ContentNew/js/helper-plugins/jquery.touchSwipe.min.js")"></script>
+    <script src="@Url.Content("~/ContentNew/js/helper-plugins/jquery.mousewheel.min.js")"></script>
+    <script src="@Url.Content("~/ContentNew/js/helper-plugins/jquery.transit.min.js")"></script>
+    <script src="@Url.Content("~/ContentNew/js/helper-plugins/jquery.ba-throttle-debounce.min.js")"></script>
+    <!-- Counter -->
+    <script src="@Url.Content("~/ContentNew/js/counter.js")"></script>
+    <script src="@Url.Content("~/ContentNew/assets/jquery-ui/jquery-ui.js")"></script>
+    <!-- Carousel-->
+    <script src="@Url.Content("~/ContentNew/js/initialize-carousel-detailspage.js")"></script>
+    <!-- Js Easing-->
+    <!-- Bootstrap-->
+    <script src="@Url.Content("~/ContentNew/assets/bootstrap3.0.3/js/bootstrap.min.js")"></script>
+
+
+
+
+    <script type="text/javascript">
+        $(".nabmobile").scroll_navi();
+    </script>
+
+</body>
+</html>

@@ -204,5 +204,10 @@ namespace H724.UI.Web.Controllers
 
             return View(response);
         }
+
+        public ActionResult RoomBooking()
+        {
+            return View();
+        }
     }
 }
