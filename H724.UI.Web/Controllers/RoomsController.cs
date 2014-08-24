@@ -127,6 +127,17 @@ namespace H724.UI.Web.Controllers
         }
 
         [HttpGet]
+        public ActionResult RoomBooking(HotelInfo hotelInfo)
+        {
+            var bookingWizard = new RoomBookingWizard();
+
+            if (TempData["bookingWizard"] != null) bookingWizard = (RoomBookingWizard)TempData["bookingWizard"];
+            else bookingWizard.HotelInfo = hotelInfo;
+
+            return View(bookingWizard);
+        }
+
+        [HttpGet]
         public ActionResult RoomBookingSecond([Deserialize] RoomBookingWizard bookingWizard, PersonalInfo personalInfo)
         {
             if (TempData["bookingWizard"] != null) bookingWizard = (RoomBookingWizard)TempData["bookingWizard"];

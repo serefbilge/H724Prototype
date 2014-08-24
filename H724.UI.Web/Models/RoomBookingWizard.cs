@@ -15,7 +15,7 @@ namespace H724.UI.Web.Models
         public PaymentInfo PaymentInfo { get; set; }
         public AddressInfo AddressInfo { get; set; }
     }
-
+     
     [Serializable]
     public class HotelInfo
     {
@@ -29,7 +29,15 @@ namespace H724.UI.Web.Models
         public string RoomTypeCode { get; set; }
         public int RoomsCount { get; set; }
         public string Name { get; set; }
+        public string HotelCity { get; set; }
+        public string HotelCountry { get; set; }
+        public string HotelImageUrl { get;set;}
+        public string TaxRate { get; set; }
+        public string AverageFare { get; set; }
+        public string CancellationPolicy { get; set; }
+        public string NonRefundable { get; set; }
         public List<Room> Rooms { get; set; }
+     
     }
 
     [Serializable]

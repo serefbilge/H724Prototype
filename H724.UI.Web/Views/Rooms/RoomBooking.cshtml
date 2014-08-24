@@ -1,4 +1,11 @@
-﻿@{
+﻿@using Microsoft.Web.Mvc
+@model H724.UI.Web.Models.RoomBookingWizard
+
+@{
+    ViewBag.Title = "Payment Page";
+}
+
+@{
     Layout = null;
 }
 
@@ -121,38 +128,56 @@
                 <div class="pagecontainer2 paymentbox grey">
                     <h4>Trip Summary</h4>
                     <div class="padding30 text-left">
-                        <img alt="" class="left margright20" src="@Url.Content("~/ContentNew/images/thumb.png")">
-                        <span class="opensans size14 dark bold">Mabely Grand Hotel <img class="lrnmoreimg" src="@Url.Content("~/ContentNew/images/lrnmore.gif")" /></span>
-                        <span class="opensans size12 grey">Zakynthos, Greece</span><br>
-                        <img alt="" src="@Url.Content("~/ContentNew/images/smallrating-5.png")">
+@if (@Model.HotelInfo.HotelImageUrl != null)
+{
+    <img alt="" class="left margright20" src="@Url.Content(@Model.HotelInfo.HotelImageUrl)">
+}
+                        <span class="opensans size14 dark bold">
+                         @Model.HotelInfo.Name.ToUpper()
+                       
+                        </span>
+                        
+                         
+                        <span class="opensans size12 grey">@Model.HotelInfo.CurrencyCode</span><br>
+                        <img alt="" src="@Url.Content("~/ContentNew/images/smallrating-5.png")"><br />
+                        @Model.HotelInfo.HotelCity,@Model.HotelInfo.HotelCountry
                     </div>
-                    <div class="line3"></div>
+                    <div class="line3">
+                      
+                    </div>
 
                     <div class="hpadding20 margtop30">
                         <table class="table margbottom20">
                             <tbody>
                                 <tr>
-                                    <td colspan="2" class="text-left"><span class="dark">Room 1</span>: Standard Double Room</td>
+                                    <td colspan="2" class="text-left"><span class="dark">Room @Model.HotelInfo.RoomsCount</span>:@Model.HotelInfo.RoomTypeCode</td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2" class="text-left"><span class="dark">5 Nights</span>: Sep/10/2013 - Sep/14/2013</td>
+                                    <td colspan="2" class="text-left"><span class="dark">@Convert.ToDateTime(@Model.HotelInfo.StandardCheckout).Subtract(@Convert.ToDateTime(@Model.HotelInfo.StandardCheckin)).Days.ToString() Nights</span>:@Convert.ToDateTime(@Model.HotelInfo.StandardCheckin).ToShortDateString() - @Convert.ToDateTime(@Model.HotelInfo.StandardCheckout).ToShortDateString()</td>
                                 </tr>
+                                @if (@Model.HotelInfo.Rooms!=null)
+                                {
+                                    for (int counter = 1; counter <= @Model.HotelInfo.Rooms.Count; counter++)
+                                { 
                                 <tr>
                                     <td class="text-left">
-                                        <span class="dark">Room 1</span>: 2 Adults<br>
+                                        <span class="dark">Room 
+                                        @counter </span>:@Model.HotelInfo.Rooms[counter-1].NumberOfAdults.ToString() Adults<br>
                                         <span class="lred2">
-                                            5 Nights
+                                            @Convert.ToDateTime(@Model.HotelInfo.StandardCheckout).Subtract(@Convert.ToDateTime(@Model.HotelInfo.StandardCheckin)).Days.ToString() Nights
                                             <!-- Collapse 1 -->
                                             <button data-target="#collapse1" data-toggle="collapse" class="collapsebtn3 mt-5 collapsed" type="button"></button>
                                         </span>
                                         <div class="collapse" id="collapse1" style="height: 0px;">
                                             <div class="left size12 lblue">
-                                                Thu Nov 14<br>
-                                                Fri Nov 15
+                                                @string.Format("{0:ddd MMM yy}", Convert.ToDateTime(@Model.HotelInfo.StandardCheckin))
+                                              
+                                                <br>
+                                              @string.Format("{0:ddd MMM yy}", Convert.ToDateTime(@Model.HotelInfo.StandardCheckout))
                                             </div>
                                             <div class="right size12 lblue">
-                                                $15.92<br>
-                                                $20.00
+                                          @Model.HotelInfo.CurrencyCode  @Model.HotelInfo.TaxRate<br>
+                                                @Model.HotelInfo.CurrencyCode  @Model.HotelInfo.AverageFare
                                             </div><div class="clearfix"></div>
                                         </div>
                                         <!-- End of collapse 1 -->
@@ -162,12 +187,14 @@
                                         <span class="lred2">Taxes &amp; Fees <img class="lrnmoreimg" src="@Url.Content("~/ContentNew/images/lrnmore.gif")" /></span>
                                         <div class="collapse" id="collapse2" style="height: 0px;">
                                             <div class="left size12 lred">
-                                                Thu Nov 14<br>
-                                                Fri Nov 15
+                                                @string.Format("{0:ddd MMM yy}", Convert.ToDateTime(@Model.HotelInfo.StandardCheckin))
+
+                                                <br>
+                                                @string.Format("{0:ddd MMM yy}", Convert.ToDateTime(@Model.HotelInfo.StandardCheckout))
                                             </div>
                                             <div class="right size12 lred">
-                                                $1.51<br>
-                                                $1.00
+                                                @Model.HotelInfo.CurrencyCode @Model.HotelInfo.TaxRate<br>
+                                                @Model.HotelInfo.CurrencyCode @Model.HotelInfo.AverageFare
                                             </div><div class="clearfix"></div>
                                         </div>
                                         <!-- End of collapse 1 -->
@@ -176,21 +203,26 @@
                                     </td>
                                     <td class="text-right">
                                         avg./night<br>
-                                        $35.92<br>
-                                        $2.51<br>
+                                        @Model.HotelInfo.CurrencyCode @Model.HotelInfo.AverageFare<br>
+                                        <br>
                                     </td>
                                 </tr>
+                                }
+                                }
                                 <tr style="border-top:1px solid #eeeeee;">
                                     <td class="text-left">Total due today:</td>
-                                    <td class="text-right dark">$38.43</td>
+                                    <td class="text-right dark">@Model.HotelInfo.CurrencyCode @Model.HotelInfo.SelectedPrice</td>
                                 </tr>
                                 <tr>
                                     <td class="text-left">
-                                        <span class="lred2">Due at Hotel <button data-target="#collapseN" data-toggle="collapse" class="collapsebtn3 mt-5 collapsed" type="button"></button></span>
+                                        <span class="lred2">Due at Hotel
+                                         <button data-target="#collapseN" data-toggle="collapse" class="collapsebtn3 mt-5 collapsed" type="button"></button></span>
                                         <div class="collapse" id="collapseN" style="height: 0px;">
                                             <div class="left size12 lblue">
-                                                Thu Nov 14<br>
-                                                Fri Nov 15
+                                                @string.Format("{0:ddd MMM yy}", Convert.ToDateTime(@Model.HotelInfo.StandardCheckin))
+
+                                                <br>
+                                                @string.Format("{0:ddd MMM yy}", Convert.ToDateTime(@Model.HotelInfo.StandardCheckout))
                                             </div>
                                             <div class="right size12 lblue">
                                                 $1.51<br>
@@ -200,8 +232,8 @@
                                         <!-- End of collapse 1 -->
                                         <div class="clearfix"></div>
 
-                                    </td>
-                                    <td class="text-right dark">$0.00</td>
+                                    </td>  
+                                    <td class="text-right dark">@Model.HotelInfo.CurrencyCode 0.00</td>
                                 </tr>
 
 
@@ -211,7 +243,7 @@
                     <div class="line3"></div>
                     <div class="padding30">
                         <span class="left size14 dark">Trip Total:</span>
-                        <span class="right lred2 bold size18">$192.15</span>
+                        <span class="right lred2 bold size18">@Model.HotelInfo.CurrencyCode @Model.HotelInfo.SelectedPrice</span>
                         <div class="clearfix"></div>
                     </div>
 
