@@ -146,11 +146,16 @@
                                         roomsValueDictionary.Add("Rooms[" + c + "].BedTypeId", r.BedTypeId);
                                         c++;
                                     }
-                                  
+
                                     string ImageUrl = "";
+                                    string RoomTypeDescription = "";
                                     if (room.RoomImages != null && (room.RoomImages.RoomImage.OrEmptyIfNull().Any()))
                                     {
                                         ImageUrl = room.RoomImages.RoomImage.First().Url;
+                                    }
+                                    @if (room.RoomType != null)
+                                    {
+                                        RoomTypeDescription = @Server.HtmlDecode(room.RoomType.Description);
                                     }
                                     var route = new RouteValueDictionary
                                         {
@@ -172,7 +177,8 @@
                                             {"HotelImageUrl", ImageUrl},
                                             {"TaxRate",room.RateInfos.RateInfo.TaxRate.ToString()},
                                             {"AverageFare",room.RateInfos.RateInfo.ChargeableRateInfo.AverageRate.ToString()},
-                                             {"NonRefundable",room.RateInfos.RateInfo.NonRefundable.ToString()}
+                                             {"NonRefundable",room.RateInfos.RateInfo.NonRefundable.ToString()},
+                                             {"RoomTypeDescription",RoomTypeDescription.ToString()}
                                         };
 
                                     route.Extend(roomsValueDictionary);

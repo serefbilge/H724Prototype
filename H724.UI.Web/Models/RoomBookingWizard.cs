@@ -37,7 +37,7 @@ namespace H724.UI.Web.Models
         public string CancellationPolicy { get; set; }
         public string NonRefundable { get; set; }
         public List<Room> Rooms { get; set; }
-     
+        public string RoomTypeDescription { get; set; }
     }
 
     [Serializable]
