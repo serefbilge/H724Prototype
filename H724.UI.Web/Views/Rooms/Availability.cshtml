@@ -54,7 +54,7 @@
                                     <p style="font-weight: bold">
                                         @if (room.RoomType != null)
                                         {
-                                            @Server.HtmlDecode(room.RoomType.Description)
+                                            Server.HtmlDecode(room.RoomType.Description);
                                         }
                                     </p>
                                 </div>
@@ -153,9 +153,9 @@
                                     {
                                         ImageUrl = room.RoomImages.RoomImage.First().Url;
                                     }
-                                    @if (room.RoomType != null)
+                                    if (room.RoomType != null)
                                     {
-                                        RoomTypeDescription = @Server.HtmlDecode(room.RoomType.Description);
+                                        RoomTypeDescription = Server.HtmlDecode(room.RoomType.Description);
                                     }
                                     var route = new RouteValueDictionary
                                         {
