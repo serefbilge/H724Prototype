@@ -52,6 +52,7 @@ namespace H724.UI.Web.Models
         [Required]
         public string ConfirmEmail { get; set; }
         [Required]
+        public string CountryCode { get; set; }
         public string HomePhone { get; set; }
         [Required]
         public string WorkPhone { get; set; }

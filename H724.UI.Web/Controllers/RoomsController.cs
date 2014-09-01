@@ -156,11 +156,11 @@ namespace H724.UI.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult RoomBookingFinal([Deserialize] RoomBookingWizard bookingWizard, PaymentInfo paymentInfo, AddressInfo addressInfo)
+        public ActionResult RoomBookingFinal([Deserialize] RoomBookingWizard bookingWizard, PaymentInfo paymentInfo, AddressInfo addressInfo,PersonalInfo personalInfo)
         {
             bookingWizard.PaymentInfo = paymentInfo;
             bookingWizard.AddressInfo = addressInfo;
-
+            bookingWizard.PersonalInfo = personalInfo;
             var model = Session["Search"] as SearchViewModel;
 
             var roomGroup = new RoomGroup { Room = bookingWizard.HotelInfo.Rooms };
@@ -191,7 +191,7 @@ namespace H724.UI.Web.Controllers
                 RoomsCount = bookingWizard.HotelInfo.RoomsCount,
                 RoomGroup = roomGroup,
                 Email = bookingWizard.PersonalInfo.Email,
-                HomePhone = bookingWizard.PersonalInfo.HomePhone,
+                HomePhone = bookingWizard.PersonalInfo.WorkPhone,
                 WorkPhone = bookingWizard.PersonalInfo.WorkPhone,
                 AddressInfo = bookingWizard.AddressInfo,
                 CardHolderFirstName = bookingWizard.PaymentInfo.CardHolderFirstName,
